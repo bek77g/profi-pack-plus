@@ -1,0 +1,46 @@
+.mainPageSearchCards {
+  display: grid;
+  grid-template-columns: repeat(3, 370px);
+  grid-template-rows: repeat(2, 170px);
+  grid-auto-rows: 170px;
+  grid-auto-columns: 370px;
+  gap: 30px;
+
+  &__card {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #CDCDCD;
+    border-radius: 3px;
+    padding: 15px;
+
+    &__left {
+      &__title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 23px;
+        line-height: 28px;
+        color: #2F3035;
+        padding-bottom: 50px;
+      }
+
+      &__btn {
+        button {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          color: #C4C4C4;
+          cursor: pointer;
+          background: #FFFFFF;
+          border: none;
+        }
+      }
+    }
+
+    &__right {
+      img {
+        max-width: 130px;
+      }
+    }
+  }
+}
