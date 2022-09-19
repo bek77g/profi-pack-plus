@@ -2,10 +2,16 @@
 
 // components
 @import "./components/header";
+
 // components
 
+//pages components
+@import "./pages/mainPage/components/mainPageAdvertise";
+@import "pages/mainPage/components/mainPageAdvertiseCard";
+@import "./pages/mainPage/components/mainPageAdvertiseSlider";
+//pages components
 // pages
-
+@import "./pages/mainPage/mainPage";
 // pages
 
 @import "global";
