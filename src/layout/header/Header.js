@@ -1,4 +1,8 @@
 import React from 'react';
+import logo from "../../assets/img/logo.jpg";
+import favourite from "../../assets/icons/favourite.svg";
+import cart from "../../assets/icons/cart.svg";
+
 
 const Header = () => {
     return (
@@ -7,16 +11,16 @@ const Header = () => {
                 <ul className="header__nav__bar">
                     <li className="header__nav__bar__item">О нас</li>
                     <li className="header__nav__bar__item">Сотрудничество</li>
-                    <li className="header__nav__bar__item">Доставка и оплата</li>
                     <li className="header__nav__bar__item">
-                        <img src="" alt=""/>
+                        <img src={logo} alt="logo"/>
                     </li>
+                    <li className="header__nav__bar__item">Доставка и оплата</li>
                     <li className="header__nav__bar__item">Контакты</li>
                     <li className="header__nav__bar__item">
-                        <img src="" alt=""/>
+                        <img src={favourite} alt="favourite"/>
                     </li>
                     <li className="header__nav__bar__item">
-                        <img src="" alt=""/>
+                        <img src={cart} alt="cart"/>
                     </li>
                 </ul>
             </nav>
