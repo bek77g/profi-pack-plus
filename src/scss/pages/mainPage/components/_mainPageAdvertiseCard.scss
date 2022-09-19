@@ -1,0 +1,83 @@
+.mainPageAdvertiseCard {
+  border: 1px solid #CDCDCD;
+  border-radius: 3px;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+
+    &__left {
+      background: #1C62CD;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      padding: 20px;
+    }
+
+    &__right {
+      padding-right: 10px;
+
+      p:first-child {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 27px;
+        line-height: 32px;
+        padding-bottom: 7px;
+        color: #1C62CD;
+      }
+
+      p:last-child {
+        display: flex;
+        justify-content: flex-end;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 17px;
+        color: #C4C4C4;
+        position: relative;
+
+        &:before {
+          content: "";
+          position: absolute;
+          top: 45%;
+          left: 40%;
+          border: 0.5px solid #C4C4C4;
+          width: 100px;
+          transform: rotate(-5.33deg);
+        }
+      }
+    }
+  }
+
+  &__mid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 325px;
+    }
+
+    &__description {
+      padding-top: 5px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 21px;
+      color: #2F3035;
+      text-align: center;
+      max-width: 232.78px;
+      padding-bottom: 10px;
+    }
+  }
+
+  &__bottom {
+    text-align: center;
+    background: #F0F0F4;
+    padding: 26px;
+  }
+}
