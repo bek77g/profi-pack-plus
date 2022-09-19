@@ -3,12 +3,13 @@
   grid-template-columns: repeat(5, 1fr);
   //grid-template-rows: 470px;
   gap: 0 20px;
+  margin-bottom: 50px;
 
   &__slider {
-    grid-column: span 4;
+    grid-column: span 3;
   }
 
   &__card {
-    grid-column: 5/6;
+    grid-column: 4/6;
   }
 }
