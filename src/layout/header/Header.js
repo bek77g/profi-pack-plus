@@ -12,7 +12,7 @@ const Header = () => {
                     <li className="header__nav__bar__item">О нас</li>
                     <li className="header__nav__bar__item">Сотрудничество</li>
                     <li className="header__nav__bar__item">
-                        <img src={logo} alt="logo"/>
+                        <img src={logo} alt="logo" className="header__img"/>
                     </li>
                     <li className="header__nav__bar__item">Доставка и оплата</li>
                     <li className="header__nav__bar__item">Контакты</li>
@@ -21,6 +21,7 @@ const Header = () => {
                     </li>
                     <li className="header__nav__bar__item">
                         <img src={cart} alt="cart"/>
+                        <span className="header__cart">1</span>
                     </li>
                 </ul>
             </nav>
