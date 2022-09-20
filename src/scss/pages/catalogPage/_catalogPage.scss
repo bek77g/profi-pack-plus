@@ -1,0 +1,47 @@
+.catalogPage {
+  &__content {
+    &__left {
+      span {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #2F3035;
+      }
+
+      &__price {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  &__top {
+
+    span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 18px;
+      color: #C4C4C4;
+      padding-left: 10px;
+
+      &:first-child {
+        padding-left: 0px;
+      }
+
+    }
+
+    h2 {
+      margin-top: 40px;
+      margin-bottom: 25px;
+    }
+  }
+
+  &__mid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
