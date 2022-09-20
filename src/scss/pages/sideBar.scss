@@ -96,14 +96,14 @@
   top: 0%;
   left: 18.5%;
   display: none;
-
-  .sideBar__text {
-    &:hover {
-      .sideBarSub {
-        display: flex;
-      }
-    }
-  }
+// Нужно по этому тексту но не робит
+  //.sideBar__text {
+  //  &:hover {
+  //    .sideBarSub {
+  //      display: flex;
+  //    }
+  //  }
+  //}
 
   &__title {
     display: flex;
@@ -114,18 +114,25 @@
     max-height: 150px;
   }
 }
-
-.sideBar__text {
-  &:hover {
-    .sideBarSub {
-      display: flex;
-    }
-  }
-}
+// Нужно по этому тексту но не робит
+//.sideBar__text {
+//  &:hover {
+//    .sideBarSub {
+//      display: flex;
+//    }
+//  }
+//}
 
 .sideBarBlock__sub__nav__bar {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
-
+//Если так то вылазить справа, но нужно не по наведению на блок а на title
+.sideBar {
+  &__hover {
+    .sideBarSub {
+      display: flex;
+    }
+  }
+}
