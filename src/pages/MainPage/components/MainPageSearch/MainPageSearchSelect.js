@@ -1,13 +1,14 @@
 import React from 'react'
 import Select from 'react-select'
+import search from "../../../../components/constants";
 
 const MainPageSearchSelect = () => {
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
+    const options = search.map(item => {
+        return (
+            {value: item.name, label: item.name}
+        )
+    })
 
     return (
         <div className="mainPageSearchSelect">
