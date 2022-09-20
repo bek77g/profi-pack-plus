@@ -5,6 +5,7 @@
   grid-auto-rows: 170px;
   grid-auto-columns: 370px;
   gap: 30px;
+  margin-bottom: 80px;
 
   &__card {
     display: flex;
@@ -20,11 +21,13 @@
         font-size: 23px;
         line-height: 28px;
         color: #2F3035;
+        max-width: 169px;
         padding-bottom: 50px;
       }
 
       &__btn {
         button {
+          margin: auto 0 0 0;
           font-style: normal;
           font-weight: 400;
           font-size: 14px;

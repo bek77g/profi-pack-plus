@@ -11,10 +11,10 @@ const Header = () => {
                 <ul className="header__nav__bar">
                     <li className="header__nav__bar__item">О нас</li>
                     <li className="header__nav__bar__item">Сотрудничество</li>
+                    <li className="header__nav__bar__item">Доставка</li>
                     <li className="header__nav__bar__item">
                         <img src={logo} alt="logo" className="header__img"/>
                     </li>
-                    <li className="header__nav__bar__item">Доставка и оплата</li>
                     <li className="header__nav__bar__item">Контакты</li>
                     <li className="header__nav__bar__item">
                         <img src={favourite} alt="favourite"/>
