@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import SideBar from "./pages/SideBar";
 import CatalogPage from "./pages/CatalogPage/CatalogPage";
 import Footer from "./layout/footer/Footer";
+import CatalogPageProducts from "./pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts";
 
 function App() {
     return (
@@ -16,7 +17,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<MainPage/>}>
                         </Route>
-                        <Route path="catalog" element={<CatalogPage/>}/>
+                        <Route path="/catalog" element={<CatalogPage/>}/>
+                        <Route path="/products" element={<CatalogPageProducts/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>

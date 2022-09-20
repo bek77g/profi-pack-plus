@@ -1,0 +1,126 @@
+.catalogPageProducts {
+  margin-bottom: 40px;
+  &__top {
+    margin-bottom: 50px;
+
+    span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 18px;
+      color: #C4C4C4;
+      padding: 0 10px;
+
+      &:first-child {
+        padding: 0;
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+
+    &__left {
+      &__card {
+        &__top {
+          margin-bottom: 20px;
+
+          span {
+            background: #1C62CD;
+            border-radius: 3px;
+            padding: 13px 24px;
+          }
+        }
+
+        &__mid {
+          img {
+            max-width: 500px;
+            max-height: 375px;
+          }
+        }
+
+        &__bottom {
+          text-align: center;
+
+          p {
+            &:first-child {
+              font-style: normal;
+              font-weight: 400;
+              font-size: 30px;
+              line-height: 36px;
+              color: #000000;
+              opacity: 0.6;
+              padding-bottom: 6px;
+              position: relative;
+
+              &:before {
+                content: "";
+                position: absolute;
+                top: 45%;
+                left: 25%;
+                border: 1px solid #2F3035;
+                width: 50%;
+                transform: rotate(-5.33deg);
+              }
+            }
+
+            &:last-child {
+              font-style: normal;
+              font-weight: 700;
+              font-size: 40px;
+              line-height: 48px;
+              color: #2F3035;
+            }
+          }
+        }
+      }
+    }
+
+    &__right {
+      margin-left: 40px;
+      &__top {
+        &__title {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 30px;
+          line-height: 36px;
+          color: #2F3035;
+          margin-bottom: 10px;
+          max-width: 400px;
+        }
+
+        p {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 15px;
+          line-height: 18px;
+          color: #2F3035;
+          opacity: 0.6;
+          margin-bottom: 20px;
+        }
+      }
+
+      &__mid {
+        margin-bottom: 45px;
+      }
+
+      &__bottom {
+        &__btn {
+          background: #1C62CD;
+          border-radius: 3px;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          text-align: center;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #FFFFFF;
+          border: none;
+          padding: 16px 53px;
+        }
+      }
+    }
+  }
+}
