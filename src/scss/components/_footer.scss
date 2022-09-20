@@ -1,0 +1,111 @@
+.footer {
+  background: #F0F0F4;
+
+  &__container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  &__content {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__messages {
+      &__title {
+        max-width: 232px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        color: #2F3035;
+        padding-bottom: 15px;
+      }
+
+      &__input {
+        input {
+          padding: 8px 66px 8px 12px;
+          border-radius: 0;
+          border: none;
+          outline: none;
+        }
+
+        button {
+          background: #1C62CD;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 11px;
+          line-height: 13px;
+          padding: 14px 16px 14px 16px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #FFFFFF;
+          border-radius: 0;
+          border: none;
+        }
+      }
+    }
+
+    &__info {
+      &__items {
+        &__item {
+          &:first-child {
+            font-weight: 700;
+          }
+
+          padding-bottom: 10px;
+          font-style: normal;
+          font-size: 14px;
+          line-height: 17px;
+          color: #2F3035;
+        }
+      }
+    }
+
+    &__shop {
+      &__items {
+        &__item {
+          &:first-child {
+            font-weight: 700;
+          }
+
+          padding-bottom: 10px;
+          font-style: normal;
+          font-size: 14px;
+          line-height: 17px;
+          color: #2F3035;
+        }
+      }
+    }
+
+    &__app {
+      &__items {
+        display: flex;
+        align-items: center;
+
+        &__item {
+          margin-right: 30px;
+        }
+      }
+    }
+
+    &__sub {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+      color: #48494D;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__item {
+        &__politics {
+          padding-left: 50px;
+        }
+      }
+    }
+  }
+}

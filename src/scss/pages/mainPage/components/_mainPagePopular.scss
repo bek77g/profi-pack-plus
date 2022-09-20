@@ -1,5 +1,20 @@
 .mainPagePopular {
   margin-bottom: 50px;
+
+  .carousel-control-prev-icon {
+    position: relative;
+    left: -40%;
+  }
+
+  .carousel-control-next-icon {
+    position: relative;
+    right: -40%;
+  }
+
+  .carousel-indicators {
+    display: none;
+  }
+
   &__catalog {
     margin-bottom: 30px;
 
@@ -30,7 +45,6 @@
         }
 
         &__descr {
-
           h5 {
             font-style: normal;
             font-weight: 400;
@@ -55,8 +69,16 @@
         &__cart {
           display: flex;
           justify-content: flex-end;
+          align-items: flex-end;
+
+          img {
+            background: #1C62CD;
+            border-radius: 10px 0px 0px 0px;
+            padding: 10px;
+          }
         }
       }
     }
   }
 }
+

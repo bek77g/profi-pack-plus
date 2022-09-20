@@ -16,7 +16,7 @@ const catalog = [
         img: "https://md-eksperiment.org/images/posts/0f60e764-5372-40e6-bb78-19d41fe2b1be.jpeg",
         price: "5000 сом",
         description:
-            "BRP Audio-Premium System"
+            "BRP Audio-Premium System Airflow PFD"
     },
     {
         name: "Хозяйственные товары",

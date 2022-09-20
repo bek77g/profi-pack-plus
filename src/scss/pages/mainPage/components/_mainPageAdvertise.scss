@@ -3,6 +3,30 @@
   grid-template-columns: repeat(5, 1fr);
   //grid-template-rows: 470px;
   gap: 0 20px;
+  margin-bottom: 30px;
+
+  .carousel-control-prev-icon {
+    position: relative;
+    left: -40%;
+  }
+
+  .carousel-control-next-icon {
+    position: relative;
+    right: -40%;
+  }
+
+  .carousel-indicators{
+
+    button{
+      position: relative;
+      bottom: -30px;
+      margin-top: 20px;
+      border-radius: 50%;
+      padding: 10px;
+      width: 0px;
+      height: 0px;
+    }
+  }
 
   &__slider {
     grid-column: span 3;
