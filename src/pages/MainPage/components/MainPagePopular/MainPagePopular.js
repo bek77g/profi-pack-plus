@@ -42,6 +42,11 @@ const MainPagePopular = () => {
                         {newCatalog}
                     </div>
                 </Carousel.Item>
+                <Carousel.Item>
+                    <div className="mainPagePopular__catalog__cards">
+                        {newCatalog}
+                    </div>
+                </Carousel.Item>
             </Carousel>
         </div>
     );
