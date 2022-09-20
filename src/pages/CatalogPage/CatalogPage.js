@@ -1,6 +1,7 @@
 import React from 'react';
 import arr from "../../assets/icons/arr.svg";
 import Form from 'react-bootstrap/Form';
+import CatalogPageCards from "./components/CatalogPageCards/CatalogPageCards";
 
 const CatalogPage = () => {
     return (
@@ -28,6 +29,9 @@ const CatalogPage = () => {
                         <Form.Range/>
                         от 100.000 до 500.000
                     </div>
+                </div>
+                <div className="catalogPage__content__right">
+                    <CatalogPageCards/>
                 </div>
             </div>
         </div>

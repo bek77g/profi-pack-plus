@@ -1,5 +1,12 @@
 .catalogPage {
   &__content {
+    display: flex;
+    justify-content: space-between;
+
+    &__right {
+      margin-left: 10px;
+    }
+
     &__left {
       span {
         font-style: normal;
@@ -43,5 +50,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #2F3035;
+
+    select {
+      padding: 8px 46px 8px 20px;
+    }
   }
 }

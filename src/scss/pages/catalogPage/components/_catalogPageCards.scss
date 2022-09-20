@@ -1,0 +1,73 @@
+.catalogPagePopular {
+  margin-bottom: 50px;
+
+  &__catalogs {
+    margin-bottom: 30px;
+
+    &__cards {
+      border-radius: 3px;
+      display: grid;
+      gap: 20px 30px;
+      grid-template-columns: repeat(4, 220px);
+      grid-auto-rows: 320px;
+      grid-auto-columns: 1fr;
+
+      &__card {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+        padding: 15px;
+        border: 1px solid #CDCDCD;
+
+        &__heart {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        &__img {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 15px;
+
+          img {
+            width: 200px !important;
+            height: 100px;
+          }
+        }
+
+        &__descr {
+          h5 {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
+            color: #2F3035;
+            padding-bottom: 25px;
+            text-align: center;
+          }
+
+          p {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 36px;
+            color: #2F3035;
+            text-align: center;
+          }
+
+        }
+
+        &__cart {
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+
+          img {
+            background: #1C62CD;
+            border-radius: 10px 0px 0px 0px;
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
