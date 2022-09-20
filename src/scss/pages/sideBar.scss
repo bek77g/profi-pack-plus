@@ -58,7 +58,7 @@
       .sideBarSub:hover {
         .sideBarSub {
           transition: all 0.5s ease;
-          display: flex;
+          display: block;
         }
       }
     }
@@ -91,25 +91,20 @@
   min-height: 100vh;
   background: #ffffff;
   box-shadow: 1px 4px 2px rgba(0, 0, 0, 0.4);
-  top: 0%;
-  left: 18.5%;
+  top: 0;
+  left: 250px;
   display: none;
-  // Нужно по этому тексту но не робит
-  //.sideBar__text {
-  //  &:hover {
-  //    .sideBarSub {
-  //      display: flex;
-  //    }
-  //  }
-  //}
 
   &__title {
-    display: flex;
   }
 
   &__img {
     max-width: 150px;
     max-height: 150px;
+  }
+
+  &__text {
+    text-align: center;
   }
 }
 // Нужно по этому тексту но не робит
@@ -125,12 +120,4 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-}
-//Если так то вылазить справа, но нужно не по наведению на блок а на title
-.sideBar {
-  &__hover {
-    .sideBarSub {
-      display: flex;
-    }
-  }
 }

@@ -8,14 +8,15 @@
       border-radius: 3px;
       display: grid;
       gap: 20px 30px;
-      grid-template-columns: repeat(4, 220px);
-      grid-auto-rows: 320px;
+      grid-template-columns: repeat(3, 280px);
       grid-auto-columns: 1fr;
 
       &__card {
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-        padding: 15px;
-        border: 1px solid #CDCDCD;
+        position: relative;
+        height: 100%;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        padding: 15px 15px 66px;
+        border: 1px solid #cdcdcd;
 
         &__heart {
           display: flex;
@@ -39,35 +40,40 @@
             font-weight: 400;
             font-size: 18px;
             line-height: 21px;
-            color: #2F3035;
-            padding-bottom: 25px;
+            color: #2f3035;
             text-align: center;
           }
 
           p {
+            display: inline-block;
             font-style: normal;
             font-weight: 700;
             font-size: 30px;
             line-height: 36px;
-            color: #2F3035;
+            color: #2f3035;
             text-align: center;
           }
-
         }
 
         &__cart {
-          display: flex;
-          justify-content: flex-end;
-          align-items: flex-end;
+          width: calc(100% - 30px);
+          position: absolute;
+          bottom: 15px;
+          right: 15px;
+          text-align: center;
 
-          img {
-            background: #1C62CD;
+          span {
+            float: right;
+            background: #1c62cd;
             border-radius: 10px 0px 0px 0px;
-            padding: 10px;
+            padding: 7px 10px;
+            svg {
+              -webkit-filter: invert(1) contrast(100);
+              filter: invert(1) contrast(100);
+            }
           }
         }
       }
     }
   }
 }
-

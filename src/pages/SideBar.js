@@ -26,18 +26,16 @@ const SideBar = () => {
                   />
                   <p className='sideBar__text alo'>Хозяйственные товары</p>
                   <div className='sideBarSub'>
-                    <div className='sideBarSub__title'>
-                      Хозяйственные товары
-                    </div>
+                    <h3 className='sideBarSub__title'>Хозяйственные товары</h3>
                     <div className='sideBarBlock__sub__nav'>
-                      <ul className='sideBarBlock__sub__nav__bar sideBarSub'>
+                      <ul className='sideBarBlock__sub__nav__bar'>
                         <li className='sideBarBlock__sub__nav__bar__item'>
                           <img
                             src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
                             alt=''
                             className='sideBarSub__img'
                           />
-                          <span className='sideBarSub__text'>Фольга</span>
+                          <p className='sideBarSub__text'>Фольга</p>
                         </li>{' '}
                         <li className='sideBarBlock__sub__nav__bar__item'>
                           <img
