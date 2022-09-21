@@ -85,7 +85,6 @@
   }
 }
 
-
 .sideBarSub {
   padding: 20px;
   position: fixed;
@@ -96,7 +95,7 @@
   top: 0%;
   left: 18.5%;
   display: none;
-// Нужно по этому тексту но не робит
+  // Нужно по этому тексту но не робит
   //.sideBar__text {
   //  &:hover {
   //    .sideBarSub {
@@ -114,6 +113,7 @@
     max-height: 150px;
   }
 }
+
 // Нужно по этому тексту но не робит
 //.sideBar__text {
 //  &:hover {
@@ -128,6 +128,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
 //Если так то вылазить справа, но нужно не по наведению на блок а на title
 .sideBar {
   &__hover {
