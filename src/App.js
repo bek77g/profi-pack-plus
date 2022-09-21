@@ -11,16 +11,18 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <SideBar />
         <div className='container'>
-          <Header />
-          <SideBar />
-          <Routes>
-            <Route path='/' element={<MainPage />}></Route>
-            <Route path='/catalog' element={<CatalogPage />} />
-            <Route path='/products' element={<CatalogPageProducts />} />
-          </Routes>
+          <div className='pageContent__view'>
+            <Header />
+            <Routes>
+              <Route path='/' element={<MainPage />}></Route>
+              <Route path='/catalog' element={<CatalogPage />} />
+              <Route path='/products' element={<CatalogPageProducts />} />
+            </Routes>
+            <Footer />
+          </div>
         </div>
-        <Footer />
       </BrowserRouter>
     </>
 
