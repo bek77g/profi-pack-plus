@@ -16,6 +16,9 @@
     padding: 15px;
 
     &__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       &__title {
         font-style: normal;
         font-weight: 700;

@@ -8,7 +8,7 @@
       font-weight: 400;
       font-size: 15px;
       line-height: 18px;
-      color: #C4C4C4;
+      color: #c4c4c4;
       padding: 0 10px;
 
       &:first-child {
@@ -27,9 +27,10 @@
           margin-bottom: 20px;
 
           span {
-            background: #1C62CD;
+            background: #1c62cd;
             border-radius: 3px;
             padding: 13px 24px;
+            color: #ffffff;
           }
         }
 
@@ -55,11 +56,11 @@
               position: relative;
 
               &:before {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 45%;
                 left: 25%;
-                border: 1px solid #2F3035;
+                border: 1px solid #2f3035;
                 width: 50%;
                 transform: rotate(-5.33deg);
               }
@@ -70,7 +71,7 @@
               font-weight: 700;
               font-size: 40px;
               line-height: 48px;
-              color: #2F3035;
+              color: #2f3035;
             }
           }
         }
@@ -85,7 +86,7 @@
           font-weight: 700;
           font-size: 30px;
           line-height: 36px;
-          color: #2F3035;
+          color: #2f3035;
           margin-bottom: 10px;
           max-width: 400px;
         }
@@ -95,7 +96,7 @@
           font-weight: 400;
           font-size: 15px;
           line-height: 18px;
-          color: #2F3035;
+          color: #2f3035;
           opacity: 0.6;
           margin-bottom: 20px;
         }
@@ -107,7 +108,7 @@
 
       &__bottom {
         &__btn {
-          background: #1C62CD;
+          background: #1c62cd;
           border-radius: 3px;
           font-style: normal;
           font-weight: 400;
@@ -116,7 +117,7 @@
           text-align: center;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #FFFFFF;
+          color: #ffffff;
           border: none;
           padding: 16px 53px;
         }
