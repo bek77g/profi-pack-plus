@@ -28,6 +28,11 @@
         position: relative;
         padding: 15px 15px 60px;
         border: 1px solid #cdcdcd;
+        transition: all 0.3s ease;
+        &:hover {
+          transition: all 0.3s ease;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
 
         &__heart {
           display: flex;
