@@ -1,4 +1,7 @@
 .pageContent {
   display: flex;
   position: relative;
+  &__view {
+    display: block;
+  }
 }

@@ -7,28 +7,41 @@
   }
 
   &__cart {
-    background: #1C62CD;
+    background: #1c62cd;
     padding: 4px 8px;
     border-radius: 50%;
     font-style: normal;
     font-weight: 500;
     font-size: 10px;
     line-height: 12px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
     &__bar {
+      width: 100%;
       display: flex;
       justify-content: space-between;
+      padding: 0 40px;
       align-items: center;
-
+      &-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 100px;
+      }
       &__item {
         font-style: normal;
         font-weight: 700;
         font-size: 20px;
         line-height: 24px;
-        color: #2F3035;
+        color: #2f3035;
+        cursor: pointer;
       }
     }
   }

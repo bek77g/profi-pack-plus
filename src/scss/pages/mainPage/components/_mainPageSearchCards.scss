@@ -10,31 +10,34 @@
   &__card {
     display: flex;
     justify-content: space-between;
-    border: 1px solid #CDCDCD;
+    border: 1px solid #cdcdcd;
+    background-color: #fff;
     border-radius: 3px;
     padding: 15px;
 
     &__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       &__title {
         font-style: normal;
         font-weight: 700;
         font-size: 23px;
         line-height: 28px;
-        color: #2F3035;
+        color: #2f3035;
         max-width: 169px;
         padding-bottom: 50px;
       }
 
       &__btn {
-        button {
+        a {
           margin: auto 0 0 0;
           font-style: normal;
           font-weight: 400;
           font-size: 14px;
           line-height: 17px;
-          color: #C4C4C4;
-          cursor: pointer;
-          background: #FFFFFF;
+          color: #c4c4c4;
+          background: #ffffff;
           border: none;
         }
       }

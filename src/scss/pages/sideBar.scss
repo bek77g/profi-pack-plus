@@ -1,26 +1,36 @@
 .sideBar {
-  position: fixed;
-  left: 0;
+  min-width: 100px;
+  height: 100vh;
+  position: relative;
   top: 0;
-  z-index: 999;
-  border-right: 1px solid #e7e7e7;
-  background-color: #fff;
-  width: 8.8%;
-  min-height: 100vh;
-
+  left: 0;
+  bottom: 0;
+  &__pos {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    max-width: 250px;
+    overflow: hidden;
+    border-right: 1px solid #e7e7e7;
+    background-color: #fff;
+    width: 100px;
+    transition: 0.3s;
+    min-height: 100vh;
+  }
   &__wrapper {
     padding-top: 70px;
   }
 
   aside {
-    padding: 20px;
+    padding: 20px 0 20px 20px;
   }
 
   &__content {
     &__burger {
       display: flex;
+      padding-left: 15px;
       align-items: center;
-      justify-content: center;
 
       &__left {
         span {
@@ -32,7 +42,8 @@
       }
 
       &__right {
-        display: none;
+        display: flex;
+        padding-left: 35px;
       }
     }
   }
@@ -44,38 +55,31 @@
     align-items: center;
     padding-top: 20px;
     position: relative;
-    top: 0;
-    left: 0;
 
     &__items {
+      width: 100%;
       display: flex;
       align-items: center;
-      padding-left: 10px;
       //border-right: 1px solid #e7e7e7;
+      &:hover,
+      .sideBarSub:hover {
+        .sideBarSub {
+          transition: all 0.5s ease;
+          display: block;
+        }
+      }
     }
   }
 
   &__text {
-    display: none;
+    display: flex;
+    margin-left: 20px;
   }
 
-  &:hover {
-    width: 250px;
-
-    .sideBar__right {
-      display: flex;
-      padding-left: 20px;
-    }
-
+  &__pos:hover {
+    width: 100%;
     .sideBar__text {
-      display: flex;
-      padding-left: 20px;
-
-      &:hover {
-        .sideBarSub {
-          display: flex;
-        }
-      }
+      cursor: pointer;
     }
   }
 
@@ -86,34 +90,30 @@
 }
 
 .sideBarSub {
+  transition: all 0.5s ease;
   padding: 20px;
   position: fixed;
-  width: 35%;
+  max-width: 450px;
+  width: 100%;
   min-height: 100vh;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 1px 4px 2px rgba(0, 0, 0, 0.4);
-  top: 0%;
-  left: 18.5%;
+  top: 0;
+  left: 250px;
   display: none;
-  // Нужно по этому тексту но не робит
-  //.sideBar__text {
-  //  &:hover {
-  //    .sideBarSub {
-  //      display: flex;
-  //    }
-  //  }
-  //}
 
   &__title {
-    display: flex;
   }
 
   &__img {
     max-width: 150px;
     max-height: 150px;
   }
-}
 
+  &__text {
+    text-align: center;
+  }
+}
 // Нужно по этому тексту но не робит
 //.sideBar__text {
 //  &:hover {
@@ -127,13 +127,4 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-}
-
-//Если так то вылазить справа, но нужно не по наведению на блок а на title
-.sideBar {
-  &__hover {
-    .sideBarSub {
-      display: flex;
-    }
-  }
 }

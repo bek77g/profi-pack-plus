@@ -15,7 +15,7 @@
         line-height: 19px;
         letter-spacing: 0.09em;
         text-transform: uppercase;
-        color: #2F3035;
+        color: #2f3035;
       }
 
       &__price {
@@ -25,19 +25,17 @@
   }
 
   &__top {
-
     span {
       font-style: normal;
       font-weight: 400;
       font-size: 15px;
       line-height: 18px;
-      color: #C4C4C4;
+      color: #c4c4c4;
       padding-left: 10px;
 
       &:first-child {
         padding-left: 0px;
       }
-
     }
 
     h2 {
@@ -55,9 +53,12 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #2F3035;
+    color: #2f3035;
 
     select {
+      background: #fff;
+      outline: none;
+      border: 1px solid #cdcdcd;
       padding: 8px 46px 8px 20px;
     }
   }
