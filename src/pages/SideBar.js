@@ -25,7 +25,7 @@ const SideBar = () => {
                       alt=''
                       className='sideBar__img'
                     />
-                    <p className='sideBar__text alo'>Хозяйственные товары</p>
+                    <p className='sideBar__text'>Хозяйственные товары</p>
                     <div className='sideBarSub'>
                       <h3 className='sideBarSub__title'>
                         Хозяйственные товары
