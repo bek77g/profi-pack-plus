@@ -8,6 +8,7 @@ import Footer from './layout/footer/Footer';
 import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
 import Contacts from "./pages/ContactsPage/Contacts";
 import About from "./pages/About/About";
+import Partnership from "./pages/Partnership/Partnership";
 
 function App() {
     return (
@@ -21,8 +22,9 @@ function App() {
                             <Route path='/' element={<MainPage/>}></Route>
                             <Route path='/catalog' element={<CatalogPage/>}/>
                             <Route path='/products' element={<CatalogPageProducts/>}/>
-                            <Route path='/contacts' element={<Contacts/>}/>
                             <Route path='/about' element={<About/>}/>
+                            <Route path='/partnership' element={<Partnership/>}/>
+                            <Route path='/contacts' element={<Contacts/>}/>
                         </Routes>
                         <Footer/>
                     </div>

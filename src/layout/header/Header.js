@@ -19,7 +19,11 @@ const Header = () => {
                             О нас
                         </Link>
                     </li>
-                    <li className='header__nav__bar__item'>Сотрудничество</li>
+                    <li className='header__nav__bar__item'>
+                        <Link to="/partnership">
+                            Сотрудничество
+                        </Link>
+                    </li>
                     <li className='header__nav__bar__item'>Доставка</li>
                     <li className='header__nav__bar__item'>
                         <Link to="/contacts">

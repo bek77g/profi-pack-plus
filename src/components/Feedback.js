@@ -7,23 +7,24 @@ const Feedback = () => {
                 <div className="contacts__content__left__name mb-3">
                     <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Имя</label>
                     <input type="email" className="form-control" id="exampleFormControlInput1"
-                           placeholder="name@example.com"/>
+                           placeholder="Имя"/>
                 </div>
                 <div className="contacts__content__left__surname mb-3">
                     <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Фамилие</label>
                     <input type="email" className="form-control" id="exampleFormControlInput1"
-                           placeholder="name@example.com"/>
+                           placeholder="Фамилие"/>
                 </div>
                 <div className="contacts__content__left__tel mb-3">
                     <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Номер
                         телефона</label>
                     <input type="email" className="form-control" id="exampleFormControlInput1"
-                           placeholder="name@example.com"/>
+                           placeholder="Номер
+                        телефона"/>
                 </div>
                 <div className="contacts__content__left__email mb-3">
                     <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Email адрес</label>
                     <input type="email" className="form-control" id="exampleFormControlInput1"
-                           placeholder="name@example.com"/>
+                           placeholder="Email@example.com"/>
                 </div>
                 <div className="contacts__content__left__message">
                     <label htmlFor="exampleFormControlTextarea1" className="form-label mb-2">Ваше
