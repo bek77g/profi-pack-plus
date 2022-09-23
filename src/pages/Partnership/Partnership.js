@@ -1,9 +1,18 @@
 import React from 'react';
 import Feedback from "../../components/Feedback";
+import {HandySvg} from "handy-svg";
+import arr from "../../assets/icons/arr.svg";
 
 const Partnership = () => {
     return (
         <div className="partnership">
+            <div className="partnership__top">
+                <span>Главная</span>
+                <span>
+                    <HandySvg src={arr} width="6" height="9"/>
+                </span>
+                <span>Сотрудничество</span>
+            </div>
             <div className="partnership__title">
                 <h2>Корпоративным клиентам</h2>
             </div>

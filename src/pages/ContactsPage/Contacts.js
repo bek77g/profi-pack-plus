@@ -4,12 +4,20 @@ import tel from "../../assets/icons/tel.svg";
 import work from "../../assets/icons/work.svg";
 import email from "../../assets/icons/email.svg";
 import {HandySvg} from "handy-svg";
+import arr from "../../assets/icons/arr.svg";
 
 const Contacts = () => {
     return (
         <div className="contacts">
             <div className="contacts__content">
                 <div className="container">
+                    <div className="contacts__top">
+                        <span>Главная</span>
+                        <span>
+                            <HandySvg src={arr} width="6" height="9"/>
+                        </span>
+                        <span>Контакты</span>
+                    </div>
                     <div className="row">
                         <div className="col">
                             <div className="contacts__content__left">

@@ -9,6 +9,7 @@ import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProdu
 import Contacts from "./pages/ContactsPage/Contacts";
 import About from "./pages/About/About";
 import Partnership from "./pages/Partnership/Partnership";
+import Order from "./pages/Order/Order";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                             <Route path='/products' element={<CatalogPageProducts/>}/>
                             <Route path='/about' element={<About/>}/>
                             <Route path='/partnership' element={<Partnership/>}/>
+                            <Route path='/order' element={<Order/>}/>
                             <Route path='/contacts' element={<Contacts/>}/>
                         </Routes>
                         <Footer/>

@@ -24,7 +24,11 @@ const Header = () => {
                             Сотрудничество
                         </Link>
                     </li>
-                    <li className='header__nav__bar__item'>Доставка</li>
+                    <li className='header__nav__bar__item'>
+                        <Link to="/order">
+                            Доставка
+                        </Link>
+                    </li>
                     <li className='header__nav__bar__item'>
                         <Link to="/contacts">
                             Контакты

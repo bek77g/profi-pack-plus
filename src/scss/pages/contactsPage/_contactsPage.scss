@@ -1,4 +1,17 @@
 .contacts {
+  &__top {
+    margin-bottom: 20px;
+
+    span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 18px;
+      color: #C4C4C4;
+      margin-right: 10px;
+    }
+  }
+
   margin-bottom: 50px;
 
   &__content {

@@ -1,4 +1,17 @@
 .partnership {
+  &__top {
+    margin-bottom: 20px;
+
+    span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 18px;
+      color: #C4C4C4;
+      margin-right: 10px;
+    }
+  }
+
   &__title {
     h2 {
       font-style: normal;
@@ -12,6 +25,7 @@
 
   &__text {
     margin-bottom: 20px;
+
     p {
       font-style: normal;
       font-weight: 400;
@@ -21,7 +35,8 @@
       margin-bottom: 20px;
     }
   }
-  &__feedback{
+
+  &__feedback {
     margin-bottom: 30px;
   }
 }
