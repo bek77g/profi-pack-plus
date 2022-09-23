@@ -7,6 +7,7 @@ import CatalogPage from './pages/CatalogPage/CatalogPage';
 import Footer from './layout/footer/Footer';
 import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
 import Contacts from "./pages/ContactsPage/Contacts";
+import About from "./pages/About/About";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                             <Route path='/catalog' element={<CatalogPage/>}/>
                             <Route path='/products' element={<CatalogPageProducts/>}/>
                             <Route path='/contacts' element={<Contacts/>}/>
+                            <Route path='/about' element={<About/>}/>
                         </Routes>
                         <Footer/>
                     </div>

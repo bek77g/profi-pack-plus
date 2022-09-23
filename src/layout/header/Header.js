@@ -14,7 +14,11 @@ const Header = () => {
                     </Link>
                 </h1>
                 <ul className='header__nav__bar'>
-                    <li className='header__nav__bar__item'>О нас</li>
+                    <li className='header__nav__bar__item'>
+                        <Link to="/about">
+                            О нас
+                        </Link>
+                    </li>
                     <li className='header__nav__bar__item'>Сотрудничество</li>
                     <li className='header__nav__bar__item'>Доставка</li>
                     <li className='header__nav__bar__item'>
