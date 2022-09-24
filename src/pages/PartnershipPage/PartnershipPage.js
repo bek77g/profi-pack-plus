@@ -3,7 +3,7 @@ import Feedback from "../../components/Feedback";
 import {HandySvg} from "handy-svg";
 import arr from "../../assets/icons/arr.svg";
 
-const Partnership = () => {
+const PartnershipPage = () => {
     return (
         <div className="partnership">
             <div className="partnership__top">
@@ -46,4 +46,4 @@ const Partnership = () => {
     );
 };
 
-export default Partnership;
+export default PartnershipPage;

@@ -2,7 +2,7 @@ import React from 'react';
 import arr from "../../assets/icons/arr.svg";
 import {HandySvg} from "handy-svg";
 
-const About = () => {
+const AboutPage = () => {
     return (
         <div className="about">
             <div className="about__top">
@@ -44,4 +44,4 @@ const About = () => {
     );
 };
 
-export default About;
+export default AboutPage;

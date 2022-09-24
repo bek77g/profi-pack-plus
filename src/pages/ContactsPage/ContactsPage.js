@@ -6,7 +6,7 @@ import email from "../../assets/icons/email.svg";
 import {HandySvg} from "handy-svg";
 import arr from "../../assets/icons/arr.svg";
 
-const Contacts = () => {
+const ContactsPage = () => {
     return (
         <div className="contacts">
             <div className="contacts__content">
@@ -78,4 +78,4 @@ const Contacts = () => {
     );
 };
 
-export default Contacts;
+export default ContactsPage;

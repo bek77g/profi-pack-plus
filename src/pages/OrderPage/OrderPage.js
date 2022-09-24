@@ -2,7 +2,7 @@ import React from 'react';
 import {HandySvg} from "handy-svg";
 import arr from "../../assets/icons/arr.svg";
 
-const Order = () => {
+const OrderPage = () => {
     return (
         <div className="order">
             <div className="order__top">
@@ -64,4 +64,4 @@ const Order = () => {
     );
 };
 
-export default Order;
+export default OrderPage;

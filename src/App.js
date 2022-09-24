@@ -6,10 +6,10 @@ import SideBar from './pages/SideBar';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import Footer from './layout/footer/Footer';
 import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
-import Contacts from "./pages/ContactsPage/Contacts";
-import About from "./pages/About/About";
-import Partnership from "./pages/Partnership/Partnership";
-import Order from "./pages/Order/Order";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import PartnershipPage from "./pages/PartnershipPage/PartnershipPage";
+import OrderPage from "./pages/OrderPage/OrderPage";
 
 function App() {
     return (
@@ -23,10 +23,10 @@ function App() {
                             <Route path='/' element={<MainPage/>}></Route>
                             <Route path='/catalog' element={<CatalogPage/>}/>
                             <Route path='/products' element={<CatalogPageProducts/>}/>
-                            <Route path='/about' element={<About/>}/>
-                            <Route path='/partnership' element={<Partnership/>}/>
-                            <Route path='/order' element={<Order/>}/>
-                            <Route path='/contacts' element={<Contacts/>}/>
+                            <Route path='/about' element={<AboutPage/>}/>
+                            <Route path='/partnership' element={<PartnershipPage/>}/>
+                            <Route path='/order' element={<OrderPage/>}/>
+                            <Route path='/contacts' element={<ContactsPage/>}/>
                         </Routes>
                         <Footer/>
                     </div>
