@@ -32,6 +32,9 @@ const Feedback = () => {
                     <textarea className="form-control" id="exampleFormControlTextarea1"
                               rows="3"></textarea>
                 </div>
+                <div className="contacts__content__left__btn mt-3">
+                    <button type="button" className="btn btn-primary">Отправить</button>
+                </div>
             </div>
         </div>
     );
