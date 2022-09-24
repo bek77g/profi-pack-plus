@@ -14,6 +14,8 @@
 @import "./pages/mainPage/components/mainPagePopular";
 @import "./pages/catalogPage/components/catalogPageCards";
 @import "./pages/catalogPage/components/catalogPageProducts";
+@import "pages/cartPage/components/cartPageEmpty";
+@import "pages/cartPage/components/cartPageProducts";
 //pages components
 
 // pages
@@ -25,6 +27,7 @@
 @import "pages/aboutPage/aboutPage";
 @import "pages/partnershipPage/partnershipPage";
 @import "pages/orderPage/orderPage";
+@import "pages/cartPage/cartPage";
 // pages
 
 @import "global";

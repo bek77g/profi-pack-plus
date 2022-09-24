@@ -2,7 +2,7 @@ import './scss/style.scss';
 import Header from './layout/header/Header';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage/MainPage';
-import SideBar from './pages/SideBar';
+import SideBarPage from './pages/SideBarPage';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import Footer from './layout/footer/Footer';
 import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
@@ -10,12 +10,13 @@ import ContactsPage from "./pages/ContactsPage/ContactsPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import PartnershipPage from "./pages/PartnershipPage/PartnershipPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
+import CartPage from "./pages/CartPage/CartPage";
 
 function App() {
     return (
         <>
             <BrowserRouter>
-                <SideBar/>
+                <SideBarPage/>
                 <div className='container'>
                     <div className='pageContent__view'>
                         <Header/>
@@ -27,6 +28,7 @@ function App() {
                             <Route path='/partnership' element={<PartnershipPage/>}/>
                             <Route path='/order' element={<OrderPage/>}/>
                             <Route path='/contacts' element={<ContactsPage/>}/>
+                            <Route path='/cart' element={<CartPage/>}/>
                         </Routes>
                         <Footer/>
                     </div>

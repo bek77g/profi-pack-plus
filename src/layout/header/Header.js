@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import logo from '../../assets/img/logo.jpg';
 import favourite from '../../assets/icons/favourite.svg';
 import cart from '../../assets/icons/cart.svg';
+import {HandySvg} from "handy-svg";
 
 const Header = () => {
     return (
@@ -40,8 +41,10 @@ const Header = () => {
                         <img src={favourite} alt='favourite'/>
                     </li>
                     <li className='header__nav__bar__item'>
-                        <img src={cart} alt='cart'/>
-                        <span className='header__cart'>1</span>
+                        <Link to="/cart">
+                            <HandySvg src={cart} width="30" height="23" alt='cart'/>
+                            <span className='header__cart'>1</span>
+                        </Link>
                     </li>
                 </ul>
             </nav>

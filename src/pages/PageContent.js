@@ -1,12 +1,12 @@
 import React from 'react';
-import SideBar from "./SideBar";
+import SideBarPage from "./SideBarPage";
 import MainPage from "./MainPage/MainPage";
 
 const PageContent = () => {
     return (
         <div className="pageContent">
             <div className="pageContent__right">
-                <SideBar/>
+                <SideBarPage/>
             </div>
             <div className="pageContents__left">
                 <MainPage/>
