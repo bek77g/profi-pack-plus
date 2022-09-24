@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SideBar = () => {
+const SideBarPage = () => {
   return (
     <div className='sideBar'>
       <div className='sideBar__pos'>
@@ -62,4 +62,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default SideBarPage;
