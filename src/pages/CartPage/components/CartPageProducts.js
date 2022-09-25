@@ -70,11 +70,12 @@ const CartPageProducts = () => {
                         </Link>
                     </div>
                     <div className="column">
-                        <button type="button" className="btn btn-primary">Оформить заказ</button>
+                        <Link to="/checkout">
+                            <button type="button" className="btn btn-primary">Оформить заказ</button>
+                        </Link>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
