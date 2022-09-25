@@ -37,9 +37,9 @@ const Header = () => {
                     </li>
                 </ul>
                 <ul className='header__nav__bar-right'>
-                    <li className='header__nav__bar__item'>
-                        <img src={favourite} alt='favourite'/>
-                    </li>
+                    <Link to="/favourite">
+                        <HandySvg src={favourite} width="30" height="23" alt='cart'/>
+                    </Link>
                     <li className='header__nav__bar__item'>
                         <Link to="/cart">
                             <HandySvg src={cart} width="30" height="23" alt='cart'/>
