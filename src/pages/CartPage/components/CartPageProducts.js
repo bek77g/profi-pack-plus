@@ -48,7 +48,7 @@ const CartPageProducts = () => {
                             <th className="text-center">Цена</th>
                             <th className="text-center">Общая цена</th>
                             <th className="text-center">
-                                <button type="button" className="btn btn-outline-danger">Очистить карту</button>
+                                <button type="button" className="btn btn-outline-danger">Очистить</button>
                             </th>
                         </tr>
                         </thead>

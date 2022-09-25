@@ -1,10 +1,6 @@
 .sideBar {
   min-width: 100px;
-  height: 100vh;
-  position: relative;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  height: auto;
 
   &__pos {
     position: fixed;
@@ -12,30 +8,33 @@
     top: 0;
     z-index: 999;
     max-width: 250px;
-    overflow: hidden;
     border-right: 1px solid #e7e7e7;
     background-color: #fff;
     width: 100px;
-    transition: 0.3s;
-    min-height: 100vh;
-  }
-
-  &__wrapper {
+    overflow: hidden;
     padding-top: 70px;
+    transition: 0.3s;
+    height: 100vh;
   }
 
   aside {
     padding: 20px 0 20px 20px;
   }
-
+  &__wrapper {
+    height: calc(100vh - 94px);
+    overflow-y: hidden;
+    direction: rtl;
+  }
   &__content {
+    direction: ltr;
     &__burger {
       display: flex;
-      padding-left: 15px;
+      padding-left: 35px;
       align-items: center;
 
       &__left {
         span {
+          transition: 0.3s ease;
           display: block;
           border: 1px solid black;
           width: 30px;
@@ -69,10 +68,13 @@
     //}
 
     &__items {
+      position: relative;
       width: 100%;
       display: flex;
       align-items: center;
-      //border-right: 1px solid #e7e7e7;
+      &:hover {
+        border-right: 2px solid #0302fb;
+      }
       &:hover,
       .sideBarSub:hover {
         .sideBarSub {
@@ -89,21 +91,32 @@
   }
 
   &__pos:hover {
-    //.sideBar__content__burger__left {
-    //  span {
-    //    &:first-child {
-    //      transform: translateX(0%) translateY(-50%) rotate(45deg);
-    //    }
-    //
-    //    &:nth-last-child(2) {
-    //      display: none;
-    //    }
-    //
-    //    &:last-child {
-    //      transform: translateX(0%) translateY(-50%) rotate(-45deg);
-    //    }
-    //  }
-    //}
+    .sideBar__wrapper {
+      overflow-y: scroll;
+    }
+    .sideBar__content__burger__left {
+      span {
+        position: relative;
+        transition: 0.3s ease;
+        &:first-child {
+          transition: 0.3s ease;
+          position: absolute;
+          transform: translateX(0%) translateY(-50%) rotate(45deg);
+        }
+
+        &:nth-last-child(2) {
+          transition: 0.3s ease;
+          opacity: 0;
+          transform: translateX(-100%);
+        }
+
+        &:last-child {
+          position: absolute;
+          transition: 0.3s ease;
+          transform: translateX(0%) translateY(-450%) rotate(-45deg);
+        }
+      }
+    }
 
     width: 100%;
 
@@ -158,5 +171,3 @@
   justify-content: space-around;
   flex-wrap: wrap;
 }
-
-
