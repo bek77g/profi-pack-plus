@@ -34,7 +34,7 @@ const CatalogPageCards = () => {
                     </div>
                     <div className="catalogPagePopular__catalogs__cards__card__quantity">
                         <button type="button" className="btn btn-info">+</button>
-                        <input type="number" className="form-control form-control-color" defaultValue={1}/>
+                        <input type="text" className="form-control form-control-color" defaultValue={1}/>
                         <button type="button" className="btn btn-info">-</button>
                     </div>
                 </div>

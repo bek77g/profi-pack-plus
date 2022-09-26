@@ -3,6 +3,7 @@ import MainPageAdvertise from './components/MainPageAdvertise/MainPageAdvertise'
 import MainPageSearch from './components/MainPageSearch/MainPageSearch';
 import MainPagePopular from './components/MainPagePopular/MainPagePopular';
 import { Helmet } from 'react-helmet';
+import MainPageSearchSelect from './components/MainPageSearch/MainPageSearchSelect';
 
 const MainPage = () => {
   return (
@@ -37,6 +38,7 @@ const MainPage = () => {
         <meta property='twitter:card' content={MAIN_IMAGE_URL} /> */}
       </Helmet>
       <div className='mainPage'>
+        <MainPageSearchSelect />
         <MainPageAdvertise />
         <MainPageSearch />
         <MainPagePopular />

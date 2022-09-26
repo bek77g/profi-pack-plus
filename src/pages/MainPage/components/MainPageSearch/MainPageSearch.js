@@ -1,14 +1,8 @@
 import React from 'react';
-import MainPageSearchSelect from "./MainPageSearchSelect";
-import MainPageSearchCards from "./MainPageSearchCards";
+import MainPageSearchCards from './MainPageSearchCards';
 
 const MainPageSearch = () => {
-    return (
-        <div>
-            <MainPageSearchSelect/>
-            <MainPageSearchCards/>
-        </div>
-    );
+  return <MainPageSearchCards />;
 };
 
 export default MainPageSearch;
