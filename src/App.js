@@ -23,7 +23,7 @@ function App() {
                     <div className='pageContent__view'>
                         <Header/>
                         <Routes>
-                            <Route path='/' element={<MainPage/>}></Route>
+                            {/*<Route path='/' element={<MainPage/>}></Route>*/}
                             <Route path='/catalog' element={<CatalogPage/>}/>
                             <Route path='/products' element={<CatalogPageProducts/>}/>
                             <Route path='/about' element={<AboutPage/>}/>

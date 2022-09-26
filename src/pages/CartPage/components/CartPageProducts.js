@@ -20,8 +20,10 @@ const CartPageProducts = () => {
                         </div>
                     </td>
                     <td className="text-center">
-                        <div className="count-input">
-                            <input type="number" className="form-control text-center" defaultValue={1}/>
+                        <div className="d-flex justify-content-center align-items-center">
+                            <button type="button" className="btn btn-info">+</button>
+                            <input type="number" className="form-control form-control-color" defaultValue={1}/>
+                            <button type="button" className="btn btn-info">-</button>
                         </div>
                     </td>
                     <td className="text-center text-lg text-medium">2800</td>

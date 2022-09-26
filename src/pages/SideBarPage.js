@@ -2,7 +2,7 @@ import React from 'react';
 
 const SideBarPage = () => {
   return (
-    <div className='sideBar'>
+    <div className='sideBar d-none'>
       <div className='sideBar__pos'>
         <div className='sideBar__content__burger'>
           <div className='sideBar__content__burger__left'>

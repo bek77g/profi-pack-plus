@@ -14,6 +14,8 @@
     justify-content: space-between;
 
     &__messages {
+      padding: 0 10px 10px 10px;
+
       &__title {
         max-width: 232px;
         font-style: normal;
@@ -49,6 +51,8 @@
     }
 
     &__info {
+      padding: 0 10px 10px 10px;
+
       &__items {
         &__item {
           &:first-child {
@@ -65,6 +69,8 @@
     }
 
     &__shop {
+      padding: 0 10px 10px 10px;
+
       &__items {
         &__item {
           &:first-child {
@@ -81,6 +87,8 @@
     }
 
     &__app {
+      padding: 0 10px 10px 10px;
+
       &__items {
         display: flex;
         align-items: center;
@@ -92,6 +100,7 @@
     }
 
     &__sub {
+      padding: 0 30px;
       font-style: normal;
       font-weight: 400;
       font-size: 10px;
@@ -106,6 +115,27 @@
           padding-left: 50px;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .footer__content {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  .footer__content {
+    display: block;
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 353px) {
+  .footer__content__messages__input {
+    input {
+      padding: 8px 23px 8px 12px;
     }
   }
 }

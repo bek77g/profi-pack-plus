@@ -17,6 +17,7 @@
         padding: 15px 15px 66px;
         border: 1px solid #cdcdcd;
         transition: all 0.3s ease;
+
         &:hover {
           transition: all 0.3s ease;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -71,10 +72,23 @@
             background: #1c62cd;
             border-radius: 10px 0px 0px 0px;
             padding: 7px 10px;
+
             svg {
               -webkit-filter: invert(1) contrast(100);
               filter: invert(1) contrast(100);
             }
+          }
+        }
+
+        &__quantity {
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          input {
+            margin: 0 10px;
+            text-align: center;
           }
         }
       }

@@ -1,6 +1,22 @@
 .header {
   margin-bottom: 45px;
 
+  &__info {
+    display: flex;
+  }
+
+  &__burger {
+    display: none;
+
+    span {
+      width: 30px;
+      height: 2px;
+      display: block;
+      margin-bottom: 5px;
+      border: 1px solid black;
+    }
+  }
+
   &__img {
     width: 80px;
     height: 76px;
@@ -22,20 +38,19 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 30px;
+    //gap: 30px;
+
     &__bar {
-      width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 40px;
       align-items: center;
-      &-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-width: 100px;
-      }
+
       &__item {
+        &__last {
+          margin-right: 0;
+        }
+
+        margin-right: 40px;
         font-style: normal;
         font-weight: 700;
         font-size: 20px;
@@ -44,5 +59,102 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .header__nav__bar__item {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 835px) {
+  .header__nav__bar__item {
+    margin-right: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header__nav__bar__item {
+    margin-bottom: 30px;
+  }
+
+  .header__burger {
+    display: block;
+    position: fixed;
+    top: 8%;
+    left: 5%;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .header__nav__bar {
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0%;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    background-color: aqua;
+    transition: left 1s;
+  }
+  .header__blockImg {
+    img {
+      width: 60px;
+      height: 56px;
+    }
+
+    position: relative;
+    top: 10px;
+    left: 45%;
+    z-index: 11;
+  }
+
+  .header__info {
+    position: fixed;
+    top: 7%;
+    left: 80%;
+  }
+}
+
+.left {
+  left: -100%;
+}
+
+.close {
+  span {
+
+    &:first-child {
+      display: none;
+    }
+
+    &:nth-last-child(2) {
+      transform: rotate(45deg);
+    }
+
+    &:last-child {
+      transform: translateY(-345%) rotate(-45deg);
+    }
+  }
+}
+
+
+@media screen and (max-width: 566px) {
+  .header__info {
+    top: 7%;
+    left: 70%;
+  }
+  .header__blockImg {
+    left: 15%;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .header__info {
+    top: 7%;
+    left: 65%;
   }
 }
