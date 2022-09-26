@@ -1,5 +1,6 @@
 .catalogPageProducts {
   margin-bottom: 40px;
+
   &__top {
     margin-bottom: 50px;
 
@@ -80,6 +81,7 @@
 
     &__right {
       margin-left: 40px;
+
       &__top {
         &__title {
           font-style: normal;
@@ -123,5 +125,27 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .catalogPageProducts__content {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .catalogPageProducts__content__left__card__mid {
+    img {
+      max-width: 350px;
+      max-height: 275px;
+    }
+  }
+  .catalogPageProducts__content {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .catalogPageProducts__content__left__card__bottom {
+    font-size: 15px;
   }
 }

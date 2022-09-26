@@ -1,7 +1,7 @@
 .catalogPage {
   &__content {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
 
     &__right {
       margin-left: 10px;
@@ -61,5 +61,18 @@
       border: 1px solid #cdcdcd;
       padding: 8px 46px 8px 20px;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .catalogPage__content {
+    flex-wrap: wrap;
+  }
+  .catalogPage__content__right {
+    padding-top: 50px;
+    margin: 0 auto;
+  }
+  .catalogPage__mid {
+    justify-content: flex-start;
   }
 }

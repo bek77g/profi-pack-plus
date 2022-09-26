@@ -21,7 +21,7 @@ const catalog = [
     {
         name: "Хозяйственные товары",
         img: "https://md-eksperiment.org/images/posts/0f60e764-5372-40e6-bb78-19d41fe2b1be.jpeg",
-        price: "35000 сом",
+        price: "3500 сом",
         description: "Водонепроницаемый Рюкзак"
     },
     // {

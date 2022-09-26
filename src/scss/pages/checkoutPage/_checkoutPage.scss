@@ -238,3 +238,9 @@
     height: 36px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .checkoutPage__wrapper {
+    flex-wrap: wrap;
+  }
+}

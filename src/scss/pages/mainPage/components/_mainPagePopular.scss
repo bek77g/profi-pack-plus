@@ -21,7 +21,7 @@
     &__cards {
       border-radius: 3px;
       display: grid;
-      gap: 0 30px;
+      gap: 30px;
       grid-template-columns: repeat(4, 1fr);
 
       &__card {
@@ -29,6 +29,7 @@
         padding: 15px 15px 60px;
         border: 1px solid #cdcdcd;
         transition: all 0.3s ease;
+
         &:hover {
           transition: all 0.3s ease;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -83,6 +84,7 @@
             background: #1c62cd;
             border-radius: 10px 0px 0px 0px;
             padding: 7px 10px;
+
             svg {
               -webkit-filter: invert(1) contrast(100);
               filter: invert(1) contrast(100);
@@ -91,5 +93,38 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1084px) {
+  .mainPagePopular__catalog__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mainPagePopular {
+    .carousel-control-prev-icon {
+      left: -55%;
+    }
+
+    .carousel-control-next-icon {
+      right: -55%;
+    }
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .mainPagePopular {
+    .carousel-control-prev-icon {
+      display: none;
+    }
+
+    .carousel-control-next-icon {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .mainPagePopular__catalog__cards__card {
+  grid-column: span 4;
   }
 }

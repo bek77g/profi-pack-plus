@@ -95,3 +95,30 @@
     }
   }
 }
+
+@media screen and (max-width: 1050px) {
+  .catalogPagePopular__catalogs__cards {
+    grid-template-columns: repeat(2, 280px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .catalogPagePopular__catalogs__cards {
+    grid-template-columns: repeat(2, 280px);
+  }
+  .catalogPagePopular__catalogs__cards__card {
+    grid-column: span 2;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .catalogPagePopular__catalogs__cards {
+    grid-template-columns: repeat(2, 150px);
+  }
+}
+
+@media screen and (max-width: 347px) {
+  .catalogPagePopular__catalogs__cards {
+    grid-template-columns: repeat(2, 120px);
+  }
+}

@@ -31,11 +31,11 @@ const MainPagePopular = () => {
                             <HandySvg src={cart} className='icon' width='30' height='30'/>
                         </span>
                     </div>
-                </div>
-                <div className="catalogPagePopular__catalogs__cards__card__quantity">
-                    <button type="button" className="btn btn-info">+</button>
-                    <input type="number" className="form-control form-control-color" defaultValue={1}/>
-                    <button type="button" className="btn btn-info">-</button>
+                    <div className="catalogPagePopular__catalogs__cards__card__quantity">
+                        <button type="button" className="btn btn-info">+</button>
+                        <input type="number" className="form-control form-control-color" defaultValue={1}/>
+                        <button type="button" className="btn btn-info">-</button>
+                    </div>
                 </div>
             </div>
         );

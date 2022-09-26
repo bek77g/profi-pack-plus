@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   //grid-template-rows: 470px;
-  gap: 0 20px;
+  gap: 130px 20px;
   margin-bottom: 30px;
 
   .carousel-control-prev-icon {
@@ -15,9 +15,9 @@
     right: -40%;
   }
 
-  .carousel-indicators{
+  .carousel-indicators {
 
-    button{
+    button {
       position: relative;
       bottom: -30px;
       margin-top: 20px;
@@ -34,5 +34,17 @@
 
   &__card {
     grid-column: 4/6;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainPageAdvertise {
+    gap: 80px 20px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .mainPageAdvertise {
+    gap: 50px 10px;
   }
 }
