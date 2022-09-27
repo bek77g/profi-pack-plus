@@ -96,6 +96,14 @@
   }
 }
 
+.mainPagePopular__catalog__cards__card__heart:hover {
+  cursor: pointer;
+}
+
+.mainPagePopular__catalog__cards__card__img {
+  padding-top: 10px;
+}
+
 .mainPagePopular__catalog__cards__card__cart {
   span {
     &:hover {

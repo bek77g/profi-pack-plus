@@ -45,10 +45,11 @@ const CartPageProducts = () => {
                                                     <h6 className="mb-0">€ 44.00</h6>
                                                 </div>
 
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
-                                                        <span>
-                                                            <HandySvg src={remove} width="13" height="15"/>
-                                                        </span>
+                                                <div
+                                                    className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
+                                                <span>
+                                                    <HandySvg src={remove} width="13" height="15"/>
+                                                </span>
                                                 </div>
                                             </div>
                                             <div className="row mb-4 d-flex justify-content-between align-items-center">
@@ -75,10 +76,11 @@ const CartPageProducts = () => {
                                                     <h6 className="mb-0">€ 44.00</h6>
                                                 </div>
 
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
-                                                        <span>
-                                                            <HandySvg src={remove} width="13" height="15"/>
-                                                        </span>
+                                                <div
+                                                    className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
+                                                <span>
+                                                    <HandySvg src={remove} width="13" height="15"/>
+                                                </span>
                                                 </div>
                                             </div>
 
