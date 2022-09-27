@@ -122,14 +122,14 @@ const CheckoutPage = () => {
                                                 <hr className="my-4"/>
 
                                                 <div className="d-flex justify-content-between mb-4">
-                                                    <h5 className="text-uppercase">Количество :</h5>
+                                                    <h5 className="">Количество :</h5>
                                                     <h5>3</h5>
                                                 </div>
 
                                                 <hr className="my-4"/>
 
                                                 <div className="d-flex justify-content-between mb-5">
-                                                    <h5 className="text-uppercase">Итого:</h5>
+                                                    <h5 className="">Итого:</h5>
                                                     <h5>137.00</h5>
                                                 </div>
                                                 <div className="d-flex justify-content-center">

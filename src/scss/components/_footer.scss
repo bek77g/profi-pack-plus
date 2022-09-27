@@ -119,6 +119,11 @@
   }
 }
 
+.footer__content__app__items__item:hover {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+}
+
 @media screen and (max-width: 1024px) {
   .footer__content {
     flex-wrap: wrap;

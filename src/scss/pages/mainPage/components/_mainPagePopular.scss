@@ -96,6 +96,14 @@
   }
 }
 
+.mainPagePopular__catalog__cards__card__cart {
+  span {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 @media screen and (max-width: 1084px) {
   .mainPagePopular__catalog__cards {
     grid-template-columns: repeat(2, 1fr);
@@ -125,6 +133,6 @@
 
 @media screen and (max-width: 544px) {
   .mainPagePopular__catalog__cards__card {
-  grid-column: span 4;
+    grid-column: span 4;
   }
 }

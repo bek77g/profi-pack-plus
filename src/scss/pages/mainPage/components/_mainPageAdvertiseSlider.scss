@@ -2,11 +2,15 @@
   grid-column: span 3;
 }
 
+.carousel-indicators {
+  bottom: 2%;
+}
+
 @media screen and (max-width: 865px) {
   .mainPageAdvertise__slider {
     grid-column: span 5;
   }
-  .carousel-indicators{
+  .carousel-indicators {
     display: none;
   }
 }

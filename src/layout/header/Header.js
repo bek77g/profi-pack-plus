@@ -41,12 +41,12 @@ const Header = () => {
                         </Link>
                     </li>
                     <div className="header__info">
-                        <li className="header__nav__bar__item">
+                        <li className="header__nav__bar__item header__special">
                             <Link to="/favourite">
                                 <HandySvg src={favourite} width="30" height="23" alt='cart'/>
                             </Link>
                         </li>
-                        <li className='header__nav__bar__item header__nav__bar__item__last'>
+                        <li className='header__nav__bar__item header__nav__bar__item__last header__special'>
                             <Link to="/cart">
                                 <HandySvg src={cart} width="30" height="23" alt='cart'/>
                                 <span className='header__cart'>1</span>

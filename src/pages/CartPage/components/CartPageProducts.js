@@ -22,7 +22,7 @@ const CartPageProducts = () => {
                                             <hr className="my-4"/>
 
                                             <div className="row mb-4 d-flex justify-content-between align-items-center">
-                                                <div className="col-md-2 col-lg-2 col-xl-2">
+                                                <div className="col-md-2 col-lg-2 col-xl-2 cartImg">
                                                     <img
                                                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
                                                         className="img-fluid rounded-3" alt="Cotton T-shirt"/>
@@ -45,14 +45,14 @@ const CartPageProducts = () => {
                                                     <h6 className="mb-0">€ 44.00</h6>
                                                 </div>
 
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText">
+                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
                                                         <span>
                                                             <HandySvg src={remove} width="13" height="15"/>
                                                         </span>
                                                 </div>
                                             </div>
                                             <div className="row mb-4 d-flex justify-content-between align-items-center">
-                                                <div className="col-md-2 col-lg-2 col-xl-2">
+                                                <div className="col-md-2 col-lg-2 col-xl-2 cartImg">
                                                     <img
                                                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
                                                         className="img-fluid rounded-3" alt="Cotton T-shirt"/>
@@ -75,7 +75,7 @@ const CartPageProducts = () => {
                                                     <h6 className="mb-0">€ 44.00</h6>
                                                 </div>
 
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText">
+                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
                                                         <span>
                                                             <HandySvg src={remove} width="13" height="15"/>
                                                         </span>
@@ -100,14 +100,14 @@ const CartPageProducts = () => {
                                             <hr className="my-4"/>
 
                                             <div className="d-flex justify-content-between mb-4">
-                                                <h5 className="text-uppercase">Количество :</h5>
+                                                <h5 className="">Количество: </h5>
                                                 <h5>3</h5>
                                             </div>
 
                                             <hr className="my-4"/>
 
                                             <div className="d-flex justify-content-between mb-5">
-                                                <h5 className="text-uppercase">Итого:</h5>
+                                                <h5 className="">Итого:</h5>
                                                 <h5>137.00</h5>
                                             </div>
                                             <div className="d-flex justify-content-center">

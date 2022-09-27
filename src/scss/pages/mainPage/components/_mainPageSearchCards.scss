@@ -52,6 +52,11 @@
   }
 }
 
+.mainPageSearchCards__card:hover {
+  transform: scale(0.95);
+  transition: all 0.3s;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1140px) {
   .mainPageSearchCards {
