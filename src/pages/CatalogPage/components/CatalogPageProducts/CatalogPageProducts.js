@@ -1,7 +1,9 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import arr from '../../../../assets/icons/arr.svg';
+import {HandySvg} from "handy-svg";
 import heart from '../../../../assets/icons/favourite.svg';
+import cart from "../../../../assets/icons/cart.svg";
 
 const CatalogPageProducts = () => {
     return (
@@ -39,7 +41,7 @@ const CatalogPageProducts = () => {
             <div className='catalogPageProducts'>
                 <div className='catalogPageProducts__top'>
                     <span>Главная</span>
-                    <img src={arr} alt=''/>
+                    <img src={arr} alt='' className="ps-2"/>
                     <span>Каталог</span>
                     <img src={arr} alt=''/>
                     <span>Спасательный жилет BRP Men's Airflow PFD</span>
@@ -110,9 +112,20 @@ const CatalogPageProducts = () => {
                                 Спасательный жилет BRP Men's Airflow PFD
                             </div>
                             <p>Код товара: 366666-2 </p>
-                            <p>
-                                <img src={heart} alt=''/>
-                            </p>
+                            <div className="mb-3 catalogInfo">
+                                <span>
+                                    <HandySvg src={heart} width="24" height="22"/>
+                                </span>
+                                <span>
+                                    <HandySvg src={cart} width="30" height="23"/>
+                                </span>
+                                <span>
+                                    В наличии
+                                </span>
+                            </div>
+                            <span>
+
+                            </span>
                         </div>
                         <div className='catalogPageProducts__content__right__mid'>
                             <h2>Описание</h2>
@@ -128,6 +141,19 @@ const CatalogPageProducts = () => {
                         <div className='catalogPageProducts__content__left__card__bottom mb-5'>
                             <p>35 000 сом</p>
                             <p>24 000 сом</p>
+                        </div>
+                        <div className='catalogPagePopular__catalogs__cards__card__quantity justify-content-start mb-3'>
+                            <button type='button' className='btn btn-info'>
+                                -
+                            </button>
+                            <input
+                                type='text'
+                                className='form-control form-control-color'
+                                defaultValue={1}
+                            />
+                            <button type='button' className='btn btn-info'>
+                                +
+                            </button>
                         </div>
                         <div className='catalogPageProducts__content__right__bottom'>
                             <button className='catalogPageProducts__content__right__bottom__btn'>

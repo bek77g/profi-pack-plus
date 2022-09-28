@@ -33,7 +33,7 @@ const MainPagePopular = () => {
           </div>
           <div className='catalogPagePopular__catalogs__cards__card__quantity'>
             <button type='button' className='btn btn-info'>
-              +
+              -
             </button>
             <input
               type='text'
@@ -41,7 +41,7 @@ const MainPagePopular = () => {
               defaultValue={1}
             />
             <button type='button' className='btn btn-info'>
-              -
+              +
             </button>
           </div>
         </div>

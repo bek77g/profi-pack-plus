@@ -61,11 +61,11 @@ const CheckoutPage = () => {
                                                     <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                         <div
                                                             className="catalogPagePopular__catalogs__cards__card__quantity pt-4">
-                                                            <button type="button" className="btn btn-info">+</button>
+                                                            <button type="button" className="btn btn-info">-</button>
                                                             <input type="text"
                                                                    className="form-control form-control-color"
                                                                    defaultValue={1}/>
-                                                            <button type="button" className="btn btn-info">-</button>
+                                                            <button type="button" className="btn btn-info">+</button>
                                                         </div>
                                                     </div>
 
@@ -94,11 +94,11 @@ const CheckoutPage = () => {
                                                     <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                         <div
                                                             className="catalogPagePopular__catalogs__cards__card__quantity pt-4">
-                                                            <button type="button" className="btn btn-info">+</button>
+                                                            <button type="button" className="btn btn-info">-</button>
                                                             <input type="text"
                                                                    className="form-control form-control-color"
                                                                    defaultValue={1}/>
-                                                            <button type="button" className="btn btn-info">-</button>
+                                                            <button type="button" className="btn btn-info">+</button>
                                                         </div>
                                                     </div>
 

@@ -129,6 +129,28 @@
   }
 }
 
+.catalogInfo {
+  span {
+    &:first-child {
+      margin-left: 0;
+      cursor: pointer;
+    }
+
+    &:nth-last-child(2) {
+      cursor: pointer;
+    }
+
+    &:last-child {
+      background: #1c62cd;
+      border-radius: 3px;
+      padding: 13px 20px;
+      color: #ffffff;
+    }
+
+    margin-left: 15px;
+  }
+}
+
 .catalogPageSubCarousel {
   margin-bottom: 20px;
 }
