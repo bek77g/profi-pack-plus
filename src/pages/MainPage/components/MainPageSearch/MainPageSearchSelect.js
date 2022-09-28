@@ -12,7 +12,7 @@ const MainPageSearchSelect = () => {
 
     return (
         <div className="mainPageSearchSelect">
-            <Select option={options}/>
+            <Select options={options}/>
         </div>
     );
 };
