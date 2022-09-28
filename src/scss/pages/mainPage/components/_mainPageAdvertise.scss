@@ -16,15 +16,13 @@
   }
 
   .carousel-indicators {
-
     button {
       position: relative;
       bottom: -30px;
+      border-radius: 2px;
       margin-top: 20px;
-      border-radius: 50%;
-      padding: 10px;
-      width: 0px;
-      height: 0px;
+      width: 3%;
+      height: 5px;
     }
   }
 
@@ -33,6 +31,7 @@
   }
 
   &__card {
+    width: 100%;
     grid-column: 4/6;
   }
 }

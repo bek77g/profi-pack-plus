@@ -84,8 +84,9 @@
     }
 
     &__img {
+      width: 100%;
       position: relative;
-      width: 325px;
+      max-width: 325px;
       height: 205px;
       background-repeat: no-repeat;
       background-size: contain;
@@ -112,8 +113,6 @@
     padding: 26px;
   }
 }
-
-
 
 @media screen and (max-width: 865px) {
   .mainPageAdvertise__card {
