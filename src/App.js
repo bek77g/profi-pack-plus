@@ -13,6 +13,8 @@ import OrderPage from "./pages/OrderPage/OrderPage";
 import CartPage from "./pages/CartPage/CartPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import FavouritePage from "./pages/FavouritePage/FavouritePage";
+import SubCategoryPage from "./pages/SubCategoryPage/SubCategoryPage";
+import SubCategoryPageCards from "./pages/SubCategoryPage/components/SubCategoryPageCards";
 
 function App() {
     return (
@@ -23,7 +25,7 @@ function App() {
                     <div className='pageContent__view'>
                         <Header/>
                         <Routes>
-                            <Route path='/' element={<MainPage/>}></Route>
+                            <Route path='/' element={<MainPage/>}/>
                             <Route path='/catalog' element={<CatalogPage/>}/>
                             <Route path='/products' element={<CatalogPageProducts/>}/>
                             <Route path='/about' element={<AboutPage/>}/>
@@ -33,6 +35,8 @@ function App() {
                             <Route path='/cart' element={<CartPage/>}/>
                             <Route path='/checkout' element={<CheckoutPage/>}/>
                             <Route path='/favourite' element={<FavouritePage/>}/>
+                            <Route path="/category" element={<SubCategoryPage/>}/>
+                            <Route path="/cards" element={<SubCategoryPageCards/>}/>
                         </Routes>
                         <Footer/>
                     </div>

@@ -12,8 +12,11 @@ const MainPageSearchCards = () => {
                     <h2 className='mainPageSearchCards__card__left__title'>
                         {elem.name}
                     </h2>
+                    <p className='mainPageSearchCards__card__left__quantity'>
+                        Количество товаров: {elem.quantity}
+                    </p>
                     <div className='mainPageSearchCards__card__left__btn'>
-                        <Link to='/catalog'>
+                        <Link to='/category'>
                             Подробнее{' '}
                             <HandySvg src={arr} className='icon' width='6' height='9'/>
                         </Link>

@@ -24,6 +24,10 @@
         }
 
         &__heart {
+          &:hover {
+            cursor: pointer;
+          }
+
           display: flex;
           justify-content: flex-end;
         }
@@ -61,6 +65,10 @@
         }
 
         &__cart {
+          &:hover {
+            cursor: pointer;
+          }
+
           width: calc(100% - 30px);
           position: absolute;
           bottom: 15px;
@@ -94,6 +102,10 @@
       }
     }
   }
+}
+
+.cartCategory {
+  padding: 15px;
 }
 
 @media screen and (max-width: 1050px) {

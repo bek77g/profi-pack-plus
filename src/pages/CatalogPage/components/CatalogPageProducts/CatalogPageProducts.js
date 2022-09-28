@@ -120,7 +120,7 @@ const CatalogPageProducts = () => {
                                     <HandySvg src={cart} width="30" height="23"/>
                                 </span>
                                 <span>
-                                    В наличии
+                                    Наличии: <span>4</span>
                                 </span>
                             </div>
                             <span>

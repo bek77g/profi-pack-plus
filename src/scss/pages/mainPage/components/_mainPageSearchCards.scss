@@ -14,6 +14,7 @@
     background-color: #fff;
     border-radius: 3px;
     padding: 15px;
+    align-items: center;
 
     &__left {
       display: flex;
@@ -27,7 +28,14 @@
         line-height: 28px;
         color: #2f3035;
         max-width: 169px;
-        padding-bottom: 50px;
+        //padding-bottom: 50px;
+      }
+
+      &__quantity {
+        font-size: 14px;
+        line-height: 28px;
+        color: #2f3035;
+        max-width: 169px;
       }
 
       &__btn {
@@ -55,6 +63,9 @@
 .mainPageSearchCards__card:hover {
   transform: scale(0.95);
   transition: all 0.3s;
+}
+
+.mainPageSearchCards__card__left__btn {
   cursor: pointer;
 }
 
