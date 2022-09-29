@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cart from "../../components/constants/cart";
 import {HandySvg} from "handy-svg";
 import remove from "../../assets/icons/remove.svg";
 import {Link} from "react-router-dom";
+import {toast, Toaster} from "react-hot-toast";
 
 const CheckoutPage = () => {
 
@@ -30,6 +31,51 @@ const CheckoutPage = () => {
             </>
         )
     })
+
+    const [inputName, setInputName] = useState("");
+    const [inputAddress, setInputAddress] = useState("");
+    const [inputTel, setInputTel] = useState("");
+    const [inputMail, setInputMail] = useState("");
+    const [inputInfo, setInputInfo] = useState("");
+
+
+    const createUserHandler = (event) => {
+        event.preventDefault();
+        if (inputName.trim().length === 0 || inputAddress.trim().length === 0 || inputTel.trim().length === 0 || inputMail.trim().length === 0 || inputInfo.trim().length === 0) {
+            toast.error("Заполните все поля!");
+        } else {
+            toast.success("Заказ успешно отправлен");
+        }
+
+        // } else if (inputName.trim().length === 0) {
+        //     toast.error("Вы не заполнили поле Имя!");
+        //     event.target.classList('validationInput');
+        // } else if (inputSurName.trim().length === 0) {
+        //     toast.error("Вы не заполнили поле Фамилие '!");
+        // } else if (inputTel.trim().length === 0) {
+        //     toast.error("Вы не заполнили поле Телефон!");
+        // } else if (inputMail.trim().length === 0) {
+        //     toast.error("Вы не заполнили поле Email адресс!");
+        // } else if (inputInfo.trim().length === 0) {
+        //     toast.error("Вы не заполнили поле Сообщения!");
+        // }
+    }
+
+    const checkInputName = (event) => {
+        setInputName(event.target.value);
+    };
+    const checkInputAddress = (event) => {
+        setInputAddress(event.target.value);
+    };
+    const checkInputTel = (event) => {
+        setInputTel(event.target.value);
+    };
+    const checkInputMail = (event) => {
+        setInputMail(event.target.value);
+    };
+    const checkInputInfo = (event) => {
+        setInputInfo(event.target.value);
+    };
 
     return (
         <div className="checkoutPage">
@@ -152,34 +198,35 @@ const CheckoutPage = () => {
                     </h2>
                 </div>
                 <div className="checkoutPage__feedback__form">
-                    <form action="">
+
+                    <form action="" onSubmit={createUserHandler}>
                         <div className="contacts__content__left">
                             <div className="contacts__content__left__name mb-3">
                                 <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Ф.И.О.</label>
-                                <input type="email" className="form-control" id="exampleFormControlInput1"
-                                       placeholder="Ф.И.О."/>
+                                <input type="text" className="form-control" id="exampleFormControlInput1"
+                                       placeholder="Ф.И.О." value={inputName} onChange={checkInputName}/>
                             </div>
                             <div className="contacts__content__left__tel mb-3">
                                 <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Номер
                                     телефона</label>
-                                <input type="email" className="form-control" id="exampleFormControlInput1"
+                                <input type="text" className="form-control" id="exampleFormControlInput1"
                                        placeholder="Номер
-                        телефона"/>
+                        телефона" value={inputTel} onChange={checkInputTel}/>
                             </div>
                             <div className="contacts__content__left__email mb-3">
                                 <label htmlFor="exampleFormControlInput1" className="form-label mb-2">Email
                                     адрес</label>
-                                <input type="email" className="form-control" id="exampleFormControlInput1"
-                                       placeholder="Email@example.com"/>
+                                <input type="text" className="form-control" id="exampleFormControlInput1"
+                                       placeholder="Email@example.com" value={inputMail} onChange={checkInputMail}/>
                             </div>
                             <div className="contacts__content__left__address mb-3">
                                 <label htmlFor="inputAddress" className="form-label">Адресс</label>
                                 <input type="text" className="form-control"
-                                       placeholder="Проспект чуй 52"/>
+                                       placeholder="Проспект чуй 52" value={inputAddress} onChange={checkInputAddress}/>
                             </div>
                             <div className="contacts__content__left__order mb-3">
                                 <label htmlFor="validationCustom04" className="form-label">Способ доставки</label>
-                                <select className="form-select">
+                                <select className="form-select" value={inputInfo} onChange={checkInputInfo}>
                                     <option></option>
                                     <option>Доставка курьером(200 сом)</option>
                                     <option>Самовывоз</option>
@@ -187,7 +234,7 @@ const CheckoutPage = () => {
                             </div>
                             <div className="contacts__content__left__payment mb-3">
                                 <label htmlFor="validationCustom04" className="form-label">Способ оплаты</label>
-                                <select className="form-select">
+                                <select className="form-select" value={inputInfo} onChange={checkInputInfo}>
                                     <option></option>
                                     <option>Наличные курьеру</option>
                                     <option>Безналичная оплата</option>
@@ -197,27 +244,28 @@ const CheckoutPage = () => {
                                 <label htmlFor="exampleFormControlTextarea1" className="form-label mb-2">Комментарии к
                                     заказу:</label>
                                 <textarea className="form-control" id="exampleFormControlTextarea1"
-                                          rows="3"></textarea>
+                                          rows="3" value={inputInfo} onChange={checkInputInfo}></textarea>
                             </div>
                         </div>
+                        <div className="shopping-cart-footer mt-5">
+                            <div className="column">
+
+                            </div>
+                            <div className="column">
+                                <button type="submit"
+                                        className=" btn btn-outline-secondary">Отправить
+                                    заказ
+                                </button>
+                            </div>
+                        </div>
+
                     </form>
+                    <Toaster/>
                 </div>
 
             </div>
 
-            <div className="shopping-cart-footer mt-5">
-                <div className="column">
 
-                </div>
-                <div className="column">
-                    <Link to="/checkout">
-                        <button type="button"
-                                className=" btn btn-outline-secondary">Отправить
-                            заказ
-                        </button>
-                    </Link>
-                </div>
-            </div>
         </div>
     );
 };

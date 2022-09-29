@@ -1,4 +1,5 @@
 import './scss/style.scss';
+import {Toaster} from "react-hot-toast";
 import Header from './layout/header/Header';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage/MainPage';
@@ -41,6 +42,7 @@ function App() {
                         <Footer/>
                     </div>
                 </div>
+                {Toaster}
             </BrowserRouter>
         </>
 
