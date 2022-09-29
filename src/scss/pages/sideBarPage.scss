@@ -108,7 +108,7 @@
         &:first-child {
           transition: 0.3s ease;
           position: absolute;
-          transform: translateX(0%) translateY(-90%) rotate(45deg);
+          transform: translateX(0%) translateY(-100%) rotate(45deg);
         }
 
         &:nth-last-child(2) {
@@ -120,7 +120,7 @@
         &:last-child {
           position: absolute;
           transition: 0.3s ease;
-          transform: translateX(0%) translateY(-450%) rotate(-45deg);
+          transform: translateX(0%) translateY(-540%) rotate(-45deg);
         }
       }
     }
@@ -222,4 +222,3 @@
   border-radius: 10px;
   background-color: #f9f9fd;
 }
-
