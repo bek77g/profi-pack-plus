@@ -38,12 +38,12 @@ const Header = () => {
             <div className='header__info'>
               <li className='header__nav__bar__item header__special'>
                 <Link to='/favourite'>
-                  <HandySvg src={favourite} width='30' height='23' alt='cart' />
+                  <HandySvg src={favourite} width='30' height='30' alt='cart' />
                 </Link>
               </li>
               <li className='header__nav__bar__item header__nav__bar__item__last header__special'>
                 <Link to='/cart'>
-                  <HandySvg src={cart} width='30' height='23' alt='cart' />
+                  <HandySvg src={cart} width='30' height='30' alt='cart' />
                   <span className='header__cart'>1</span>
                 </Link>
               </li>

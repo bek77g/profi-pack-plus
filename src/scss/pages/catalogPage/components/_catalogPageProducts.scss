@@ -22,7 +22,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 20px 0;
+      gap: 30px;
+    }
     &__left {
       &__card {
         &__top {
@@ -143,7 +150,7 @@
     &:last-child {
       background: #1c62cd;
       border-radius: 3px;
-      padding: 13px 20px;
+      padding: 5px 10px;
       color: #ffffff;
     }
 
