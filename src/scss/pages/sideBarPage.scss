@@ -222,3 +222,15 @@
   border-radius: 10px;
   background-color: #f9f9fd;
 }
+
+@media screen and (max-width: 1242px) {
+  .sideBar__pos {
+    height: 112vh;
+  }
+  .sideBarSub {
+    height: 112vh;
+  }
+  .sideBar__wrapper {
+    height: calc(100vh - 25px);
+  }
+}
