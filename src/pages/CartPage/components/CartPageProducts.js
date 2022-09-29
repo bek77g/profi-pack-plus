@@ -3,8 +3,54 @@ import {HandySvg} from "handy-svg";
 import remove from "../../../assets/icons/remove.svg";
 import cart from "../../../components/constants/cart";
 import {Link} from "react-router-dom";
+import heart from "../../../assets/icons/favourite.svg";
+
+const Products = (props) => {
+    const [count, setCount] = useState(1);
+
+    return (
+        <div className='mainPagePopular__catalog__cards__card'>
+            <div className='mainPagePopular__catalog__cards__card__heart'>
+                <img src={heart} alt='heart'/>
+            </div>
+            <div className='mainPagePopular__catalog__cards__card__img'>
+                <Link to='/products'>
+                    <img className='d-block w-100' src={props.data.img} alt='First slide'/>
+                </Link>
+            </div>
+            <div className='mainPagePopular__catalog__cards__card__descr'>
+                <Link to='/products'>
+                    <h5>{props.data.description}</h5>
+                </Link>
+                <div className='mainPagePopular__catalog__cards__card__cart'>
+                    <Link to='/products'>
+                        <p>{props.data.price}</p>
+                    </Link>
+                    <span>
+              <HandySvg src={cart} className='icon' width='30' height='30'/>
+            </span>
+                </div>
+                <div className='catalogPagePopular__catalogs__cards__card__quantity'>
+                    <button type='button' className='btn btn-info' onClick={() => setCount(count - 1)}>
+                        -
+                    </button>
+                    <input
+                        type='number'
+                        className='form-control form-control-color'
+                        value={count}
+                    />
+                    <button type='button' className='btn btn-info' onClick={() => setCount(count + 1)}>
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 const CartPageProducts = () => {
+
+    const [count, setCount] = useState(1);
 
     return (
         <section className="h-100 h-custom cartPage">
@@ -34,10 +80,14 @@ const CartPageProducts = () => {
                                                 <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                     <div
                                                         className="catalogPagePopular__catalogs__cards__card__quantity pt-4">
-                                                        <button type="button" className="btn btn-info">-</button>
-                                                        <input type="text" className="form-control form-control-color"
-                                                               defaultValue={1}/>
-                                                        <button type="button" className="btn btn-info">+</button>
+                                                        <button type="button" className="btn btn-info"
+                                                                onClick={() => setCount(count - 1)}>-
+                                                        </button>
+                                                        <input type="number" className="form-control form-control-color"
+                                                               value={count}/>
+                                                        <button type="button" className="btn btn-info"
+                                                                onClick={() => setCount(count + 1)}>+
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -65,10 +115,14 @@ const CartPageProducts = () => {
                                                 <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                     <div
                                                         className="catalogPagePopular__catalogs__cards__card__quantity pt-4">
-                                                        <button type="button" className="btn btn-info">-</button>
-                                                        <input type="text" className="form-control form-control-color"
-                                                               defaultValue={1}/>
-                                                        <button type="button" className="btn btn-info">+</button>
+                                                        <button type="button" className="btn btn-info"
+                                                                onClick={() => setCount(count - 1)}>-
+                                                        </button>
+                                                        <input type="number" className="form-control form-control-color"
+                                                               value={count}/>
+                                                        <button type="button" className="btn btn-info"
+                                                                onClick={() => setCount(count + 1)}>+
+                                                        </button>
                                                     </div>
                                                 </div>
 
