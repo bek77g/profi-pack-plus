@@ -5,6 +5,7 @@ import {HandySvg} from 'handy-svg';
 import heart from '../../../../assets/icons/favourite.svg';
 import cart from '../../../../assets/icons/cart.svg';
 import {Link} from "react-router-dom";
+import {toast, Toaster} from "react-hot-toast";
 
 const Products = (props) => {
     const [count, setCount] = useState(1);
@@ -52,6 +53,10 @@ const Products = (props) => {
 const CatalogPageProducts = () => {
 
     const [count, setCount] = useState(1);
+
+    const addToCart = () => {
+        toast.success("Товар добавлен в корзину");
+    }
 
     return (
         <>
@@ -180,9 +185,9 @@ const CatalogPageProducts = () => {
                 <span>
                   <HandySvg src={heart} width='24' height='22'/>
                 </span>
-                                <span>
-                  <HandySvg src={cart} width='30' height='23'/>
-                </span>
+                                <span onClick={() => addToCart()}>
+                                    <HandySvg src={cart} width='30' height='23'/>
+                                </span>
                                 <span>
                   Наличии: <span>4</span>
                 </span>
@@ -209,7 +214,8 @@ const CatalogPageProducts = () => {
                                 </button>
                             </div>
                             <div className='catalogPageProducts__content__right__bottom'>
-                                <button className='catalogPageProducts__content__right__bottom__btn'>
+                                <button className='catalogPageProducts__content__right__bottom__btn'
+                                        onClick={() => addToCart()}>
                                     купить
                                 </button>
                             </div>
@@ -226,6 +232,7 @@ const CatalogPageProducts = () => {
                             </p>
                         </div>
                     </div>
+                    <Toaster/>
                 </div>
             </div>
         </>

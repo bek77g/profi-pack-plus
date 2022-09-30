@@ -8,9 +8,14 @@ import {Link} from "react-router-dom";
 import {HandySvg} from "handy-svg";
 import cart from "../../../assets/icons/cart.svg";
 import PaginationComp from "../../../components/Pagination";
+import {toast, Toaster} from "react-hot-toast";
 
 const Products = (props) => {
     const [count, setCount] = useState(1);
+
+    const addToCart = () => {
+        toast.success("Товар добавлен в корзину");
+    }
 
     return (
         <div className='mainPagePopular__catalog__cards__card'>
@@ -30,9 +35,9 @@ const Products = (props) => {
                     <Link to='/products'>
                         <p>{props.data.price}</p>
                     </Link>
-                    <span>
-              <HandySvg src={cart} className='icon' width='30' height='30'/>
-            </span>
+                    <span onClick={() => addToCart()}>
+                        <HandySvg src={cart} className='icon' width='30' height='30'/>
+                    </span>
                 </div>
                 <div className='catalogPagePopular__catalogs__cards__card__quantity'>
                     <button type='button' className='btn btn-info' onClick={() => setCount(count - 1)}>
@@ -90,6 +95,7 @@ const SubCategoryPageCards = () => {
                         <PaginationComp/>
                     </div>
                 </div>
+                <Toaster/>
             </div>
         </div>
     );

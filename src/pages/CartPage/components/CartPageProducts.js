@@ -4,6 +4,7 @@ import remove from "../../../assets/icons/remove.svg";
 import cart from "../../../components/constants/cart";
 import {Link} from "react-router-dom";
 import heart from "../../../assets/icons/favourite.svg";
+import {toast, Toaster} from "react-hot-toast";
 
 const Products = (props) => {
     const [count, setCount] = useState(1);
@@ -52,6 +53,10 @@ const CartPageProducts = () => {
 
     const [count, setCount] = useState(1);
 
+    const removeItem = () => {
+        toast.success("Товар удалён из корзины");
+    }
+
     return (
         <section className="h-100 h-custom cartPage">
             <div className="container py-5 h-100">
@@ -97,7 +102,7 @@ const CartPageProducts = () => {
 
                                                 <div
                                                     className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
-                                                <span>
+                                                <span onClick={() => removeItem()}>
                                                     <HandySvg src={remove} width="13" height="15"/>
                                                 </span>
                                                 </div>
@@ -132,7 +137,7 @@ const CartPageProducts = () => {
 
                                                 <div
                                                     className="col-md-1 col-lg-1 col-xl-1 text-end cartPageText cartRemove">
-                                                <span>
+                                                <span onClick={() => removeItem()}>
                                                     <HandySvg src={remove} width="13" height="15"/>
                                                 </span>
                                                 </div>
@@ -175,6 +180,7 @@ const CartPageProducts = () => {
                                                     </Link>
                                                 </div>
                                             </div>
+                                            <Toaster/>
                                         </div>
                                     </div>
 
