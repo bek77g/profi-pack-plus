@@ -1,6 +1,70 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CustomContext } from '../hoc/mainContentContext';
+import { Link } from 'react-router-dom';
 
 const SideBarPage = () => {
+  const { baseUrl, catalogs } = useContext(CustomContext);
+
+  const setSubCategoryToList = (sub_catalogs, fromToSlug) => {
+    return (
+      <ul className='sideBarBlock__sub__nav__bar'>
+        {sub_catalogs.map(({ id, Title, Description, Slug, Icon }) => {
+          return (
+            <li
+              title={Description}
+              key={id}
+              className='sideBarBlock__sub__nav__bar__item sideBarImg'>
+              <Link to={`${fromToSlug}/${Slug}`}>
+                <img
+                  src={`${baseUrl}${Icon?.formats.thumbnail.url}`}
+                  alt={Title}
+                  className='sideBarSub__img'
+                />
+              </Link>
+              <Link to={`${fromToSlug}/${Slug}`}>
+                <p className='sideBarSub__text'>{Title}</p>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+  const setCatalogsToList = (catalogs) => {
+    return (
+      <ul className='sideBar__content__nav__items sideBar__block'>
+        {catalogs.map(
+          ({ id, Title, Slug, Description, sub_catalogs, Icon }) => {
+            return (
+              <li
+                key={id}
+                className='sideBar__content__nav__items__item sideBar__block__items '>
+                <Link to={`/${Slug}`}>
+                  <img
+                    src={`${baseUrl}${Icon?.formats.thumbnail.url}`}
+                    alt={Title}
+                    className='sideBar__img'
+                  />
+                </Link>
+                <Link to={`/${Slug}`}>
+                  {' '}
+                  <p className='sideBar__text' title={Description}>
+                    {Title}
+                  </p>
+                </Link>
+                <div className='sideBarSub'>
+                  <h3 className='sideBarSub__title'>{Title}</h3>
+                  <div className='sideBarBlock__sub__nav'>
+                    {setSubCategoryToList(sub_catalogs, Slug)}
+                  </div>
+                </div>
+              </li>
+            );
+          }
+        )}
+      </ul>
+    );
+  };
   return (
     <div className='sideBar'>
       <div className='sideBar__pos'>
@@ -18,459 +82,7 @@ const SideBarPage = () => {
           <aside className='sideBar__aside'>
             <div className='sideBar__content'>
               <nav className='sideBar__content__nav'>
-                <ul className='sideBar__content__nav__items sideBar__block'>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li className='sideBar__content__nav__items__item sideBar__block__items '>
-                    <img
-                      src='https://netco.kg/upload/resize_cache/iblock/b41/180_180_0/uryt413st6bnbffktxmnwwebhmsp3nr4.png'
-                      alt=''
-                      className='sideBar__img'
-                    />
-                    <p className='sideBar__text'>Хозяйственные товары</p>
-                    <div className='sideBarSub'>
-                      <h3 className='sideBarSub__title'>
-                        Хозяйственные товары
-                      </h3>
-                      <div className='sideBarBlock__sub__nav'>
-                        <ul className='sideBarBlock__sub__nav__bar'>
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>{' '}
-                          <li className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-                            <img
-                              src='https://profipackpluskgz.1c-umi.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/57317-700x700_220_220.jpg'
-                              alt=''
-                              className='sideBarSub__img'
-                            />
-                            <p className='sideBarSub__text'>Фольга</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                {setCatalogsToList(catalogs)}
               </nav>
             </div>
           </aside>

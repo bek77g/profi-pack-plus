@@ -1,74 +1,85 @@
 import React from 'react';
-import heart from "../../assets/icons/favourite.svg";
-import cart from '../../assets/icons/cart.svg';
 import secondCatalog from '../../components/constants/secondCatalog';
 import PaginationComp from '../../components/Pagination';
-import {Link} from 'react-router-dom';
-import {HandySvg} from 'handy-svg';
-import arr from "../../assets/icons/arr.svg";
-import Form from "react-bootstrap/Form";
-import CatalogPageCards from "../CatalogPage/components/CatalogPageCards/CatalogPageCards";
+import { Link, useParams } from 'react-router-dom';
+import arr from '../../assets/icons/arr.svg';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 
 const SubCategoryPage = () => {
-    const newCatalog = secondCatalog.map((elem) => {
-        return (
-            <>
-                <div className='catalogPagePopular__catalogs__cards__card cartCategory'>
-                    <div className='catalogPagePopular__catalogs__cards__card__img'>
-                        <Link to='/cards'>
-                            <img className='d-block w-100' src={elem.img} alt='First slide'/>
-                        </Link>
-                    </div>
-                    <div className='catalogPagePopular__catalogs__cards__card__descr'>
-                        <Link to='/products'>
-                            <h5>{elem.description}</h5>
-                        </Link>
-                    </div>
-                </div>
-            </>
-        );
+  const { catalog } = useParams();
+
+  const [catalogSeo, setCatalogSeo] = useState({});
+  const [title, setTitle] = useState('');
+  const [subCatalogs, setSubCatalogs] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `/api/catalogs/${catalog}?populate=deep
+    `
+      )
+      .then(({ data }) => {
+        setCatalogSeo(data.data.catalogSeo);
+        setTitle(data.data.Title);
+        setSubCatalogs(data.data.sub_catalogs);
+      });
+  }, []);
+
+  const showSubCatalogs = () => {
+    return subCatalogs.map(({ id, Title, Slug, Icon }) => {
+      return (
+        <div
+          key={id}
+          className='catalogPagePopular__catalogs__cards__card cartCategory'>
+          <div className='catalogPagePopular__catalogs__cards__card__img'>
+            <Link to={Slug}>
+              <img
+                className='d-block w-100'
+                src={
+                  Icon?.url ||
+                  'https://via.placeholder.com/828x828.png?text=ProfiPackPlus+product'
+                }
+                alt='First slide'
+              />
+            </Link>
+          </div>
+          <div className='catalogPagePopular__catalogs__cards__card__descr'>
+            <Link to={Slug}>
+              <h5>{Title}</h5>
+            </Link>
+          </div>
+        </div>
+      );
     });
+  };
 
-    return (
-        <>
-            <div className='catalogPage'>
-                <div className='catalogPage__top'>
+  return (
+    <>
+      <div className='catalogPage'>
+        <div className='catalogPage__top'>
           <span>
-            Главная <img src={arr} alt=''/>
+            <Link to='/'>
+              Главная <img src={arr} alt='' />
+            </Link>
           </span>
-                    <span>Каталог <img src={arr} alt=''/></span>
-                    <span>Салфетки</span>
-                    <h2>Салфетки</h2>
-                </div>
-                <div className='catalogPage__mid'>
-                    <div></div>
-                    <div className='catalogPage__mid__select'>
-                        <select name='' id=''>
-                            <option value='1'>По популярности</option>
-                            <option value='1'>По цене</option>
-                            <option value='1'>По дате</option>
-                        </select>
-                    </div>
-                </div>
-                <div className='catalogPage__content'>
-                    <div className='catalogPage__content__left'>
-                        <span>Параметры</span>
-                        <div className='catalogPage__content__left__price'>
-                            <Form.Label>Цена</Form.Label>
-                            <Form.Range/>
-                            от 100.000 до 500.000
-                        </div>
-                    </div>
-                    <div className='catalogPage__content__right'>
-                        <div className='catalogPagePopular__catalogs__cards'>{newCatalog}</div>
-                        <PaginationComp/>
-                    </div>
-                </div>
+          <span>{title && title}</span>
+          <h2>{title && title}</h2>
+        </div>
+        <div className='catalogPage__content'>
+          <div
+            className='catalogPage__content__right'
+            style={{ margin: '0 auto' }}>
+            <div className='catalogPagePopular__catalogs__cards'>
+              {subCatalogs && showSubCatalogs()}
             </div>
-
-        </>
-    );
+            <PaginationComp />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default SubCategoryPage;
-

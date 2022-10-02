@@ -1,30 +1,31 @@
+import { useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
+import { CustomContext } from '../../../../hoc/mainContentContext';
 
 const MainPageAdvertiseSlider = () => {
+  const { baseUrl, discountGallery } = useContext(CustomContext);
+
+  const setDiscountSlider = (slider) => {
+    return slider.map(({ Url, Img }) => {
+      return (
+        <Carousel.Item>
+          <Link className='advertise-slide' to={Url}>
+            <img
+              className='d-block w-100'
+              src={`${baseUrl}${Img.url}`}
+              alt={Url}
+            />
+          </Link>
+        </Carousel.Item>
+      );
+    });
+  };
+
   return (
     <div className='mainPageAdvertiseSlider'>
       <Carousel interval='2300' pause='hover' variant='dark'>
-        <Carousel.Item>
-          <img
-            className='d-block w-100'
-            src='https://md-eksperiment.org/images/posts/0f60e764-5372-40e6-bb78-19d41fe2b1be.jpeg'
-            alt='First slide'
-          />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className='d-block w-100'
-            src='https://md-eksperiment.org/images/posts/0f60e764-5372-40e6-bb78-19d41fe2b1be.jpeg'
-            alt='Second slide'
-          />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className='d-block w-100'
-            src='https://md-eksperiment.org/images/posts/0f60e764-5372-40e6-bb78-19d41fe2b1be.jpeg'
-            alt='Third slide'
-          />
-        </Carousel.Item>
+        {setDiscountSlider(discountGallery[0].Slide)}
       </Carousel>
     </div>
   );

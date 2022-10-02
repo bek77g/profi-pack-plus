@@ -6,6 +6,9 @@
   bottom: 2%;
 }
 
+.advertise-slide img {
+  max-height: 520px;
+}
 @media screen and (max-width: 865px) {
   .mainPageAdvertise__slider {
     grid-column: span 5;
