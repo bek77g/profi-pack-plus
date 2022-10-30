@@ -1,14 +1,21 @@
 import React from 'react';
-import secondCatalog from '../../components/constants/secondCatalog';
+import SEO from '../../hoc/SEO';
 import PaginationComp from '../../components/Pagination';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import Loading from '../../layout/loading/Loading';
+import { useContext } from 'react';
+import { CustomContext } from '../../hoc/mainContentContext';
 
 const SubCategoryPage = () => {
+  const { baseUrl } = useContext(CustomContext);
   const { catalog } = useParams();
+  const { pathname } = useLocation();
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const [catalogSeo, setCatalogSeo] = useState({});
   const [title, setTitle] = useState('');
@@ -17,15 +24,16 @@ const SubCategoryPage = () => {
   useEffect(() => {
     axios
       .get(
-        `/api/catalogs/${catalog}?populate=deep
+        `/api/sub-catalogs?populate=deep&filters[catalog][Slug][$eq]=${catalog}
     `
       )
       .then(({ data }) => {
-        setCatalogSeo(data.data.catalogSeo);
-        setTitle(data.data.Title);
-        setSubCatalogs(data.data.sub_catalogs);
+        setCatalogSeo(data.data[0].catalog.CatalogSEO);
+        setTitle(data.data[0].catalog.Title);
+        setSubCatalogs(data.data);
+        setLoading(false);
       });
-  }, []);
+  }, [pathname]);
 
   const showSubCatalogs = () => {
     return subCatalogs.map(({ id, Title, Slug, Icon }) => {
@@ -38,7 +46,7 @@ const SubCategoryPage = () => {
               <img
                 className='d-block w-100'
                 src={
-                  Icon?.url ||
+                  `${baseUrl}${Icon.url}` ||
                   'https://via.placeholder.com/828x828.png?text=ProfiPackPlus+product'
                 }
                 alt='First slide'
@@ -57,6 +65,10 @@ const SubCategoryPage = () => {
 
   return (
     <>
+      <SEO
+        SeoTitle={catalogSeo?.SeoTitle}
+        SeoDescription={catalogSeo?.SeoDescription}
+      />
       <div className='catalogPage'>
         <div className='catalogPage__top'>
           <span>
@@ -64,17 +76,29 @@ const SubCategoryPage = () => {
               Главная <img src={arr} alt='' />
             </Link>
           </span>
-          <span>{title && title}</span>
-          <h2>{title && title}</h2>
+          <span>{title || 'Название'}</span>
+          <h2>{title || 'Название'}</h2>
         </div>
         <div className='catalogPage__content'>
           <div
             className='catalogPage__content__right'
             style={{ margin: '0 auto' }}>
-            <div className='catalogPagePopular__catalogs__cards'>
-              {subCatalogs && showSubCatalogs()}
-            </div>
-            <PaginationComp />
+            {!loading ? (
+              <>
+                <div className='catalogPagePopular__catalogs__cards'>
+                  {subCatalogs && showSubCatalogs()}
+                </div>
+                {subCatalogs.length >= 12 && (
+                  <PaginationComp
+                    setPage={setPage}
+                    page={page}
+                    pageSize={subCatalogs.length}
+                  />
+                )}
+              </>
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </div>

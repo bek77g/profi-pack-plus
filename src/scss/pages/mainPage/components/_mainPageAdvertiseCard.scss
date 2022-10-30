@@ -19,7 +19,8 @@
 
     &__right {
       padding-right: 10px;
-
+      display: inline;
+      justify-content: center;
       p:first-child {
         font-style: normal;
         font-weight: 700;
@@ -30,8 +31,9 @@
       }
 
       p:last-child {
-        display: flex;
-        justify-content: flex-end;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -43,9 +45,9 @@
           content: '';
           position: absolute;
           top: 45%;
-          left: 40%;
+          left: -20%;
           border: 0.5px solid #c4c4c4;
-          width: 100px;
+          width: 140%;
           transform: rotate(-5.33deg);
         }
       }

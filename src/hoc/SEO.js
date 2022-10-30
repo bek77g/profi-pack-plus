@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet';
 const SEO = ({ SeoTitle, SeoDescription, SeoImage }) => {
   const MAIN_IMAGE_URL =
     SeoImage === null || SeoImage === undefined
-      ? `https://www.studkgreen.kg/%PUBLIC_URL%/logo.jpg`
+      ? `https://www.profipackplus.kg/%PUBLIC_URL%/logo.jpg`
       : SeoImage[0] === '/'
-      ? `https://www.studkgreen.kg${SeoImage}`
+      ? `https://www.profipackplus.kg${SeoImage}`
       : SeoImage;
   return (
     <Helmet>

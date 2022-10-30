@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import heart from '../../../../assets/icons/favourite.svg';
+import React, { useEffect, useState } from 'react';
 import cart from '../../../../assets/icons/cart.svg';
 import PaginationComp from '../../../../components/Pagination';
 import { Link } from 'react-router-dom';
@@ -7,24 +6,61 @@ import { HandySvg } from 'handy-svg';
 import { toast, Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { CustomContext } from '../../../../hoc/mainContentContext';
+import { favsProduct, limitCount, pagesHandler } from '../../../../hoc/Hooks';
 
 const Products = ({ data }) => {
-  const { baseUrl } = useContext(CustomContext);
+  const { baseUrl, addCart, addFav } = useContext(CustomContext);
   const [count, setCount] = useState(1);
 
-  const { id, Title, Description, Slug, Price, Gallery, New, CountType } = data;
+  const {
+    Title,
+    Slug,
+    Price,
+    Gallery,
+    CountType,
+    New,
+    favorite,
+    BestSeller,
+    Count,
+    MinCount,
+  } = favsProduct(data);
 
   const addToCart = () => {
+    addCart(data, count);
     toast.success('Товар добавлен в корзину');
   };
+  const addToFav = () => {
+    addFav(data);
+    favorite
+      ? toast.success('Товар удалён из избранных')
+      : toast.success('Товар добавлен в избранное');
+  };
+
+  useEffect(() => setCount(MinCount), []);
 
   return (
-    <div key={id} className='mainPagePopular__catalog__cards__card'>
+    <div className='mainPagePopular__catalog__cards__card'>
+      {New && (
+        <div className='mainPagePopular__catalog__cards__card__new'>
+          Новинка
+        </div>
+      )}
+      {BestSeller && (
+        <div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
+      )}
       <div className='mainPagePopular__catalog__cards__card__heart'>
-        <img src={heart} alt='heart' />
+        <p
+          class={`icon ${favorite ? 'active' : ''}`}
+          onClick={() => addToFav()}>
+          <p>
+            <svg width='24' height='24'>
+              <use href='#favourite.2a1d5b83572b289bc5592a74153597a1'></use>
+            </svg>
+          </p>
+        </p>
       </div>
       <div className='mainPagePopular__catalog__cards__card__img'>
-        <Link to='/products'>
+        <Link to={Slug}>
           <img
             className='d-block w-100'
             src={`${baseUrl}${Gallery[0].url}`}
@@ -33,13 +69,17 @@ const Products = ({ data }) => {
         </Link>
       </div>
       <div className='mainPagePopular__catalog__cards__card__descr'>
-        <Link to='/products'>
+        <Link to={Slug}>
           <h5>{Title}</h5>
         </Link>
         <div className='mainPagePopular__catalog__cards__card__cart'>
-          <Link to='/products'>
-            <p>
+          <Link to={Slug}>
+            <p style={{ lineHeight: '23px' }}>
               {Price} сом/{CountType}
+              <br />
+              <i style={{ fontStyle: 'initial', fontSize: '18px' }}>
+                {Price * count} сом
+              </i>
             </p>
           </Link>
           <span onClick={() => addToCart()}>
@@ -50,18 +90,25 @@ const Products = ({ data }) => {
           <button
             type='button'
             className='btn btn-info'
-            onClick={() => setCount(count - 1)}>
+            onClick={() =>
+              setCount(count <= MinCount ? MinCount : count - MinCount)
+            }>
             -
           </button>
           <input
-            type='number'
+            type='text'
+            pattern='[0-9]{1,5}'
             className='form-control form-control-color'
             value={count}
           />
           <button
             type='button'
             className='btn btn-info'
-            onClick={() => setCount(count + 1)}>
+            onClick={() =>
+              setCount(
+                count >= Count ? limitCount(count, Count) : count + MinCount
+              )
+            }>
             +
           </button>
         </div>
@@ -70,9 +117,30 @@ const Products = ({ data }) => {
   );
 };
 
-const CatalogPageCards = ({ products }) => {
+const CatalogPageCards = ({ products, sortType, minPrice, maxPrice }) => {
+  const [page, setPage] = useState(1);
+
   const showProducts = () => {
-    return products.map((product) => <Products data={product} />);
+    let array = products
+      .filter((product) => {
+        if (minPrice !== undefined && maxPrice !== undefined) {
+          return product.Price >= minPrice && product.Price <= maxPrice;
+        }
+        return product;
+      })
+      .sort((a, b) => {
+        if (sortType === 'priceInc') {
+          return a.Price - b.Price;
+        }
+        if (sortType === 'priceDec') {
+          return b.Price - a.Price;
+        }
+        if (sortType === 'priceDate') {
+          return a.publishedAt - b.publishedAt;
+        }
+      })
+      .map((product) => <Products key={product.id} data={product} />);
+    return pagesHandler(array, 12, page);
   };
 
   return (
@@ -80,7 +148,13 @@ const CatalogPageCards = ({ products }) => {
       <div className='catalogPagePopular__catalogs__cards'>
         {products && showProducts()}
       </div>
-      <PaginationComp />
+      {products.length >= 12 && (
+        <PaginationComp
+          setPage={setPage}
+          page={page}
+          pageSize={products.length}
+        />
+      )}
       <Toaster />
     </>
   );

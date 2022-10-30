@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { CustomContext } from '../../hoc/mainContentContext';
 import logo from '../../assets/img/logo.jpg';
 import favourite from '../../assets/icons/favourite.svg';
-import cart from '../../assets/icons/cart.svg';
+import cartImg from '../../assets/icons/cart.svg';
 import { HandySvg } from 'handy-svg';
-import HeaderMobile from '../header-mobile/HeaderMobile';
 
 const Header = () => {
-  const [nav, setNav] = useState(true);
-  const active = nav ? 'left' : '';
-  const setActive = nav ? 'open' : 'close';
-  const width = window.innerWidth;
+  const { cart, setNav, nav } = useContext(CustomContext);
+  const { pathname } = useLocation();
+  const setActive = !nav ? 'open' : 'close';
+
+  useEffect(() => setNav(false), [pathname]);
 
   return (
     <>
-      {/*<HeaderMobile/>*/}
       <header className='header'>
         <nav className='header__nav'>
           <div className='header__blockImg'>
@@ -22,7 +22,7 @@ const Header = () => {
               <img src={logo} alt='logo' className='header__img' />
             </Link>
           </div>
-          <ul className={`header__nav__bar ${active}`}>
+          <ul className={`header__nav__bar `}>
             <li className='header__nav__bar__item header__nav__bar__item__prelast'>
               <Link to='/about'>О нас</Link>
             </li>
@@ -35,19 +35,19 @@ const Header = () => {
             <li className='header__nav__bar__item header__nav__bar__item__prelast'>
               <Link to='/contacts'>Контакты</Link>
             </li>
-            <div className='header__info'>
-              <li className='header__nav__bar__item header__special'>
-                <Link to='/favourite'>
-                  <HandySvg src={favourite} width='30' height='30' alt='cart' />
-                </Link>
-              </li>
-              <li className='header__nav__bar__item header__nav__bar__item__last header__special'>
-                <Link to='/cart'>
-                  <HandySvg src={cart} width='30' height='30' alt='cart' />
-                  <span className='header__cart'>1</span>
-                </Link>
-              </li>
-            </div>
+            <li className='header__nav__bar__item header__special header__special-heart'>
+              <Link to='/favourite'>
+                <HandySvg src={favourite} width='30' height='30' alt='cart' />
+              </Link>
+            </li>
+            <li className='header__nav__bar__item header__nav__bar__item__last header__special header__special-cart'>
+              <Link to='/cart'>
+                <HandySvg src={cartImg} width='30' height='30' alt='cart' />
+                {cart.length !== 0 && (
+                  <span className='header__cart'>{cart.length}</span>
+                )}
+              </Link>
+            </li>
           </ul>
           <div
             onClick={() => setNav(!nav)}

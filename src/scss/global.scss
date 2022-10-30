@@ -1,5 +1,6 @@
 #root {
   display: flex;
+  transition: all 0.3s ease-in-out;
 }
 
 body {
@@ -16,6 +17,6 @@ body {
   border: 1px solid red;
 }
 
-.validationNormal{
+.validationNormal {
   border: 1px solid #ced4da;
 }

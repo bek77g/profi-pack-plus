@@ -1,5 +1,6 @@
 .mainPageSearchCards {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 350px);
   grid-template-rows: repeat(2, 170px);
   grid-auto-rows: 170px;

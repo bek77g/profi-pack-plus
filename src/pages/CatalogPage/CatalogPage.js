@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import SEO from '../../hoc/SEO';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 import arr from '../../assets/icons/arr.svg';
 import Form from 'react-bootstrap/Form';
 import CatalogPageCards from './components/CatalogPageCards/CatalogPageCards';
-import { Link, useParams } from 'react-router-dom';
+import {
+  createSearchParams,
+  Link,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import axios from 'axios';
 
 const CatalogPage = () => {
   const { subCatalog } = useParams();
-  const [priceValue, setPriceValue] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [sortType, setSortType] = useState('priceInc');
+  const [priceValue, setPriceValue] = useState({
+    min: 0,
+    max: 5000,
+  });
+
+  const { min, max } = priceValue;
 
   const [subCatalogSeo, setSubCatalogSeo] = useState({});
   const [catalogOfSubcatalog, setCatalogOfSubcatalog] = useState('');
@@ -17,7 +32,7 @@ const CatalogPage = () => {
   useEffect(() => {
     axios
       .get(
-        `/api/sub-catalogs/${subCatalog}?populate=deep
+        `/api/sub-catalogs/${subCatalog}
     `
       )
       .then(({ data }) => {
@@ -30,6 +45,10 @@ const CatalogPage = () => {
 
   return (
     <>
+      <SEO
+        SeoTitle={subCatalogSeo?.SeoTitle}
+        SeoDescription={subCatalogSeo?.SeoDescription}
+      />
       <div className='catalogPage'>
         <div className='catalogPage__top'>
           <span>
@@ -50,9 +69,10 @@ const CatalogPage = () => {
         <div className='catalogPage__mid'>
           <div></div>
           <div className='catalogPage__mid__select'>
-            <select name='' id=''>
-              <option value='1'>По цене</option>
-              <option value='1'>По дате</option>
+            <select onChange={(e) => setSortType(e.target.value)}>
+              <option value='priceInc'>По возрастанию цены</option>
+              <option value='priceDec'>По убыванию цены</option>
+              <option value='priceDate'>По дате</option>
             </select>
           </div>
         </div>
@@ -60,18 +80,32 @@ const CatalogPage = () => {
           <div className='catalogPage__content__left'>
             <span>Параметры</span>
             <div className='catalogPage__content__left__price'>
-              <Form.Label>Цена: {priceValue} сом</Form.Label>
-              <Form.Range
-                onChange={(e) => setPriceValue(e.target.value)}
-                defaultValue='0'
-                min='0'
-                max='10000'
+              <Form.Label>
+                Цена: <br /> от {min} до {max} сом
+              </Form.Label>
+              <InputRange
+                step={5}
+                formatLabel={(value) => null}
+                draggableTrack={false}
+                allowSameValues={false}
+                maxValue={10000}
+                minValue={0}
+                value={priceValue}
+                onChange={setPriceValue}
+                onChangeComplete={() =>
+                  setSearchParams({ priceMin: min, priceMax: max })
+                }
               />
               от 0 до 10.000 сом
             </div>
           </div>
           <div className='catalogPage__content__right'>
-            <CatalogPageCards products={products} />
+            <CatalogPageCards
+              products={products}
+              sortType={sortType}
+              minPrice={min}
+              maxPrice={max}
+            />
           </div>
         </div>
       </div>

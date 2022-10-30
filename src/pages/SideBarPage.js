@@ -1,9 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { CustomContext } from '../hoc/mainContentContext';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const SideBarPage = () => {
-  const { baseUrl, catalogs } = useContext(CustomContext);
+  const { baseUrl, catalogs, nav, setNav } = useContext(CustomContext);
+  let menuRef = useRef();
+
+  const [mobile, setMobile] = useState('');
+
+  useEffect(() => {
+    if (window.innerWidth <= 950) setMobile('mobile');
+  }, []);
+  useEffect(() => {
+    document.addEventListener('mousedown', (e) =>
+      !menuRef.current.contains(e.target) ? setNav(false) : null
+    );
+  });
 
   const setSubCategoryToList = (sub_catalogs, fromToSlug) => {
     return (
@@ -14,13 +28,18 @@ const SideBarPage = () => {
               title={Description}
               key={id}
               className='sideBarBlock__sub__nav__bar__item sideBarImg'>
-              <Link to={`${fromToSlug}/${Slug}`}>
-                <img
-                  src={`${baseUrl}${Icon?.formats.thumbnail.url}`}
-                  alt={Title}
-                  className='sideBarSub__img'
-                />
-              </Link>
+              {Icon === null || Icon === undefined ? (
+                <div className='sideBarSub__img-skeleton'></div>
+              ) : (
+                <Link to={`${fromToSlug}/${Slug}`}>
+                  <img
+                    src={`${baseUrl}${Icon?.url}`}
+                    alt={Title}
+                    className='sideBarSub__img'
+                  />
+                </Link>
+              )}
+
               <Link to={`${fromToSlug}/${Slug}`}>
                 <p className='sideBarSub__text'>{Title}</p>
               </Link>
@@ -40,11 +59,16 @@ const SideBarPage = () => {
                 key={id}
                 className='sideBar__content__nav__items__item sideBar__block__items '>
                 <Link to={`/${Slug}`}>
-                  <img
-                    src={`${baseUrl}${Icon?.formats.thumbnail.url}`}
-                    alt={Title}
-                    className='sideBar__img'
-                  />
+                  {Icon !== null && (
+                    <img
+                      src={`${baseUrl}${Icon?.url}`}
+                      alt={Title}
+                      className='sideBar__img'
+                    />
+                  )}
+                  {Icon === null && (
+                    <div className='sideBar__img-skeleton'></div>
+                  )}
                 </Link>
                 <Link to={`/${Slug}`}>
                   {' '}
@@ -67,7 +91,9 @@ const SideBarPage = () => {
   };
   return (
     <div className='sideBar'>
-      <div className='sideBar__pos'>
+      <div
+        ref={menuRef}
+        className={`sideBar__pos ${mobile} ${nav ? '' : 'left'}`}>
         <div className='sideBar__content__burger'>
           <div className='sideBar__content__burger__left'>
             <span></span>

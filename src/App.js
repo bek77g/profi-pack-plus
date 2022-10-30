@@ -8,20 +8,37 @@ import SideBarPage from './pages/SideBarPage';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import Footer from './layout/footer/Footer';
 import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
-import ContactsPage from './pages/ContactsPage/ContactsPage';
-import AboutPage from './pages/AboutPage/AboutPage';
 import PartnershipPage from './pages/PartnershipPage/PartnershipPage';
-import OrderPage from './pages/OrderPage/OrderPage';
 import CartPage from './pages/CartPage/CartPage';
-import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import FavouritePage from './pages/FavouritePage/FavouritePage';
 import SubCategoryPage from './pages/SubCategoryPage/SubCategoryPage';
 import SubCategoryPageCards from './pages/SubCategoryPage/components/SubCategoryPageCards';
+import NotFounf from './pages/NotFound/NotFounf';
+// import { ReviewsConfigContext, ReviewsProvider } from 'strapi-ratings-client';
+// import { useContext } from 'react';
+// import { CustomContext } from './hoc/mainContentContext';
+// import { useEffect } from 'react';
+
 const MainPage = React.lazy(() => import('./pages/MainPage/MainPage'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage/AboutPage'));
+const OrderPage = React.lazy(() => import('./pages/OrderPage/OrderPage'));
+const ContactsPage = React.lazy(() =>
+  import('./pages/ContactsPage/ContactsPage')
+);
 
 function App() {
+  // const { baseUrl } = useContext(CustomContext);
+  // const { setUser } = useContext(ReviewsConfigContext);
+
+  // useEffect(
+  //   () =>
+  //     setUser(),
+  //   []
+  // );
+
   return (
     <>
+      {/* <ReviewsProvider apiURL={baseUrl}> */}
       <Suspense fallback={Loading}>
         <BrowserRouter>
           <SideBarPage />
@@ -31,16 +48,19 @@ function App() {
               <Routes>
                 <Route path='/' element={<MainPage />} />
                 <Route path='/:catalog/:subCatalog' element={<CatalogPage />} />
-                <Route path='/products' element={<CatalogPageProducts />} />
+                <Route
+                  path='/:catalog/:subCatalog/:product'
+                  element={<CatalogPageProducts />}
+                />
                 <Route path='/about' element={<AboutPage />} />
                 <Route path='/partnership' element={<PartnershipPage />} />
                 <Route path='/order' element={<OrderPage />} />
                 <Route path='/contacts' element={<ContactsPage />} />
                 <Route path='/cart' element={<CartPage />} />
-                <Route path='/checkout' element={<CheckoutPage />} />
                 <Route path='/favourite' element={<FavouritePage />} />
                 <Route path='/:catalog' element={<SubCategoryPage />} />
                 <Route path='/cards' element={<SubCategoryPageCards />} />
+                <Route path='*' element={<NotFounf />} />
               </Routes>
               <Footer />
             </div>
@@ -48,15 +68,8 @@ function App() {
           {Toaster}
         </BrowserRouter>
       </Suspense>
+      {/* </ReviewsProvider> */}
     </>
-
-    // <div className="wrapper">
-    //     <div className="container">
-    //         <Header/>
-    //         <PageContent/>
-    //     </div>
-    //     <Footer/>
-    // </div>
   );
 }
 

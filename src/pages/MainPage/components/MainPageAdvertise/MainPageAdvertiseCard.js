@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 
 const MainPageAdvertiseCard = () => {
-  const { baseURL, discount } = useContext(CustomContext);
+  const { baseUrl, MainPageData } = useContext(CustomContext);
   const { title, url, priceBefore, currentPrice, discountPeriod, img } =
-    discount[0];
+    MainPageData.discount[0];
   let navigate = useNavigate();
   return (
     <div className='mainPageAdvertiseCard'>
@@ -21,7 +21,7 @@ const MainPageAdvertiseCard = () => {
         <div
           className='mainPageAdvertiseCard__mid__img'
           style={{
-            backgroundImage: `url(${baseURL}${img.url}})`,
+            background: `url(${baseUrl}${img.url}) center/contain no-repeat`,
           }}></div>
         <div className='mainPageAdvertiseCard__mid__description'>
           <p>{title}</p>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import arr from '../../../assets/icons/arr.svg';
 import Form from 'react-bootstrap/Form';
-import CatalogPageCards from '../../CatalogPage/components/CatalogPageCards/CatalogPageCards';
 import secondCatalog from '../../../components/constants/secondCatalog';
-import heart from '../../../assets/icons/favourite.svg';
 import { Link } from 'react-router-dom';
 import { HandySvg } from 'handy-svg';
 import cart from '../../../assets/icons/cart.svg';
@@ -19,8 +17,15 @@ const Products = (props) => {
 
   return (
     <div className='mainPagePopular__catalog__cards__card'>
+      <div className='mainPagePopular__catalog__cards__card__new'>Новинка</div>
       <div className='mainPagePopular__catalog__cards__card__heart'>
-        <img src={heart} alt='heart' />
+        <p class='icon'>
+          <p>
+            <svg width='24' height='24'>
+              <use href='#favourite.2a1d5b83572b289bc5592a74153597a1'></use>
+            </svg>
+          </p>
+        </p>
       </div>
       <div className='mainPagePopular__catalog__cards__card__img'>
         <Link to='/products'>
@@ -51,7 +56,8 @@ const Products = (props) => {
             -
           </button>
           <input
-            type='number'
+            type='text'
+            pattern='[0-9]{1,5}'
             className='form-control form-control-color'
             value={count}
           />

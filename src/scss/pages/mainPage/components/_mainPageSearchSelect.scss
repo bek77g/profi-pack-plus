@@ -1,3 +1,21 @@
-.mainPageSearchSelect{
+.mainPageSearchSelect {
+  position: relative;
+  z-index: 5;
+  padding-right: 70px;
   margin-bottom: 50px;
+  &-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    height: 100%;
+    padding: 6px 10px;
+    background: #1c62cd;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+  &-btn:disabled {
+    background: #174b98;
+  }
 }

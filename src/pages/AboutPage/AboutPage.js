@@ -1,47 +1,54 @@
-import React from 'react';
-import arr from "../../assets/icons/arr.svg";
-import {HandySvg} from "handy-svg";
+import React, { useContext } from 'react';
+import ReactMarkdown from 'react-markdown';
+import SEO from '../../hoc/SEO';
+import arr from '../../assets/icons/arr.svg';
+import { HandySvg } from 'handy-svg';
+import { CustomContext } from '../../hoc/mainContentContext';
+import { Link } from 'react-router-dom';
+import Loading from '../../layout/loading/Loading';
 
 const AboutPage = () => {
-    return (
-        <div className="about">
-            <div className="about__top">
-                <span>Главная</span>
-                <span>
-                    <HandySvg src={arr} width="6" height="9"/>
-                </span>
-                <span>О нас</span>
-                <div className="about__top__title">
-                    <h2>Наша компания</h2>
-                </div>
-            </div>
-            <div className="about__mid">
-                <p><b>ProfiPuckPlus</b> онлайн маркет – товаров для дома, офиса и промышленности.</p>
-                <p>Более 200 тысяч наименований, среди которых Вы непременно точно найдете то, что искали: электроника,
-                    бытовая техника , компьютерные комплектующие, программное обеспечение ,сетевое, охранное и монтажное
-                    оборудование , книги, игрушки, детские товары, косметика, садовый инструмент ,товары для красоты и
-                    здоровья товары для спорта и отдыха и многое другое по выгодным ценам.
-                </p>
-            </div>
-            <div className="about__bottom">
-                <div className="about__bottom__title">
-                    <h2>Наши возможности</h2>
-                    <p>Онлайн маркет ProfiPuckPlus это сеть с единым форматом и специальной концепцией дизайна. Постоянное
-                        пополнение ассортимента ,высокая скорость работы, индивидуальный подход, широкий ассортимент
-                        товаров, быстрая доставка и оперативное обслуживание во всех основных городах Кыргызской
-                        Республики и Республики Казахстан.
-                    </p>
-                    <p>Наша высококлассная курьерская служба, работающая во всех крупных городах Кыргызстана и
-                        Казахстана доставит заказ прямо до Ваших дверей в удобное для Вас время. А также Вы можете
-                        забрать заказ сами из наших собственных пунктов выдачи заказов в Кыргызстане и Казахстане.
-                    </p>
-                    <p>Помимо эффективного формата розничной торговли и ориентированной на покупателя концепции
-                        магазина, компания предлагает клиентам высококлассную сервисную поддержку.
-                    </p>
-                </div>
-            </div>
+  const { AboutPageData } = useContext(CustomContext);
+  const { AboutCompany, OurCapabilities, AboutPageSEO } = AboutPageData;
+  return (
+    <>
+      <SEO
+        SeoTitle={AboutPageSEO?.SeoTitle || 'ProfiPackPlus - О нас'}
+        SeoDescription={AboutPageSEO?.SeoDescription || 'Подробнее о нас '}
+      />
+      <div className='about'>
+        <div className='about__top'>
+          <Link to='/'>
+            Главная{' '}
+            <span>
+              <HandySvg src={arr} width='6' height='9' />
+            </span>
+          </Link>
+          <span>О нас</span>
+          <div className='about__top__title'>
+            <h2>Наша компания</h2>
+          </div>
         </div>
-    );
+        <div className='about__mid order__self '>
+          {AboutCompany !== '' ? (
+            <ReactMarkdown children={AboutCompany} />
+          ) : (
+            <Loading />
+          )}
+        </div>
+        <div className='about__bottom order__self '>
+          <div className='about__bottom__title'>
+            <h2>Наши возможности</h2>
+          </div>
+          {OurCapabilities !== '' ? (
+            <ReactMarkdown children={OurCapabilities} />
+          ) : (
+            <Loading />
+          )}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default AboutPage;
