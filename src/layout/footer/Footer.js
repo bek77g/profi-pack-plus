@@ -68,23 +68,10 @@ const Footer = () => {
           <div className='footer__content__app'>
             <ul className='footer__content__app__items'>
               <li className='footer__content__app__items__item'>
-                <a href='/'>
-                  <img src={insta} alt='insta' />
-                </a>
-              </li>
-              <li className='footer__content__app__items__item'>
-                <a href='/'>
-                  <img src={vk} alt='vk' />
-                </a>
-              </li>
-              <li className='footer__content__app__items__item'>
-                <a href='/'>
-                  <img src={facebook} alt='facebook' />
-                </a>
-              </li>
-              <li className='footer__content__app__items__item'>
-                <a href='/'>
-                  <img src={youtube} alt='youtube' />
+                <a
+                  href='https://www.instagram.com/profipackplus.kg/'
+                  target='_blank'>
+                  <img src={insta} alt='insta' /> <span>instagram</span>
                 </a>
               </li>
             </ul>

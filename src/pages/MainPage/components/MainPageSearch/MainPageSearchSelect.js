@@ -54,12 +54,12 @@ const MainPageSearchSelect = () => {
         placeholder='Поиск товара'
         onChange={handleInputChange}
       />
-      <button
+      {/* <button
         disabled={!!searchValue}
         className='mainPageSearchSelect-btn'
         onClick={() => handleSearchSubmit()}>
         Search
-      </button>
+      </button> */}
     </div>
   );
 };

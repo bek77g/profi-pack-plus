@@ -38,12 +38,16 @@
       &__card {
         &__top {
           margin-bottom: 20px;
-
+          display: flex;
+          gap: 8px;
           span {
             background: #1c62cd;
             border-radius: 3px;
-            padding: 13px 24px;
+            padding: 8px 18px;
             color: #ffffff;
+          }
+          & .bestseller {
+            background-color: #d6192b;
           }
         }
 
@@ -92,6 +96,7 @@
             }
           }
           p {
+            text-align: center;
             &:last-child {
               font-style: normal;
               font-weight: 700;

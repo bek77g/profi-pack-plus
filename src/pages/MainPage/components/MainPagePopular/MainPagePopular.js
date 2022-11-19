@@ -105,7 +105,11 @@ const Product = ({ data }) => {
           </button>
           <input
             type='text'
-            pattern='[0-9]{1,5}'
+            onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+            onChange={(e) => {
+              let num = +e.target.value;
+              setCount(num >= Count ? limitCount(num, Count) : num);
+            }}
             className='form-control form-control-color'
             value={count}
           />

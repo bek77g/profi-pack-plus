@@ -7,6 +7,7 @@ import { HandySvg } from 'handy-svg';
 import cart from '../../../assets/icons/cart.svg';
 import PaginationComp from '../../../components/Pagination';
 import { toast, Toaster } from 'react-hot-toast';
+import { limitCount } from '../../../hoc/Hooks';
 
 const Products = (props) => {
   const [count, setCount] = useState(1);
@@ -17,7 +18,14 @@ const Products = (props) => {
 
   return (
     <div className='mainPagePopular__catalog__cards__card'>
-      <div className='mainPagePopular__catalog__cards__card__new'>Новинка</div>
+      {props.data.New && (
+        <div className='mainPagePopular__catalog__cards__card__new'>
+          Новинка
+        </div>
+      )}
+      {props.data.BestSeller && (
+        <div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
+      )}
       <div className='mainPagePopular__catalog__cards__card__heart'>
         <p class='icon'>
           <p>
@@ -57,7 +65,15 @@ const Products = (props) => {
           </button>
           <input
             type='text'
-            pattern='[0-9]{1,5}'
+            onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+            onChange={(e) => {
+              let num = +e.target.value;
+              setCount(
+                num >= props.data.Count
+                  ? limitCount(num, props.data.Count)
+                  : num
+              );
+            }}
             className='form-control form-control-color'
             value={count}
           />

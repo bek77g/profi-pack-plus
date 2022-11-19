@@ -74,6 +74,7 @@ const CartPageProducts = () => {
                                     Count,
                                     Gallery,
                                     quantity,
+                                    MinCount,
                                   }) => {
                                     return (
                                       <div
@@ -100,13 +101,21 @@ const CartPageProducts = () => {
                                               type='button'
                                               className='btn btn-info'
                                               onClick={() =>
-                                                editCart(id, quantity - 1)
+                                                editCart(
+                                                  id,
+                                                  quantity <= MinCount
+                                                    ? MinCount
+                                                    : quantity - MinCount
+                                                )
                                               }>
                                               -
                                             </button>
                                             <input
                                               type='text'
-                                              pattern='[0-9]{1,5}'
+                                              onKeyPress={(e) =>
+                                                !/[0-9]/.test(e.key) &&
+                                                e.preventDefault()
+                                              }
                                               class='form-control form-control-color'
                                               value={quantity}
                                             />
@@ -121,7 +130,7 @@ const CartPageProducts = () => {
                                                         quantity,
                                                         Count
                                                       )
-                                                    : quantity + 1
+                                                    : quantity + MinCount
                                                 )
                                               }>
                                               +

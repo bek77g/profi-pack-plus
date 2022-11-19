@@ -13,6 +13,7 @@ import { useContext } from 'react';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { limitCount } from '../../../../hoc/Hooks';
 import ReactMarkdown from 'react-markdown';
+import Carousel from 'react-bootstrap/Carousel';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -43,6 +44,7 @@ const CatalogPageProducts = () => {
     ProductSEO,
     Title,
     sub_catalog,
+    BestSeller,
     MinCount,
     favorite,
   } = favsProduct(productData);
@@ -93,6 +95,14 @@ const CatalogPageProducts = () => {
     });
   };
 
+  const handleSelect = (selectedIndex, e) => {
+    if (selectedIndex >= Gallery.length || selectedIndex < 0) {
+      this.setThumbState(0);
+    } else if (selectedIndex !== thumbState) {
+      setThumbState(selectedIndex);
+    }
+  };
+
   return (
     <>
       <SEO
@@ -134,85 +144,34 @@ const CatalogPageProducts = () => {
                 <div className='catalogPageProducts__content__left__card__top'>
                   {!Discount && <span>Скидка</span>}
                   {New && <span>Новинка</span>}
+                  {BestSeller && <span className='bestseller'>Хит</span>}
                 </div>
                 <div className='catalogPageProducts__content__left__card__mid'>
-                  <div
-                    id='carouselExampleDark'
-                    className='carousel carousel-dark slide'
-                    data-bs-ride='carousel'>
-                    <div className='carousel-inner catalogPageCarouselCard'>
-                      <div className='carousel-inner'>
-                        {Gallery.map(({ id, alternativeText, url }, idx) => {
-                          return (
-                            <div
-                              key={id}
-                              className={`carousel-item ${
-                                idx === 0 ? 'active' : ''
-                              }`}>
-                              <img
-                                style={{
-                                  width: '100%',
-                                  maxHeight: '390px',
-                                  minWidth: '300px',
-                                }}
-                                className='img-thumbnail'
-                                src={`${baseUrl}${url}`}
-                                alt={alternativeText}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {Gallery.length > 1 && (
-                        <>
-                          <button
-                            className='carousel-control-prev'
-                            type='button'
-                            onClick={() =>
-                              setTimeout(
-                                () =>
-                                  setThumbState(
-                                    thumbState === 0
-                                      ? Gallery.length - 1
-                                      : thumbState - 1
-                                  ),
-                                400
-                              )
-                            }
-                            data-bs-target='#carouselExampleDark'
-                            data-bs-slide='prev'>
-                            <span
-                              className='carousel-control-prev-icon'
-                              aria-hidden='true'></span>
-                            <span className='visually-hidden'>Previous</span>
-                          </button>
-                          <button
-                            className='carousel-control-next'
-                            type='button'
-                            onClick={() =>
-                              setTimeout(
-                                () =>
-                                  setThumbState(
-                                    Gallery.length - 1 === thumbState
-                                      ? 0
-                                      : thumbState + 1
-                                  ),
-                                400
-                              )
-                            }
-                            data-bs-target='#carouselExampleDark'
-                            data-bs-slide='next'>
-                            <span
-                              className='carousel-control-next-icon'
-                              aria-hidden='true'></span>
-                            <span className='visually-hidden'>Next</span>
-                          </button>
-                        </>
-                      )}
-                    </div>
-                    <div className='catalogPageSubCarousel d-flex justify-content-between mt-3'>
-                      {Gallery.length > 1 && productSliderThumbs()}
-                    </div>
+                  <Carousel
+                    indicators={false}
+                    className='catalogPageCarouselCard'
+                    variant='dark'
+                    onSelect={handleSelect}
+                    activeIndex={thumbState}>
+                    {Gallery.map(({ id, alternativeText, url }, idx) => {
+                      return (
+                        <Carousel.Item key={id}>
+                          <img
+                            style={{
+                              width: '100%',
+                              maxHeight: '390px',
+                              minWidth: '300px',
+                            }}
+                            className='img-thumbnail'
+                            src={`${baseUrl}${url}`}
+                            alt={alternativeText}
+                          />
+                        </Carousel.Item>
+                      );
+                    })}
+                  </Carousel>
+                  <div className='catalogPageSubCarousel d-flex justify-content-between mt-3'>
+                    {Gallery.length > 1 && productSliderThumbs()}
                   </div>
                 </div>
               </div>
@@ -223,7 +182,7 @@ const CatalogPageProducts = () => {
                   {Title}
                 </div>
                 <p>
-                  Код товара: {sub_catalog.catalog.id}-{sub_catalog.id}-{id}{' '}
+                  Код товара: {sub_catalog.catalog.id}-{sub_catalog.id}-{id}
                 </p>
                 <div className='mb-3 catalogInfo'>
                   <span onClick={() => addToFav()}>
@@ -246,11 +205,11 @@ const CatalogPageProducts = () => {
                     </p>
                   )}
                   <p>
-                    {Price} сом/{CountType}(
+                    {Price} сом/{CountType}
+                    <br />
                     <span className='catalogPageProducts__content__left__card__bottom-minCount'>
-                      {count * Price} сом
+                      ({count * Price} сом)
                     </span>
-                    )
                   </p>
                 </div>
                 <div className='catalogPagePopular__catalogs__cards__card__quantity justify-content-start mb-0'>
@@ -264,7 +223,13 @@ const CatalogPageProducts = () => {
                   </button>
                   <input
                     type='text'
-                    pattern='[0-9]{1,5}'
+                    onKeyPress={(e) =>
+                      !/[0-9]/.test(e.key) && e.preventDefault()
+                    }
+                    onChange={(e) => {
+                      let num = +e.target.value;
+                      setCount(num >= Count ? limitCount(num, Count) : num);
+                    }}
                     className='form-control form-control-color'
                     value={count}
                   />
