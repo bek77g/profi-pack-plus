@@ -3,15 +3,17 @@ import { CustomContext } from '../hoc/mainContentContext';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useWindowDimensions } from '../hooks/useWindowDimensions';
 
 const SideBarPage = () => {
   const { baseUrl, catalogs, nav, setNav } = useContext(CustomContext);
+  const { width } = useWindowDimensions();
   let menuRef = useRef();
 
   const [mobile, setMobile] = useState('');
 
   useEffect(() => {
-    if (window.innerWidth <= 950) setMobile('mobile');
+    if (width <= 950) setMobile('mobile');
   }, []);
   useEffect(() => {
     document.addEventListener('mousedown', (e) =>

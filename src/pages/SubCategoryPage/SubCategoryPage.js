@@ -13,7 +13,7 @@ import { CustomContext } from '../../hoc/mainContentContext';
 const SubCategoryPage = () => {
   const { baseUrl } = useContext(CustomContext);
   const { catalog } = useParams();
-  const { pathname } = useLocation();
+  const location = useLocation();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,7 @@ const SubCategoryPage = () => {
   const [subCatalogs, setSubCatalogs] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(
         `/api/sub-catalogs?populate=deep&filters[catalog][Slug][$eq]=${catalog}
@@ -33,7 +34,7 @@ const SubCategoryPage = () => {
         setSubCatalogs(data.data);
         setLoading(false);
       });
-  }, [pathname]);
+  }, [location]);
 
   const showSubCatalogs = () => {
     return subCatalogs.map(({ id, Title, Slug, Icon }) => {
@@ -83,10 +84,12 @@ const SubCategoryPage = () => {
           <div
             className='catalogPage__content__right'
             style={{ margin: '0 auto' }}>
-            {!loading ? (
+            {loading && <Loading />}
+            {loading && !subCatalogs && <p>Ничего не найдено</p>}
+            {!loading && subCatalogs && (
               <>
                 <div className='catalogPagePopular__catalogs__cards'>
-                  {subCatalogs && showSubCatalogs()}
+                  {showSubCatalogs()}
                 </div>
                 {subCatalogs.length >= 12 && (
                   <PaginationComp
@@ -96,8 +99,6 @@ const SubCategoryPage = () => {
                   />
                 )}
               </>
-            ) : (
-              <Loading />
             )}
           </div>
         </div>

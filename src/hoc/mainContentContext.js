@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const CustomContext = createContext();
 export const MainContentContext = (props) => {
-  const baseUrl = 'http://localhost:1337';
+  const baseUrl = 'http://app.profipack.kg';
   axios.defaults.baseURL = baseUrl;
   axios.defaults.headers.common = {
     Authorization: `Bearer ${process.env.REACT_APP_JWT_SECRET_KEY}`,
