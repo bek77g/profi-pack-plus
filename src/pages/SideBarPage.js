@@ -16,8 +16,16 @@ const SideBarPage = () => {
     if (width <= 950) setMobile('mobile');
   }, []);
   useEffect(() => {
-    document.addEventListener('mousedown', (e) =>
-      width >= 950 && !menuRef.current.contains(e.target) ? setNav(false) : null
+    document.addEventListener(
+      'mousedown',
+      (e) =>
+        (!document.querySelector('.header__burger').contains(e.target) ||
+          !document
+            .querySelector('.header__burger')
+            .contains(e.target)
+            .querySelector('span') ||
+          !menuRef.current.contains(e.target)) &&
+        setNav(false)
     );
   });
 
