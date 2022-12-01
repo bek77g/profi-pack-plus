@@ -59,7 +59,7 @@ const SideBarPage = () => {
             return (
               <li
                 key={id}
-                className='sideBar__content__nav__items__item sideBar__block__items '>
+                className={`sideBar__content__nav__items__item ${mobile} sideBar__block__items `}>
                 <Link to={`/${Slug}`}>
                   {Icon !== null && (
                     <img

@@ -54,7 +54,7 @@ const FavouritePage = () => {
               </span>
             </div>
             <div className='cartPageEmpty__title'>
-              Ваша каталог избранных пуст
+              Ваш каталог избранных пуст
             </div>
             <div className='cartPageEmpty__subtitle'>
               Самое время добавить в нее что-нибудь

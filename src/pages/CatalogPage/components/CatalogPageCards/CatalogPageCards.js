@@ -40,14 +40,16 @@ const Products = ({ data }) => {
 
   return (
     <div className='mainPagePopular__catalog__cards__card'>
-      {New && (
-        <div className='mainPagePopular__catalog__cards__card__new'>
-          Новинка
-        </div>
-      )}
-      {BestSeller && (
-        <div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
-      )}
+      <div className='mainPagePopular__catalog__cards__card__tags'>
+        {New && (
+          <div className='mainPagePopular__catalog__cards__card__new'>
+            Новинка
+          </div>
+        )}
+        {BestSeller && (
+          <div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
+        )}
+      </div>
       <div className='mainPagePopular__catalog__cards__card__heart'>
         <p
           class={`icon ${favorite ? 'active' : ''}`}

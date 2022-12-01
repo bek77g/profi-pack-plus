@@ -33,7 +33,17 @@ const SubCategoryPage = () => {
         setTitle(data.data[0].catalog.Title);
         setSubCatalogs(data.data);
         setLoading(false);
+      })
+      .catch((e) => {
+        setCatalogSeo({
+          SeoTitle: 'Не найдено',
+          SeoDescription: 'Не найдено',
+        });
+        setTitle('Не найдено');
+        setSubCatalogs([]);
+        setLoading(false);
       });
+    console.log('Render');
   }, [location]);
 
   const showSubCatalogs = () => {
@@ -77,16 +87,22 @@ const SubCategoryPage = () => {
               Главная <img src={arr} alt='' />
             </Link>
           </span>
-          <span>{title || 'Название'}</span>
-          <h2>{title || 'Название'}</h2>
+          <span>{title || catalog || 'Загрузка...'}</span>
+          {!loading && subCatalogs.length > 0 && (
+            <h2>{title || catalog || 'Загрузка...'}</h2>
+          )}
         </div>
         <div className='catalogPage__content'>
           <div
             className='catalogPage__content__right'
             style={{ margin: '0 auto' }}>
             {loading && <Loading />}
-            {loading && !subCatalogs && <p>Ничего не найдено</p>}
-            {!loading && subCatalogs && (
+            {!loading && !subCatalogs.length && (
+              <>
+                <h2>Ничего не найдено</h2>
+              </>
+            )}
+            {!loading && subCatalogs.length > 0 && (
               <>
                 <div className='catalogPagePopular__catalogs__cards'>
                   {showSubCatalogs()}

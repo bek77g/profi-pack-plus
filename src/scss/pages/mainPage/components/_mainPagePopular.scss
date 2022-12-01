@@ -32,7 +32,7 @@
 
       &__card {
         position: relative;
-        padding: 10px 15px 60px;
+        padding: 10px 15px 70px;
         background-color: #f9f9f9;
         border: 1px solid #cdcdcd;
         transition: all 0.3s ease;
@@ -50,6 +50,9 @@
         }
         &__new {
           background: #1c62cd;
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
           font-size: 12px;
           line-height: 13px;
           letter-spacing: 0.1em;
@@ -59,6 +62,9 @@
         }
         &__hit {
           background: #d6192b;
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
           font-size: 12px;
           line-height: 13px;
           letter-spacing: 0.1em;
@@ -75,18 +81,18 @@
             transition: all 0.1s;
             border-radius: 30%;
           }
-          .icon:hover,
+          .icon:active,
           .icon.active {
             transform: scale(1.1);
             padding: 1px 2px 0;
             transition: all 0.1s;
           }
-          .icon:first-child:hover,
+          .icon:first-child:active,
           .icon.active {
             background-color: #d6192b;
             border-radius: 50%;
           }
-          .icon:hover svg,
+          .icon:active svg,
           .icon.active svg {
             -webkit-filter: invert(1) contrast(150%);
             filter: invert(1) contrast(150%);
