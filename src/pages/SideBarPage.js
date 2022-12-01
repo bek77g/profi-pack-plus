@@ -17,7 +17,7 @@ const SideBarPage = () => {
   }, []);
   useEffect(() => {
     document.addEventListener('mousedown', (e) =>
-      !menuRef.current.contains(e.target) ? setNav(false) : null
+      width >= 950 && !menuRef.current.contains(e.target) ? setNav(false) : null
     );
   });
 
@@ -95,6 +95,7 @@ const SideBarPage = () => {
     <div className='sideBar'>
       <div
         ref={menuRef}
+        onClick={() => setNav(!nav)}
         className={`sideBar__pos ${mobile} ${nav ? '' : 'left'}`}>
         <div className='sideBar__content__burger'>
           <div className='sideBar__content__burger__left'>

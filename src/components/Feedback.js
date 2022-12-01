@@ -167,7 +167,7 @@ const Feedback = () => {
           </div>
         </div>
       </form>
-      <Toaster />
+      <Toaster position='bottom-center' />
     </div>
   );
 };

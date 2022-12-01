@@ -128,7 +128,7 @@ const SubCategoryPageCards = () => {
             <PaginationComp />
           </div>
         </div>
-        <Toaster />
+        <Toaster position='bottom-center' />
       </div>
     </div>
   );

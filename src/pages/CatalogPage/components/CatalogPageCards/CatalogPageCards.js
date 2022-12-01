@@ -161,7 +161,7 @@ const CatalogPageCards = ({ products, sortType, minPrice, maxPrice }) => {
           pageSize={products.length}
         />
       )}
-      <Toaster />
+      <Toaster position='bottom-center' />
     </>
   );
 };

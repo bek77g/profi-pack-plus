@@ -207,7 +207,7 @@ const CartPageProducts = () => {
                                 </div>
                               </div>
                             )}
-                            <Toaster />
+                            <Toaster position='bottom-center' />
                           </div>
                         </div>
                       </div>
@@ -485,7 +485,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
             <h2>Заказ успешно отправлен {'\u2713'}</h2>
           </div>
         )}
-        <Toaster />
+        <Toaster position='bottom-center' />
       </div>
     </div>
   );

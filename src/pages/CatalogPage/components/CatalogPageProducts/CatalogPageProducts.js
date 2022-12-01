@@ -261,7 +261,7 @@ const CatalogPageProducts = () => {
                 </p>
               </div>
             </div>
-            <Toaster />
+            <Toaster position='bottom-center' />
           </div>
           {/* <ReviewForm />
           <ErrorBox /> */}

@@ -180,7 +180,7 @@ const MainPagePopular = () => {
           })}
         </Carousel>
       )}
-      <Toaster />
+      <Toaster position='bottom-center' />
     </div>
   );
 };
