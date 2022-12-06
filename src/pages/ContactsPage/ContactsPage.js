@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SEO from '../../hoc/SEO';
 import work from '../../assets/icons/work.svg';
 import email from '../../assets/icons/email.svg';
@@ -7,11 +7,33 @@ import arr from '../../assets/icons/arr.svg';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { CustomContext } from '../../hoc/mainContentContext';
+import DG from '2gis-maps';
+
+import logo from '../../assets/favicon.ico';
 
 const ContactsPage = () => {
   const { ContactPageData } = useContext(CustomContext);
   const { Phone, Address, WorkSchedule, Mail, ContactPageSEO } =
     ContactPageData;
+
+  useEffect(() => {
+    let map;
+    map = DG.map('map-container', {
+      center: [42.88707, 74.597775],
+      zoom: 17,
+    });
+
+    const icon = DG.icon({
+      iconUrl: logo,
+      iconSize: [30, 30],
+      borderRadius: '100%',
+    });
+
+    DG.marker([42.88707, 74.597775], { icon, title: 'ProfiPackPlus' })
+      .addTo(map)
+      .bindPopup('ProfiPackPlus');
+  }, []);
+
   return (
     <>
       <SEO
@@ -95,17 +117,10 @@ const ContactsPage = () => {
           </div>
           <div className='col'>
             <div className='contacts__content__right'>
-              <div className='contacts__content__right__map'>
-                <iframe
-                  title='map'
-                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5848.16529649286!2d74.62744932490476!3d42.871099679656744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7aefd001863%3A0x2cb6c66ca4d4e24!2z0LzQuNC60YDQvtGA0LDQudC-0L0g0JLQvtGB0YLQvtC6LTUsINCR0LjRiNC60LXQug!5e0!3m2!1sru!2skg!4v1663847719636!5m2!1sru!2skg'
-                  allowFullScreen=''
-                  loading='
-                                lazy'
-                  referrerPolicy=''
-                  no-referrer-when-downgrade
-                />
-              </div>
+              <div
+                id='map-container'
+                className='contacts__content__right__map'
+                style={{ width: '100%', height: '100%' }}></div>
             </div>
           </div>
         </div>

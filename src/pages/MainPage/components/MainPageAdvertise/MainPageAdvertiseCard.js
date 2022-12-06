@@ -13,8 +13,8 @@ const MainPageAdvertiseCard = () => {
       <div className='mainPageAdvertiseCard__top'>
         <div className='mainPageAdvertiseCard__top__left'>Акция</div>
         <div className='mainPageAdvertiseCard__top__right'>
-          <p>{currentPrice}</p>
-          <p>{priceBefore}</p>
+          <p>{currentPrice} сом</p>
+          <p>{priceBefore} сом</p>
         </div>
       </div>
       <div className='mainPageAdvertiseCard__mid' onClick={() => navigate(url)}>
