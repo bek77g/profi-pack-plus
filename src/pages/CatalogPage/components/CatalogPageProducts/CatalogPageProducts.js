@@ -14,6 +14,7 @@ import { CustomContext } from '../../../../hoc/mainContentContext';
 import { limitCount } from '../../../../hoc/Hooks';
 import ReactMarkdown from 'react-markdown';
 import Carousel from 'react-bootstrap/Carousel';
+import Fancybox from '../../../../utils/FancyBox';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -147,29 +148,39 @@ const CatalogPageProducts = () => {
                   {BestSeller && <span className='bestseller'>Хит</span>}
                 </div>
                 <div className='catalogPageProducts__content__left__card__mid'>
-                  <Carousel
-                    indicators={false}
-                    className='catalogPageCarouselCard'
-                    variant='dark'
-                    onSelect={handleSelect}
-                    activeIndex={thumbState}>
-                    {Gallery.map(({ id, alternativeText, url }, idx) => {
-                      return (
-                        <Carousel.Item key={id}>
-                          <img
-                            style={{
-                              width: '100%',
-                              maxHeight: '390px',
-                              minWidth: '300px',
-                            }}
-                            className='img-thumbnail'
-                            src={`${baseUrl}${url}`}
-                            alt={alternativeText}
-                          />
-                        </Carousel.Item>
-                      );
-                    })}
-                  </Carousel>
+                  <Fancybox>
+                    <Carousel
+                      indicators={false}
+                      className='catalogPageCarouselCard'
+                      variant='dark'
+                      controls={Gallery.length > 1}
+                      onSelect={handleSelect}
+                      activeIndex={thumbState}>
+                      {Gallery.map(
+                        ({ id, alternativeText, url, width }, idx) => {
+                          return (
+                            <Carousel.Item key={id}>
+                              <a
+                                data-fancybox='slider'
+                                href={`${baseUrl}${url}`}
+                                data-sizes={`(max-width: ${width})`}>
+                                <img
+                                  style={{
+                                    width: '100%',
+                                    maxHeight: '390px',
+                                    minWidth: '300px',
+                                  }}
+                                  className='img-thumbnail'
+                                  src={`${baseUrl}${url}`}
+                                  alt={alternativeText}
+                                />
+                              </a>
+                            </Carousel.Item>
+                          );
+                        }
+                      )}
+                    </Carousel>
+                  </Fancybox>
                   <div className='catalogPageSubCarousel d-flex justify-content-between mt-3'>
                     {Gallery.length > 1 && productSliderThumbs()}
                   </div>

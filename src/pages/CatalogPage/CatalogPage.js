@@ -44,7 +44,7 @@ const CatalogPage = () => {
         setSubCatalogSeo(data.data.subCatalogSeo);
         setCatalogOfSubcatalog(data.data.catalog);
         setTitle(data.data.Title);
-        setProducts(data.data.products);
+        setProducts(data.data.products.filter((el) => el.publishedAt !== null));
         setLoading(false);
       })
       .catch((e) => {
