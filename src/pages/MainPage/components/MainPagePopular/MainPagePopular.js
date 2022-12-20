@@ -86,7 +86,7 @@ const Product = ({ data }) => {
               {Price} сом/{CountType}
               <br />
               <i style={{ fontStyle: 'initial', fontSize: '18px' }}>
-                {Price * count} сом
+                {(Price * count).toFixed(2)} сом
               </i>
             </p>
           </Link>

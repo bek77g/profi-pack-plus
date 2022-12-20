@@ -140,7 +140,7 @@ const CartPageProducts = () => {
 
                                         <div className='col-md-3 col-lg-2 col-xl-2 offset-lg-1 cartPageText'>
                                           <h6 className='mb-0'>
-                                            {Price * quantity} сом
+                                            {(Price * quantity).toFixed(2)} сом
                                           </h6>
                                         </div>
 
@@ -190,7 +190,7 @@ const CartPageProducts = () => {
                             <div className='text-center mb-5'>
                               <h5 className=''>Итого: </h5>
                               <h4>
-                                <b>{totalPrice} сом</b>
+                                <b>{totalPrice.toFixed(2)} сом</b>
                               </h4>
                             </div>
                             {!checkout && (
@@ -255,7 +255,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
           </td>
           <td style='padding: 20px 0 20px 10px; width: 70%'>
             ${Title}
-            <span style='float: right'>${Price * quantity}</span>
+            <span style='float: right'>${(Price * quantity).toFixed(2)}</span>
           </td>
         </tr>`;
     });

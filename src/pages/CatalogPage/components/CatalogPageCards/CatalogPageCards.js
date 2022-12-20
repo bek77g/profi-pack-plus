@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cart from '../../../../assets/icons/cart.svg';
 import PaginationComp from '../../../../components/Pagination';
 import { Link } from 'react-router-dom';
+import heart from '../../../../assets/icons/favourite.svg';
 import { HandySvg } from 'handy-svg';
 import { toast, Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
@@ -52,12 +53,10 @@ const Products = ({ data }) => {
       </div>
       <div className='mainPagePopular__catalog__cards__card__heart'>
         <p
-          class={`icon ${favorite ? 'active' : ''}`}
+          className={`icon ${favorite ? 'active' : ''}`}
           onClick={() => addToFav()}>
           <p>
-            <svg width='24' height='24'>
-              <use href='#favourite.2a1d5b83572b289bc5592a74153597a1'></use>
-            </svg>
+            <HandySvg width='24' height='24' src={heart} />
           </p>
         </p>
       </div>
@@ -80,7 +79,7 @@ const Products = ({ data }) => {
               {Price} сом/{CountType}
               <br />
               <i style={{ fontStyle: 'initial', fontSize: '18px' }}>
-                {Price * count} сом
+                {(Price * count).toFixed(2)} сом
               </i>
             </p>
           </Link>

@@ -219,7 +219,7 @@ const CatalogPageProducts = () => {
                     {Price} сом/{CountType}
                     <br />
                     <span className='catalogPageProducts__content__left__card__bottom-minCount'>
-                      ({count * Price} сом)
+                      ({(count * Price).toFixed(2)} сом)
                     </span>
                   </p>
                 </div>

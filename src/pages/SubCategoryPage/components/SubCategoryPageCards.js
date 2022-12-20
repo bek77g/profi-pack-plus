@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import arr from '../../../assets/icons/arr.svg';
+import heart from '../../../assets/icons/favourite.svg';
 import Form from 'react-bootstrap/Form';
 import secondCatalog from '../../../components/constants/secondCatalog';
 import { Link } from 'react-router-dom';
@@ -29,9 +30,7 @@ const Products = (props) => {
       <div className='mainPagePopular__catalog__cards__card__heart'>
         <p class='icon'>
           <p>
-            <svg width='24' height='24'>
-              <use href='#favourite.2a1d5b83572b289bc5592a74153597a1'></use>
-            </svg>
+            <HandySvg width='24' height='24' src={heart} />
           </p>
         </p>
       </div>
