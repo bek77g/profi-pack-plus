@@ -11,7 +11,9 @@ const Header = () => {
   const { pathname } = useLocation();
   const setActive = !nav ? 'open' : 'close';
 
-  useEffect(() => setNav(false), [pathname]);
+  useEffect(() => {
+    setNav(false);
+  }, [pathname]);
 
   return (
     <>

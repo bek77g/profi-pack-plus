@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SEO from '../../hoc/SEO';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
@@ -14,6 +14,7 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../../layout/loading/Loading';
+import { goToTop } from '../../hooks/goToTop';
 
 const CatalogPage = () => {
   const { subCatalog } = useParams();
@@ -32,6 +33,13 @@ const CatalogPage = () => {
   const [title, setTitle] = useState('');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    goToTop();
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -68,7 +76,7 @@ const CatalogPage = () => {
         SeoTitle={subCatalogSeo?.SeoTitle}
         SeoDescription={subCatalogSeo?.SeoDescription}
       />
-      <div className='catalogPage'>
+      <div className='catalogPage' ref={ref}>
         <div className='catalogPage__top'>
           <span>
             <Link to='/'>

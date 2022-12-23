@@ -15,6 +15,8 @@ import { limitCount } from '../../../../hoc/Hooks';
 import ReactMarkdown from 'react-markdown';
 import Carousel from 'react-bootstrap/Carousel';
 import Fancybox from '../../../../utils/FancyBox';
+import { goToTop } from '../../../../hooks/goToTop';
+import { useRef } from 'react';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -28,6 +30,7 @@ const CatalogPageProducts = () => {
   const [count, setCount] = useState(1);
   const [thumbState, setThumbState] = useState(0);
   const { catalog, subCatalog, product } = useParams();
+  const ref = useRef();
 
   const [loading, setLoading] = useState(true);
 
@@ -63,6 +66,8 @@ const CatalogPageProducts = () => {
         setLoading(false);
         setCount(res.MinCount);
       });
+    goToTop();
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   const addToCart = (id, quantity) => {
@@ -110,176 +115,180 @@ const CatalogPageProducts = () => {
         SeoTitle={ProductSEO?.SeoTitle}
         SeoDescription={ProductSEO?.SeoDescription}
       />
-      {!loading ? (
-        <div className='catalogPageProducts'>
-          <div className='catalogPageProducts__top'>
-            <span className={`icon ${favorite ? 'active' : ''}`}>
-              <Link to='/'>
-                Главная{' '}
-                <span>
-                  <img src={arr} alt='arrow' />
-                </span>
-              </Link>
-            </span>
-            <span>
-              <Link to={`/${catalog}`}>
-                {sub_catalog.catalog.Title}{' '}
-                <span>
-                  <img src={arr} alt='' />
-                </span>
-              </Link>
-            </span>
-            <span>
-              <Link to={`/${catalog}/${subCatalog}`}>
-                {sub_catalog.Title}{' '}
-                <span>
-                  <img src={arr} alt='arrow' />
-                </span>
-              </Link>
-            </span>
-            <span>{Title}</span>
-          </div>
-          <div className='catalogPageProducts__content'>
-            <div className='catalogPageProducts__content__left'>
-              <div className='catalogPageProducts__content__left__card'>
-                <div className='catalogPageProducts__content__left__card__top'>
-                  {!Discount && <span>Скидка</span>}
-                  {New && <span>Новинка</span>}
-                  {BestSeller && <span className='bestseller'>Хит</span>}
-                </div>
-                <div className='catalogPageProducts__content__left__card__mid'>
-                  <Fancybox>
-                    <Carousel
-                      indicators={false}
-                      className='catalogPageCarouselCard'
-                      variant='dark'
-                      controls={Gallery.length > 1}
-                      onSelect={handleSelect}
-                      activeIndex={thumbState}>
-                      {Gallery.map(
-                        ({ id, alternativeText, url, width }, idx) => {
-                          return (
-                            <Carousel.Item key={id}>
-                              <a
-                                data-fancybox='slider'
-                                href={`${baseUrl}${url}`}
-                                data-sizes={`(max-width: ${width})`}>
-                                <img
-                                  style={{
-                                    width: '100%',
-                                    maxHeight: '390px',
-                                    minWidth: '300px',
-                                  }}
-                                  className='img-thumbnail'
-                                  src={`${baseUrl}${url}`}
-                                  alt={alternativeText}
-                                />
-                              </a>
-                            </Carousel.Item>
-                          );
-                        }
-                      )}
-                    </Carousel>
-                  </Fancybox>
-                  <div className='catalogPageSubCarousel d-flex justify-content-between mt-3'>
-                    {Gallery.length > 1 && productSliderThumbs()}
+      <div className='catalogPageProducts' ref={ref}>
+        {!loading ? (
+          <>
+            <div className='catalogPageProducts__top'>
+              <span className={`icon ${favorite ? 'active' : ''}`}>
+                <Link to='/'>
+                  Главная{' '}
+                  <span>
+                    <img src={arr} alt='arrow' />
+                  </span>
+                </Link>
+              </span>
+              <span>
+                <Link to={`/${catalog}`}>
+                  {sub_catalog.catalog.Title}{' '}
+                  <span>
+                    <img src={arr} alt='' />
+                  </span>
+                </Link>
+              </span>
+              <span>
+                <Link to={`/${catalog}/${subCatalog}`}>
+                  {sub_catalog.Title}{' '}
+                  <span>
+                    <img src={arr} alt='arrow' />
+                  </span>
+                </Link>
+              </span>
+              <span>{Title}</span>
+            </div>
+            <div className='catalogPageProducts__content'>
+              <div className='catalogPageProducts__content__left'>
+                <div className='catalogPageProducts__content__left__card'>
+                  <div className='catalogPageProducts__content__left__card__top'>
+                    {!Discount && <span>Скидка</span>}
+                    {New && <span>Новинка</span>}
+                    {BestSeller && <span className='bestseller'>Хит</span>}
+                  </div>
+                  <div className='catalogPageProducts__content__left__card__mid'>
+                    <Fancybox>
+                      <Carousel
+                        indicators={false}
+                        className='catalogPageCarouselCard'
+                        variant='dark'
+                        controls={Gallery.length > 1}
+                        onSelect={handleSelect}
+                        activeIndex={thumbState}>
+                        {Gallery.map(
+                          ({ id, alternativeText, url, width }, idx) => {
+                            return (
+                              <Carousel.Item key={id}>
+                                <a
+                                  data-fancybox='slider'
+                                  href={`${baseUrl}${url}`}
+                                  data-sizes={`(max-width: ${width})`}>
+                                  <img
+                                    style={{
+                                      width: '100%',
+                                      maxHeight: '390px',
+                                      minWidth: '300px',
+                                    }}
+                                    className='img-thumbnail'
+                                    src={`${baseUrl}${url}`}
+                                    alt={alternativeText}
+                                  />
+                                </a>
+                              </Carousel.Item>
+                            );
+                          }
+                        )}
+                      </Carousel>
+                    </Fancybox>
+                    <div className='catalogPageSubCarousel d-flex justify-content-between mt-3'>
+                      {Gallery.length > 1 && productSliderThumbs()}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className='catalogPageProducts__content__right'>
-              <div className='catalogPageProducts__content__right__top'>
-                <div className='catalogPageProducts__content__right__top__title'>
-                  {Title}
-                </div>
-                <p>
-                  Код товара: {sub_catalog.catalog.id}-{sub_catalog.id}-{id}
-                </p>
-                <div className='mb-3 catalogInfo'>
-                  <span onClick={() => addToFav()}>
-                    <HandySvg src={heart} width='24' height='22' />
-                  </span>
-                  <span onClick={() => addCart(productData, count)}>
-                    <HandySvg src={cart} width='30' height='23' />
-                  </span>
-                  <span>
-                    Наличии: <span>{Count}</span>
-                  </span>
-                </div>
-                <span></span>
-              </div>
-              <div className='catalogPageProducts__content__wrapper'>
-                <div className='catalogPageProducts__content__left__card__bottom'>
-                  {Discount > 0 && (
-                    <p className='catalogPageProducts__content__left__card__bottom-discount'>
-                      {Discount} сом
-                    </p>
-                  )}
+              <div className='catalogPageProducts__content__right'>
+                <div className='catalogPageProducts__content__right__top'>
+                  <div className='catalogPageProducts__content__right__top__title'>
+                    {Title}
+                  </div>
                   <p>
-                    {Price} сом/{CountType}
-                    <br />
-                    <span className='catalogPageProducts__content__left__card__bottom-minCount'>
-                      ({(count * Price).toFixed(2)} сом)
+                    Код товара: {sub_catalog.catalog.id}-{sub_catalog.id}-{id}
+                  </p>
+                  <div className='mb-3 catalogInfo'>
+                    <span onClick={() => addToFav()}>
+                      <HandySvg src={heart} width='24' height='22' />
                     </span>
+                    <span onClick={() => addCart(productData, count)}>
+                      <HandySvg src={cart} width='30' height='23' />
+                    </span>
+                    <span>
+                      Наличии: <span>{Count}</span>
+                    </span>
+                  </div>
+                  <span></span>
+                </div>
+                <div className='catalogPageProducts__content__wrapper'>
+                  <div className='catalogPageProducts__content__left__card__bottom'>
+                    {Discount > 0 && (
+                      <p className='catalogPageProducts__content__left__card__bottom-discount'>
+                        {Discount} сом
+                      </p>
+                    )}
+                    <p>
+                      {Price} сом/{CountType}
+                      <br />
+                      <span className='catalogPageProducts__content__left__card__bottom-minCount'>
+                        ({(count * Price).toFixed(2)} сом)
+                      </span>
+                    </p>
+                  </div>
+                  <div className='catalogPagePopular__catalogs__cards__card__quantity justify-content-start mb-0'>
+                    <button
+                      type='button'
+                      className='btn btn-info'
+                      onClick={() =>
+                        setCount(
+                          count <= MinCount ? MinCount : count - MinCount
+                        )
+                      }>
+                      -
+                    </button>
+                    <input
+                      type='text'
+                      onKeyPress={(e) =>
+                        !/[0-9]/.test(e.key) && e.preventDefault()
+                      }
+                      onChange={(e) => {
+                        let num = +e.target.value;
+                        setCount(num >= Count ? limitCount(num, Count) : num);
+                      }}
+                      className='form-control form-control-color'
+                      value={count}
+                    />
+                    <button
+                      type='button'
+                      className='btn btn-info'
+                      onClick={() =>
+                        setCount(
+                          count >= Count
+                            ? limitCount(count, Count)
+                            : count + MinCount
+                        )
+                      }>
+                      +
+                    </button>
+                  </div>
+                  <div className='catalogPageProducts__content__right__bottom'>
+                    <button
+                      className='catalogPageProducts__content__right__bottom__btn'
+                      onClick={() => addToCart(productData, count)}>
+                      В корзину
+                    </button>
+                  </div>
+                </div>
+                <div className='catalogPageProducts__content__right__mid'>
+                  <h2>Описание</h2>
+                  <p>
+                    <ReactMarkdown children={Description} />
                   </p>
                 </div>
-                <div className='catalogPagePopular__catalogs__cards__card__quantity justify-content-start mb-0'>
-                  <button
-                    type='button'
-                    className='btn btn-info'
-                    onClick={() =>
-                      setCount(count <= MinCount ? MinCount : count - MinCount)
-                    }>
-                    -
-                  </button>
-                  <input
-                    type='text'
-                    onKeyPress={(e) =>
-                      !/[0-9]/.test(e.key) && e.preventDefault()
-                    }
-                    onChange={(e) => {
-                      let num = +e.target.value;
-                      setCount(num >= Count ? limitCount(num, Count) : num);
-                    }}
-                    className='form-control form-control-color'
-                    value={count}
-                  />
-                  <button
-                    type='button'
-                    className='btn btn-info'
-                    onClick={() =>
-                      setCount(
-                        count >= Count
-                          ? limitCount(count, Count)
-                          : count + MinCount
-                      )
-                    }>
-                    +
-                  </button>
-                </div>
-                <div className='catalogPageProducts__content__right__bottom'>
-                  <button
-                    className='catalogPageProducts__content__right__bottom__btn'
-                    onClick={() => addToCart(productData, count)}>
-                    В корзину
-                  </button>
-                </div>
               </div>
-              <div className='catalogPageProducts__content__right__mid'>
-                <h2>Описание</h2>
-                <p>
-                  <ReactMarkdown children={Description} />
-                </p>
-              </div>
+              <Toaster position='bottom-center' />
             </div>
-            <Toaster position='bottom-center' />
-          </div>
-          {/* <ReviewForm />
+            {/* <ReviewForm />
           <ErrorBox /> */}
-        </div>
-      ) : (
-        <Loading />
-      )}
+          </>
+        ) : (
+          <Loading />
+        )}
+      </div>
     </>
   );
 };

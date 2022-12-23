@@ -47,6 +47,7 @@ function App() {
               <Header />
               <Routes>
                 <Route path='/' element={<MainPage />} />
+                <Route path='/:catalog' element={<SubCategoryPage />} />
                 <Route path='/:catalog/:subCatalog' element={<CatalogPage />} />
                 <Route
                   path='/:catalog/:subCatalog/:product'
@@ -58,7 +59,6 @@ function App() {
                 <Route path='/contacts' element={<ContactsPage />} />
                 <Route path='/cart' element={<CartPage />} />
                 <Route path='/favourite' element={<FavouritePage />} />
-                <Route path='/:catalog' element={<SubCategoryPage />} />
                 <Route path='/cards' element={<SubCategoryPageCards />} />
                 <Route path='*' element={<NotFounf />} />
               </Routes>

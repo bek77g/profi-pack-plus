@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import SEO from '../../hoc/SEO';
 import PaginationComp from '../../components/Pagination';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Loading from '../../layout/loading/Loading';
 import { useContext } from 'react';
 import { CustomContext } from '../../hoc/mainContentContext';
+import { goToTop } from '../../hooks/goToTop';
 
 const SubCategoryPage = () => {
   const { baseUrl } = useContext(CustomContext);
@@ -16,10 +17,16 @@ const SubCategoryPage = () => {
   const location = useLocation();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const ref = useRef();
 
   const [catalogSeo, setCatalogSeo] = useState({});
   const [title, setTitle] = useState('');
   const [subCatalogs, setSubCatalogs] = useState([]);
+
+  useEffect(() => {
+    goToTop();
+    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -80,7 +87,7 @@ const SubCategoryPage = () => {
         SeoTitle={catalogSeo?.SeoTitle}
         SeoDescription={catalogSeo?.SeoDescription}
       />
-      <div className='catalogPage'>
+      <div className='catalogPage' ref={ref}>
         <div className='catalogPage__top'>
           <span>
             <Link to='/'>
