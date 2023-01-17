@@ -1,5 +1,6 @@
 .mainPageAdvertiseSlider {
   grid-column: span 3;
+  height: 100%;
   & .carousel-item {
     &::after {
       content: '';

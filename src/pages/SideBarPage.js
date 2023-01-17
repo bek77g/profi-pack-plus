@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { CustomContext } from '../hoc/mainContentContext';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -99,6 +100,32 @@ const SideBarPage = () => {
       </ul>
     );
   };
+  const setCatalogsToListSkeleton = () => {
+    return (
+      <ul className='sideBar__content__nav__items sideBar__block'>
+        {[...Array(9)].map((el, idx) => {
+          return (
+            <li
+              key={idx}
+              className={`sideBar__content__nav__items__item ${mobile} sideBar__block__items `}
+              style={{ marginBottom: '8px' }}>
+              <Link to='/'>
+                <Skeleton className='sideBar__img' width='60px' height='60px' />
+              </Link>
+              <Link to='/'>
+                <Skeleton
+                  className='sideBar__text'
+                  width='140px'
+                  height='24px'
+                />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
   return (
     <div className='sideBar'>
       <div
@@ -119,7 +146,9 @@ const SideBarPage = () => {
           <aside className='sideBar__aside'>
             <div className='sideBar__content'>
               <nav className='sideBar__content__nav'>
-                {setCatalogsToList(catalogs)}
+                {!!catalogs?.length
+                  ? setCatalogsToList(catalogs)
+                  : setCatalogsToListSkeleton()}
               </nav>
             </div>
           </aside>

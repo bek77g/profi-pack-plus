@@ -14,6 +14,7 @@ import FavouritePage from './pages/FavouritePage/FavouritePage';
 import SubCategoryPage from './pages/SubCategoryPage/SubCategoryPage';
 import SubCategoryPageCards from './pages/SubCategoryPage/components/SubCategoryPageCards';
 import NotFounf from './pages/NotFound/NotFounf';
+import 'react-loading-skeleton/dist/skeleton.css';
 // import { ReviewsConfigContext, ReviewsProvider } from 'strapi-ratings-client';
 // import { useContext } from 'react';
 // import { CustomContext } from './hoc/mainContentContext';

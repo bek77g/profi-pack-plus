@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CustomContext } from '../../../../hoc/mainContentContext';
+import Skeleton from 'react-loading-skeleton';
 
 const MainPageAdvertiseCard = () => {
   const { baseUrl, MainPageData } = useContext(CustomContext);
@@ -13,8 +14,16 @@ const MainPageAdvertiseCard = () => {
       <div className='mainPageAdvertiseCard__top'>
         <div className='mainPageAdvertiseCard__top__left'>Акция</div>
         <div className='mainPageAdvertiseCard__top__right'>
-          <p>{currentPrice} сом</p>
-          <p>{priceBefore} сом</p>
+          {currentPrice ? (
+            <p>{currentPrice} сом</p>
+          ) : (
+            <Skeleton width='100px' height='30px' />
+          )}
+          {priceBefore ? (
+            <p>{priceBefore} сом</p>
+          ) : (
+            <Skeleton width='60px' height='12px' />
+          )}
         </div>
       </div>
       <div className='mainPageAdvertiseCard__mid' onClick={() => navigate(url)}>
@@ -28,8 +37,17 @@ const MainPageAdvertiseCard = () => {
         </div>
       </div>
       <div className='mainPageAdvertiseCard__bottom'>
-        Акция действует до
-        <p>{discountPeriod}</p>
+        {discountPeriod ? (
+          <>
+            Акция действует до
+            <p>{discountPeriod}</p>
+          </>
+        ) : (
+          <>
+            <Skeleton width='160px' height='18px' />
+            <Skeleton width='120px' height='18px' />
+          </>
+        )}
       </div>
     </div>
   );

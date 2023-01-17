@@ -25,11 +25,6 @@ export const MainContentContext = (props) => {
   const [MainPageData, setMainPageData] = useState({
     discount: [
       {
-        title: 'Продукт со скидкой',
-        url: 'url',
-        priceBefore: 3424,
-        currentPrice: 234234,
-        discountPeriod: '2022-10-18',
         img: {
           url: 'https://via.placeholder.com/128x90.png?text=ProfiPackPlus+slide+of+slider',
         },

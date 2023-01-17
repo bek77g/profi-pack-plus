@@ -54,8 +54,9 @@
     }
 
     &__right {
-      img {
+      & .image {
         max-width: 120px;
+        max-height: 120px;
       }
     }
   }
@@ -127,7 +128,7 @@
     font-size: 17px;
   }
   .mainPageSearchCards__card__right {
-    img {
+    & .image {
       max-width: 100px;
     }
   }
