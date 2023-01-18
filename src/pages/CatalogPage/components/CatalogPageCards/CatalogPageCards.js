@@ -64,7 +64,11 @@ const Products = ({ data }) => {
         <Link to={Slug}>
           <img
             className='d-block w-100'
-            src={`${baseUrl}${Gallery[0].url}`}
+            src={
+              !!Gallery?.length
+                ? `${baseUrl}${Gallery[0].url}`
+                : `https://via.placeholder.com/128x100.png?text=ProfiPackPlus+${Title}`
+            }
             alt={Title}
           />
         </Link>
