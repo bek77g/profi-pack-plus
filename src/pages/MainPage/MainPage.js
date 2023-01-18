@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import MainPageAdvertise from './components/MainPageAdvertise/MainPageAdvertise';
 import MainPageSearch from './components/MainPageSearch/MainPageSearch';
 import MainPagePopular from './components/MainPagePopular/MainPagePopular';

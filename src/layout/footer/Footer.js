@@ -1,4 +1,3 @@
-import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import insta from '../../assets/icons/instagram.svg';
 import vk from '../../assets/icons/vk.svg';

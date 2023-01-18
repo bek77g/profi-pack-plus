@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import arr from '../../../assets/icons/arr.svg';
 import SEO from '../../../hoc/SEO';
 import { HandySvg } from 'handy-svg';

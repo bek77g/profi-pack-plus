@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import SEO from '../../hoc/SEO';
 import PaginationComp from '../../components/Pagination';
 import { Link, useLocation, useParams } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { CustomContext } from '../hoc/mainContentContext';
 import { Link } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SEO from '../../../../hoc/SEO';
 import { favsProduct } from '../../../../hoc/Hooks';
 import arr from '../../../../assets/icons/arr.svg';

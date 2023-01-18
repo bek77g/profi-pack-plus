@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SEO from '../../hoc/SEO';
 import arr from '../../assets/icons/arr.svg';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import SEO from '../../hoc/SEO';
 import work from '../../assets/icons/work.svg';
 import email from '../../assets/icons/email.svg';

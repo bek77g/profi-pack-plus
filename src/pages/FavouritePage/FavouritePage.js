@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import arr from '../../assets/icons/arr.svg';
 import empty from '../../assets/icons/empty.svg';
 import { useContext } from 'react';

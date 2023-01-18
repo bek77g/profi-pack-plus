@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import arr from '../../../assets/icons/arr.svg';
 import heart from '../../../assets/icons/favourite.svg';
 import Form from 'react-bootstrap/Form';

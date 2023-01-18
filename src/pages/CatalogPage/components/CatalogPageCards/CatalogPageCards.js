@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cart from '../../../../assets/icons/cart.svg';
 import PaginationComp from '../../../../components/Pagination';
 import { Link } from 'react-router-dom';

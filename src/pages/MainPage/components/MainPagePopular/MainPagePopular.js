@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HandySvg } from 'handy-svg';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';

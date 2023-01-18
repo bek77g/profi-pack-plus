@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { HandySvg } from 'handy-svg';
 import { Link } from 'react-router-dom';

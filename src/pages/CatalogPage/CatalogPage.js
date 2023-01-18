@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SEO from '../../hoc/SEO';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import empty from '../../../assets/icons/empty.svg';
 import { HandySvg } from 'handy-svg';

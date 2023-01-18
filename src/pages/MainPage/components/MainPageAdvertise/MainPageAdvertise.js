@@ -1,4 +1,3 @@
-import React from 'react';
 import MainPageAdvertiseSlider from './MainPageAdvertiseSlider';
 import MainPageAdvertiseCard from './MainPageAdvertiseCard';
 
