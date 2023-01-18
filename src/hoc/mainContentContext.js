@@ -114,13 +114,12 @@ export const MainContentContext = (props) => {
   }
   //Get pages data end
 
-  getMainPageData();
-  getAboutPageData();
-  getPartnerPageData();
-  getOrderPageData();
-  getContactPageData();
-
   useEffect(() => {
+    getMainPageData();
+    getAboutPageData();
+    getPartnerPageData();
+    getOrderPageData();
+    getContactPageData();
     let prev_cart = JSON.parse(localStorage.getItem('cart')) || [];
     setCart(prev_cart);
   }, []);
