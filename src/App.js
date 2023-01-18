@@ -3,12 +3,12 @@ import './scss/style.scss';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
+import PageLoading from './layout/loading/PageLoading';
 // import { ReviewsConfigContext, ReviewsProvider } from 'strapi-ratings-client';
 // import { useContext } from 'react';
 // import { CustomContext } from './hoc/mainContentContext';
 // import { useEffect } from 'react';
 
-const Loading = React.lazy(() => import('./layout/loading/Loading'));
 const Header = React.lazy(() => import('./layout/header/Header'));
 const Footer = React.lazy(() => import('./layout/footer/Footer'));
 const SideBarPage = React.lazy(() => import('./pages/SideBarPage'));
@@ -53,7 +53,7 @@ function App() {
   return (
     <>
       {/* <ReviewsProvider apiURL={baseUrl}> */}
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<PageLoading />}>
         <BrowserRouter>
           <SideBarPage />
           <div className='container'>
