@@ -32,7 +32,7 @@ const SubCategoryPage = () => {
     setLoading(true);
     axios
       .get(
-        `/api/sub-catalogs?populate=deep&filters[catalog][Slug][$eq]=${catalog}
+        `/api/sub-catalogs?populate[Icon][populate]=*&populate[catalog][populate]=*&filters[catalog][Slug][$eq]=${catalog}
     `
       )
       .then(({ data }) => {

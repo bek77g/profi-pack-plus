@@ -19,7 +19,7 @@ const SideBarPage = () => {
   function getCatalogs() {
     axios
       .get(
-        '/api/catalogs?populate=deep'
+        '/api/catalogs?populate[Icon][populate]=*&populate[sub_catalogs][populate]=*'
         // '/api/catalogs?populate[sub_catalogs][populate]=products&populate=Icon'
       )
       .then(({ data }) => {

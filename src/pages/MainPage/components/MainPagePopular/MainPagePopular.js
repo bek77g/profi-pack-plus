@@ -135,12 +135,12 @@ const MainPagePopular = () => {
   const slideSliceNew = Math.ceil(newProducts.length / 4);
   const slideSliceHit = Math.ceil(hitProducts.length / 4);
   useEffect(() => {
-    axios('/api/products?filters[New][$eq=true]&populate=deep').then(
-      ({ data }) => setNewProducts(data.data)
-    );
-    axios('/api/products?filters[BestSeller][$eq=true]&populate=deep').then(
-      ({ data }) => setHitProducts(data.data)
-    );
+    axios(
+      '/api/products?filters[New][$eq=true]&populate[Gallery][populate]=*&populate[ProductSEO][populate]=*&populate[sub_catalog][populate]=*'
+    ).then(({ data }) => setNewProducts(data.data));
+    axios(
+      '/api/products?filters[BestSeller][$eq=true]&populate[Gallery][populate]=*&populate[ProductSEO][populate]=*&populate[sub_catalog][populate]=*'
+    ).then(({ data }) => setHitProducts(data.data));
   }, []);
   const newCatalog = newProducts.map((elem) => (
     <Product key={elem.id} data={elem} />
