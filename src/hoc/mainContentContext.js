@@ -8,11 +8,8 @@ export const MainContentContext = (props) => {
   axios.defaults.headers.common = {
     Authorization: `Bearer ${process.env.REACT_APP_JWT_SECRET_KEY}`,
   };
-
-  const [nav, setNav] = useState(false);
-
   const [catalogs, setCatalogs] = useState([]);
-  const [searchParams, setSearchParams] = useState([]);
+  const [nav, setNav] = useState(false);
 
   const [cart, setCart] = useState([]);
   const [favorite, setFavorite] = useState([]);
@@ -51,25 +48,6 @@ export const MainContentContext = (props) => {
   //Pages data end
 
   //Get pages data start
-  function getCatalogs() {
-    axios
-      .get(
-        '/api/catalogs?populate=deep'
-        // '/api/catalogs?populate[sub_catalogs][populate]=products&populate=Icon'
-      )
-      .then(({ data }) => {
-        setCatalogs(data.data);
-        setSearchParams(
-          data.data
-            .reduce(
-              (acc, rec) =>
-                acc.concat(rec.sub_catalogs.map((el) => el.products)),
-              []
-            )
-            .flat()
-        );
-      });
-  }
   function getMainPageData() {
     axios
       .get('/api/main-page?populate=deep')
@@ -136,17 +114,13 @@ export const MainContentContext = (props) => {
   }
   //Get pages data end
 
-  const getPagesData = () => {
-    getCatalogs();
-    getMainPageData();
-    getAboutPageData();
-    getPartnerPageData();
-    getOrderPageData();
-    getContactPageData();
-  };
+  getMainPageData();
+  getAboutPageData();
+  getPartnerPageData();
+  getOrderPageData();
+  getContactPageData();
 
   useEffect(() => {
-    getPagesData();
     let prev_cart = JSON.parse(localStorage.getItem('cart')) || [];
     setCart(prev_cart);
   }, []);
@@ -206,9 +180,9 @@ export const MainContentContext = (props) => {
 
   const value = {
     baseUrl,
-    catalogs,
-    searchParams,
     nav,
+    catalogs,
+    setCatalogs,
     setNav,
     shippingPrice,
     addFav,

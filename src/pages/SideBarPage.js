@@ -5,17 +5,33 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useWindowDimensions } from '../hooks/useWindowDimensions';
+import axios from 'axios';
 
 const SideBarPage = () => {
-  const { baseUrl, catalogs, nav, setNav } = useContext(CustomContext);
+  const { baseUrl, nav, setNav, setCatalogs, catalogs } =
+    useContext(CustomContext);
   const { width } = useWindowDimensions();
+
   let menuRef = useRef();
 
   const [mobile, setMobile] = useState('');
 
+  function getCatalogs() {
+    axios
+      .get(
+        '/api/catalogs?populate=deep'
+        // '/api/catalogs?populate[sub_catalogs][populate]=products&populate=Icon'
+      )
+      .then(({ data }) => {
+        setCatalogs(data.data);
+      });
+  }
+
   useEffect(() => {
     if (width <= 950) setMobile('mobile');
+    getCatalogs();
   }, []);
+
   useEffect(() => {
     document.addEventListener(
       'mousedown',

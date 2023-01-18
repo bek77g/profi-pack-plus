@@ -1,24 +1,37 @@
 import React, { Suspense } from 'react';
-import Loading from './layout/loading/Loading';
 import './scss/style.scss';
 import { Toaster } from 'react-hot-toast';
-import Header from './layout/header/Header';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SideBarPage from './pages/SideBarPage';
-import CatalogPage from './pages/CatalogPage/CatalogPage';
-import Footer from './layout/footer/Footer';
-import CatalogPageProducts from './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts';
-import PartnershipPage from './pages/PartnershipPage/PartnershipPage';
-import CartPage from './pages/CartPage/CartPage';
-import FavouritePage from './pages/FavouritePage/FavouritePage';
-import SubCategoryPage from './pages/SubCategoryPage/SubCategoryPage';
-import SubCategoryPageCards from './pages/SubCategoryPage/components/SubCategoryPageCards';
-import NotFounf from './pages/NotFound/NotFounf';
 import 'react-loading-skeleton/dist/skeleton.css';
 // import { ReviewsConfigContext, ReviewsProvider } from 'strapi-ratings-client';
 // import { useContext } from 'react';
 // import { CustomContext } from './hoc/mainContentContext';
 // import { useEffect } from 'react';
+
+const Loading = React.lazy(() => import('./layout/loading/Loading'));
+const Header = React.lazy(() => import('./layout/header/Header'));
+const Footer = React.lazy(() => import('./layout/footer/Footer'));
+const SideBarPage = React.lazy(() => import('./pages/SideBarPage'));
+const CatalogPage = React.lazy(() => import('./pages/CatalogPage/CatalogPage'));
+const CatalogPageProducts = React.lazy(() =>
+  import(
+    './pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts'
+  )
+);
+const PartnershipPage = React.lazy(() =>
+  import('./pages/PartnershipPage/PartnershipPage')
+);
+const CartPage = React.lazy(() => import('./pages/CartPage/CartPage'));
+const FavouritePage = React.lazy(() =>
+  import('./pages/FavouritePage/FavouritePage')
+);
+const SubCategoryPage = React.lazy(() =>
+  import('./pages/SubCategoryPage/SubCategoryPage')
+);
+const SubCategoryPageCards = React.lazy(() =>
+  import('./pages/SubCategoryPage/components/SubCategoryPageCards')
+);
+const NotFounf = React.lazy(() => import('./pages/NotFound/NotFounf'));
 
 const MainPage = React.lazy(() => import('./pages/MainPage/MainPage'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage/AboutPage'));
