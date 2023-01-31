@@ -56,7 +56,7 @@ const ContactsPage = () => {
           <div className='col'>
             <div className='contacts__content__left'>
               <div className='contacts__content__left__title'>
-                <span>Интернет-магазин «ProfiPuckPlus»</span>
+                <span>Интернет-магазин «ProfiPackPlus»</span>
               </div>
               <div className='contacts__content__left__call'>
                 <span>Позвоните нам</span>

@@ -157,7 +157,12 @@ const CatalogPageCards = ({ products, sortType, minPrice, maxPrice }) => {
       <div className='catalogPagePopular__catalogs__cards'>
         {products && showProducts()}
       </div>
-      {products.length >= 12 && (
+      {products.filter((product) => {
+        if (minPrice !== undefined && maxPrice !== undefined) {
+          return product.Price >= minPrice && product.Price <= maxPrice;
+        }
+        return product;
+      }).length >= 12 && (
         <PaginationComp
           setPage={setPage}
           page={page}

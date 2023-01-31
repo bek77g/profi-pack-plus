@@ -76,12 +76,12 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className='footer__content__sub'>
+        {/* <div className='footer__content__sub'>
           <div className='footer__content__sub__item'>Договор оферты</div>
           <div className='footer__content__sub__item__politics'>
             Политика обработки персональных данных
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

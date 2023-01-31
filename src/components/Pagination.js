@@ -5,27 +5,32 @@ function PaginationComp({ setPage, page, pageSize }) {
       aria-label='Page navigation example'
       className='d-flex justify-content-center mt-5 mb-5'>
       <ul className='pagination'>
-        <li className='page-item' onClick={() => setPage(page - 1)}>
-          <a className='page-link' href='#'>
-            Previous
-          </a>
+        <li className='page-item'>
+          <button
+            disabled={page <= 1 && true}
+            className='page-link'
+            onClick={() => setPage((prev) => +prev - 1)}>
+            Назад
+          </button>
         </li>
+
         {[...Array(pageBtns).fill()].map((pageBtn, i) => {
-          let pageIdx = i + 1;
+          let pageIdx = +i + 1;
           return (
-            <li
-              className={`page-item ${pageIdx === page ? 'active' : ''}`}
-              onClick={() => setPage(pageIdx)}>
-              <a className='page-link' href='#'>
+            <li className={`page-item ${pageIdx === page ? 'active' : ''}`}>
+              <button className='page-link' onClick={() => setPage(+pageIdx)}>
                 {pageIdx}
-              </a>
+              </button>
             </li>
           );
         })}
-        <li className='page-item' onClick={() => setPage(page + 1)}>
-          <a className='page-link' href='#'>
-            Next
-          </a>
+        <li className='page-item'>
+          <button
+            disabled={page >= pageBtns}
+            className='page-link'
+            onClick={() => setPage((prev) => +prev + 1)}>
+            Вперёд
+          </button>
         </li>
       </ul>
     </nav>
