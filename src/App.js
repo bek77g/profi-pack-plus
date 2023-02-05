@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import './scss/style.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';

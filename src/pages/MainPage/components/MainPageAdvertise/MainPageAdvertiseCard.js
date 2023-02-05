@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 const MainPageAdvertiseCard = () => {
   const { baseUrl, MainPageData } = useContext(CustomContext);
   const { title, url, priceBefore, currentPrice, discountPeriod, img } =
-    MainPageData.discount[0];
+    MainPageData.discount;
   let navigate = useNavigate();
   return (
     <div className='mainPageAdvertiseCard'>

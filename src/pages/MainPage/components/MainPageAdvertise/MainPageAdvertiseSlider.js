@@ -36,7 +36,7 @@ const MainPageAdvertiseSlider = () => {
         pause='hover'
         variant='dark'
         indicators>
-        {setDiscountSlider(MainPageData.discountGallery[0].Slide)}
+        {setDiscountSlider(MainPageData.discountGallery.Slide)}
       </Carousel>
       {onLoad ? null : <Skeleton width='100%' height='100%' />}
     </div>

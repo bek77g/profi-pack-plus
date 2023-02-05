@@ -21,25 +21,21 @@ export const MainContentContext = (props) => {
 
   //Pages data start
   const [MainPageData, setMainPageData] = useState({
-    discount: [
-      {
-        img: {
-          url: 'https://via.placeholder.com/128x90.png?text=ProfiPackPlus+slide+of+slider',
-        },
+    discount: {
+      img: {
+        url: 'https://via.placeholder.com/128x90.png?text=ProfiPackPlus+slide+of+slider',
       },
-    ],
-    discountGallery: [
-      {
-        Slide: [
-          {
-            Url: 'url',
-            Img: {
-              url: 'https://via.placeholder.com/128x90.png?text=ProfiPackPlus+discount+product',
-            },
+    },
+    discountGallery: {
+      Slide: [
+        {
+          Url: 'url',
+          Img: {
+            url: 'https://via.placeholder.com/128x90.png?text=ProfiPackPlus+discount+product',
           },
-        ],
-      },
-    ],
+        },
+      ],
+    },
     listofCategories: [],
   });
   const [AboutPageData, setAboutPageData] = useState({});
@@ -54,12 +50,19 @@ export const MainContentContext = (props) => {
       .get('/api/main-page?populate=deep')
       .then(({ data }) => data.data)
       .then(
-        ({ MainPageDiscount, MainPageSlider, ListOfCategories, MainPageSEO }) =>
+        ({
+          MainPageDiscount,
+          MainPageSlider,
+          ListOfCategories,
+          MainPageSEO,
+          PartnersSlider,
+        }) =>
           setMainPageData({
             discount: MainPageDiscount,
             discountGallery: MainPageSlider,
             listofCategories: ListOfCategories,
             mainPageSEO: MainPageSEO,
+            partnersSlider: PartnersSlider,
           })
       );
   }
