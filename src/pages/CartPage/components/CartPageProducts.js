@@ -236,7 +236,14 @@ const CheckoutPage = ({ cart, totalPrice }) => {
     return (
       <table>
         <thead>
-          <tr>
+          <tr
+            style={{
+              marginTop: '15px',
+              borderBottomColor: '#e5e5e5',
+              borderBottomStyle: 'solid',
+              borderBottomWidth: '1px',
+              borderCollapse: 'separate',
+            }}>
             <td>Количество</td>
             <td>Название</td>
             <td>Цена</td>
@@ -245,13 +252,26 @@ const CheckoutPage = ({ cart, totalPrice }) => {
         <tbody>
           {cart.map(({ Title, Price, Gallery, quantity }) => {
             return (
-              <tr>
-                <td>
+              <tr
+                style={{
+                  borderBottomColor: '#e5e5e5',
+                  borderBottomStyle: 'solid',
+                  borderBottomWidth: '1px',
+                  borderCollapse: 'separate',
+                }}>
+                <td style={{ padding: '20px 0', width: '30%' }}>
                   {quantity}
-                  <span>x</span>
+                  <span style={{ color: '#999', padding: '0 10px' }}>x</span>
+                  <img
+                    style={{ width: '120px' }}
+                    src={`${baseUrl}${Gallery[0].url}`}
+                    alt={Title}
+                  />
                 </td>
-                <td>{Title}</td>
-                <td>
+                <td style={{ padding: '20px 0 20px 10px', width: '50%' }}>
+                  {Title}
+                </td>
+                <td style={{ padding: '20px 0 20px 10px', width: '20%' }}>
                   {Price} * {quantity}
                   {' = '}
                   <span>{(Price * quantity).toFixed(2)}</span>
@@ -261,10 +281,16 @@ const CheckoutPage = ({ cart, totalPrice }) => {
           })}
         </tbody>
         <tfoot>
-          <tr>
+          <tr
+            style={{
+              borderBottomColor: '#e5e5e5',
+              borderBottomStyle: 'solid',
+              borderBottomWidth: '1px',
+              borderCollapse: 'separate',
+            }}>
             <td></td>
-            <td>Общая цена:</td>
-            <td>{totalPrice + shippingPrice}</td>
+            <td style={{ padding: '20px 0 20px 10px' }}>Общая цена:</td>
+            <td style={{ padding: '20px 0 20px 10px' }}>{totalPrice}</td>
           </tr>
         </tfoot>
       </table>
@@ -291,7 +317,6 @@ const CheckoutPage = ({ cart, totalPrice }) => {
     if (localStorage.getItem('user')) {
       setUserData({ ...JSON.parse(localUser), ...userData });
     }
-    console.log(userData);
   }, []);
 
   const { FullName, Phone, Email, Address, ShippingType, Payment, Comment } =
@@ -303,7 +328,6 @@ const CheckoutPage = ({ cart, totalPrice }) => {
   };
 
   const orderPostHandler = () => {
-    console.log(userData.Products);
     let data = { data: userData };
     axios
       .post('api/orders', data)
