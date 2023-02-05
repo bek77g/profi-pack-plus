@@ -88,6 +88,22 @@
           }
         }
 
+        &__availability {
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
+          color: #fff;
+          margin: 0 auto 10px;
+          padding: 4px 8px;
+          border-radius: 8px;
+          &--stock {
+            background: #1c62cd;
+          }
+          &--nonstock {
+            background: #941320;
+          }
+        }
+
         &__quantity {
           margin-bottom: 20px;
           display: flex;

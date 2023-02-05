@@ -164,6 +164,22 @@
         }
       }
     }
+
+    &__availability {
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      color: #fff;
+      margin: 0 auto 10px;
+      padding: 5px 10px;
+      border-radius: 3px;
+      &--stock {
+        background: #1c62cd;
+      }
+      &--nonstock {
+        background: #941320;
+      }
+    }
   }
 }
 
@@ -176,13 +192,6 @@
 
     &:nth-last-child(2) {
       cursor: pointer;
-    }
-
-    &:last-child {
-      background: #1c62cd;
-      border-radius: 3px;
-      padding: 5px 10px;
-      color: #ffffff;
     }
 
     .icon {

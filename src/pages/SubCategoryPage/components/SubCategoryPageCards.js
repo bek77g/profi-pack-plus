@@ -55,6 +55,12 @@ const Products = (props) => {
             <HandySvg src={cart} className='icon' width='30' height='30' />
           </span>
         </div>
+        <div
+          className={`catalogPagePopular__catalogs__cards__card__availability catalogPagePopular__catalogs__cards__card__availability--${
+            props.data.Availability ? 'stock' : 'nonstock'
+          }`}>
+          {props.data.Availability ? 'В наличии' : 'Нет в наличии'}
+        </div>
         <div className='catalogPagePopular__catalogs__cards__card__quantity'>
           <button
             type='button'
@@ -67,11 +73,7 @@ const Products = (props) => {
             onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
             onChange={(e) => {
               let num = +e.target.value;
-              setCount(
-                num >= props.data.Count
-                  ? limitCount(num, props.data.Count)
-                  : num
-              );
+              setCount(num);
             }}
             className='form-control form-control-color'
             value={count}

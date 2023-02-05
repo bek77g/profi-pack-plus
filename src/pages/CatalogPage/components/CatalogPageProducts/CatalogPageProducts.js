@@ -38,11 +38,11 @@ const CatalogPageProducts = () => {
 
   const {
     id,
-    Count,
     CountType,
     Description,
     Discount,
     Gallery,
+    Availability,
     New,
     Price,
     ProductSEO,
@@ -208,11 +208,13 @@ const CatalogPageProducts = () => {
                     <span onClick={() => addCart(productData, count)}>
                       <HandySvg src={cart} width='30' height='23' />
                     </span>
-                    <span>
-                      Наличии: <span>{Count}</span>
+                    <span
+                      className={`catalogPageProducts__content__availability catalogPageProducts__content__availability--${
+                        Availability ? 'stock' : 'nonstock'
+                      }`}>
+                      {Availability ? 'В наличии' : 'Нет в наличии'}
                     </span>
                   </div>
-                  <span></span>
                 </div>
                 <div className='catalogPageProducts__content__wrapper'>
                   <div className='catalogPageProducts__content__left__card__bottom'>
@@ -247,7 +249,7 @@ const CatalogPageProducts = () => {
                       }
                       onChange={(e) => {
                         let num = +e.target.value;
-                        setCount(num >= Count ? limitCount(num, Count) : num);
+                        setCount(num);
                       }}
                       className='form-control form-control-color'
                       value={count}
@@ -255,13 +257,7 @@ const CatalogPageProducts = () => {
                     <button
                       type='button'
                       className='btn btn-info'
-                      onClick={() =>
-                        setCount(
-                          count >= Count
-                            ? limitCount(count, Count)
-                            : count + MinCount
-                        )
-                      }>
+                      onClick={() => setCount(count + MinCount)}>
                       +
                     </button>
                   </div>

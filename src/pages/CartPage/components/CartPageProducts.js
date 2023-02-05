@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import arr from '../../../assets/icons/arr.svg';
 import SEO from '../../../hoc/SEO';
 import { HandySvg } from 'handy-svg';
@@ -71,7 +72,6 @@ const CartPageProducts = () => {
                                     Title,
                                     sub_catalog,
                                     Price,
-                                    Count,
                                     Gallery,
                                     quantity,
                                     MinCount,
@@ -103,9 +103,7 @@ const CartPageProducts = () => {
                                               onClick={() =>
                                                 editCart(
                                                   id,
-                                                  quantity <= MinCount
-                                                    ? MinCount
-                                                    : quantity - MinCount
+                                                  quantity - MinCount
                                                 )
                                               }>
                                               -
@@ -125,12 +123,7 @@ const CartPageProducts = () => {
                                               onClick={() =>
                                                 editCart(
                                                   id,
-                                                  quantity >= Count
-                                                    ? limitCount(
-                                                        quantity,
-                                                        Count
-                                                      )
-                                                    : quantity + MinCount
+                                                  quantity + MinCount
                                                 )
                                               }>
                                               +
@@ -239,26 +232,43 @@ const CheckoutPage = ({ cart, totalPrice }) => {
   const [submitBtn, setSubmitBtn] = useState(false);
   let randomId = Date.now().valueOf().toString().replace('.', 7);
 
-  const productsTableLoop = () => {
-    return cart.map(({ Title, Price, Gallery, quantity }) => {
-      return `<tr
-          style='border-bottom-color: #e5e5e5; border-bottom-style: solid; border-bottom-width: 1px; border-collapse: separate'>
-          <td class='tl' style='padding: 20px 0; width: 30%'>
-            ${quantity}
-            <span style='color: #999999; padding: 0 10px'>x</span>
-            <img
-              width='140'
-              style='border: 0; display: inline-block; max-width: 80%; outline: none; text-decoration: none; vertical-align: middle'
-              src='${baseUrl}${Gallery[0].url}'
-              alt='${Title}'
-            />
-          </td>
-          <td style='padding: 20px 0 20px 10px; width: 70%'>
-            ${Title}
-            <span style='float: right'>${(Price * quantity).toFixed(2)}</span>
-          </td>
-        </tr>`;
-    });
+  const ProductsTableLoop = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <td>Количество</td>
+            <td>Название</td>
+            <td>Цена</td>
+          </tr>
+        </thead>
+        <tbody>
+          {cart.map(({ Title, Price, Gallery, quantity }) => {
+            return (
+              <tr>
+                <td>
+                  {quantity}
+                  <span>x</span>
+                </td>
+                <td>{Title}</td>
+                <td>
+                  {Price} * {quantity}
+                  {' = '}
+                  <span>{(Price * quantity).toFixed(2)}</span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td>Общая цена:</td>
+            <td>{totalPrice + shippingPrice}</td>
+          </tr>
+        </tfoot>
+      </table>
+    );
   };
 
   const [userData, setUserData] = useState({
@@ -273,7 +283,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
     Payment: '',
     Comment: '',
     DateId: randomId,
-    Products: productsTableLoop().join(' '),
+    Products: ReactDOMServer.renderToStaticMarkup(<ProductsTableLoop />),
   });
 
   useEffect(() => {
@@ -293,6 +303,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
   };
 
   const orderPostHandler = () => {
+    console.log(userData.Products);
     let data = { data: userData };
     axios
       .post('api/orders', data)

@@ -24,8 +24,8 @@ const Product = ({ data }) => {
     Gallery,
     CountType,
     sub_catalog,
-    Count,
     favorite,
+    Availability,
     BestSeller,
     MinCount,
   } = favsProduct(data);
@@ -94,6 +94,12 @@ const Product = ({ data }) => {
             <HandySvg src={cart} className='icon' width='30' height='30' />
           </span>
         </div>
+        <div
+          className={`catalogPagePopular__catalogs__cards__card__availability catalogPagePopular__catalogs__cards__card__availability--${
+            Availability ? 'stock' : 'nonstock'
+          }`}>
+          {Availability ? 'В наличии' : 'Нет в наличии'}
+        </div>
         <div className='catalogPagePopular__catalogs__cards__card__quantity'>
           <button
             type='button'
@@ -108,7 +114,7 @@ const Product = ({ data }) => {
             onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
             onChange={(e) => {
               let num = +e.target.value;
-              setCount(num >= Count ? limitCount(num, Count) : num);
+              setCount(num);
             }}
             className='form-control form-control-color'
             value={count}
@@ -116,11 +122,7 @@ const Product = ({ data }) => {
           <button
             type='button'
             className='btn btn-info'
-            onClick={() =>
-              setCount(
-                count >= Count ? limitCount(count, Count) : count + MinCount
-              )
-            }>
+            onClick={() => setCount(count + MinCount)}>
             +
           </button>
         </div>
