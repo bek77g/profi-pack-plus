@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className='footer'>
       <div className='footer__container'>
         <div className='footer__content'>
-          <div className='footer__content__messages'>
+          {/* <div className='footer__content__messages'>
             <div className='footer__content__messages__title'>
               Подпишитесь на нашу рассылку и узнавайте о акция быстрее
             </div>
@@ -28,7 +28,7 @@ const Footer = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className='footer__content__info'>
             <ul className='footer__content__info__items'>
               <li className='footer__content__info__items__item itemBold'>
