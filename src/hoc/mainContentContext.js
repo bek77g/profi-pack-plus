@@ -106,9 +106,9 @@ export const MainContentContext = (props) => {
     axios
       .get('/api/contact-page?populate=deep')
       .then(({ data }) => data.data)
-      .then(({ Phone, Address, WorkSchedule, Mail, ContactPageSEO }) =>
+      .then(({ Phones, Address, WorkSchedule, Mail, ContactPageSEO }) =>
         setContactPageData({
-          Phone,
+          Phones,
           Address,
           WorkSchedule,
           Mail,

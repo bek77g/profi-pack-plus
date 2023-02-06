@@ -331,10 +331,9 @@ const CheckoutPage = ({ cart, totalPrice }) => {
   const orderPostHandler = () => {
     setLoading(true);
     let data = { data: userData };
-    axios
+    const promise = axios
       .post('api/orders', data)
       .then((res) => {
-        if (res.status === 200) toast.success('Заказ успешно отправлен');
         setSubmitBtn(true);
         setLoading(false);
         localStorage.removeItem('cart');
@@ -345,14 +344,25 @@ const CheckoutPage = ({ cart, totalPrice }) => {
         document.getElementById('order-form').reset();
       })
       .catch((err) => {
-        toast.error('Проверьте все поля');
         console.log(err);
       });
+
     // setTimeout(() => {
     //   setSubmitBtn(true);
     //   setLoading(false);
     //   console.log('Ordered');
     // }, 3000);
+
+    // const promise = new Promise(function (resolve, reject) {
+    //   // Setting 2000 ms time
+    //   setTimeout(resolve, 2000);
+    // });
+
+    toast.promise(promise, {
+      loading: 'Отправка заказа...',
+      success: 'Заказ успешно отправлен',
+      error: 'Что-то пошло не так, проверьте поля',
+    });
   };
 
   const createUserHandler = (event) => {

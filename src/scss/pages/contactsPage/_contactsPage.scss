@@ -46,6 +46,12 @@
         line-height: 150%;
         color: #545155;
 
+        &__phones {
+          align-items: unset !important;
+          display: flex;
+          flex-direction: column;
+        }
+
         div {
           display: flex;
           align-items: center;

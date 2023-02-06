@@ -13,7 +13,7 @@ import logo from '../../assets/favicon.ico';
 
 const ContactsPage = () => {
   const { ContactPageData } = useContext(CustomContext);
-  const { Phone, Address, WorkSchedule, Mail, ContactPageSEO } =
+  const { Phones, Address, WorkSchedule, Mail, ContactPageSEO } =
     ContactPageData;
 
   useEffect(() => {
@@ -74,9 +74,15 @@ const ContactsPage = () => {
                       stroke='#1C62CD'
                     />
                   </svg>
-                  <span>
-                    <a href={`tel:${Phone}`}>{Phone}</a>
-                  </span>
+                  <div className='contacts__content__left__info__phones'>
+                    {Phones?.map(({ Phone, Title }) => (
+                      <span>
+                        <a href={`tel:${Phone}`}>
+                          {Phone} {!!Title && ` - ${Title}`}
+                        </a>
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <div className='contacts__content__left__address mb-4'>
                   <svg
