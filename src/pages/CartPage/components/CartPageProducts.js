@@ -114,7 +114,7 @@ const CartPageProducts = () => {
                                                 !/[0-9]/.test(e.key) &&
                                                 e.preventDefault()
                                               }
-                                              class='form-control form-control-color'
+                                              className='form-control form-control-color'
                                               value={quantity}
                                             />
                                             <button
@@ -193,7 +193,7 @@ const CartPageProducts = () => {
                                     <button
                                       onClick={() => setCheckout(true)}
                                       type='button'
-                                      className=' btn btn-outline-secondary'>
+                                      className='btn btn-outline-primary'>
                                       Оформить заказ
                                     </button>
                                   </HashLink>
@@ -230,6 +230,7 @@ export default CartPageProducts;
 const CheckoutPage = ({ cart, totalPrice }) => {
   const { baseUrl, shippingPrice } = useContext(CustomContext);
   const [submitBtn, setSubmitBtn] = useState(false);
+  const [loading, setLoading] = useState(false);
   let randomId = Date.now().valueOf().toString().replace('.', 7);
 
   const ProductsTableLoop = () => {
@@ -328,23 +329,30 @@ const CheckoutPage = ({ cart, totalPrice }) => {
   };
 
   const orderPostHandler = () => {
+    setLoading(true);
     let data = { data: userData };
     axios
       .post('api/orders', data)
       .then((res) => {
         if (res.status === 200) toast.success('Заказ успешно отправлен');
+        setSubmitBtn(true);
+        setLoading(false);
         localStorage.removeItem('cart');
         localStorage.setItem(
           'user',
           JSON.stringify({ FullName, Phone, Email, Address })
         );
         document.getElementById('order-form').reset();
-        setSubmitBtn(true);
       })
       .catch((err) => {
         toast.error('Проверьте все поля');
         console.log(err);
       });
+    // setTimeout(() => {
+    //   setSubmitBtn(true);
+    //   setLoading(false);
+    //   console.log('Ordered');
+    // }, 3000);
   };
 
   const createUserHandler = (event) => {
@@ -507,9 +515,12 @@ const CheckoutPage = ({ cart, totalPrice }) => {
               <div className='column'></div>
               <div className='column'>
                 <button
+                  disabled={loading}
                   type='submit'
                   disabled={submitBtn}
-                  className=' btn btn-outline-secondary'>
+                  className={`btn btn-outline-${
+                    !loading ? 'primary' : 'secondary'
+                  }`}>
                   Отправить заказ
                 </button>
               </div>
@@ -517,7 +528,26 @@ const CheckoutPage = ({ cart, totalPrice }) => {
           </form>
         ) : (
           <div className='container' style={{ textAlign: 'center' }}>
-            <h2>Заказ успешно отправлен {'\u2713'}</h2>
+            <h2>Заказ успешно отправлен</h2>
+            <div class='success-animation'>
+              <svg
+                class='checkmark'
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 52 52'>
+                <circle
+                  class='checkmark__circle'
+                  cx='26'
+                  cy='26'
+                  r='25'
+                  fill='none'
+                />
+                <path
+                  class='checkmark__check'
+                  fill='none'
+                  d='M14.1 27.2l7.1 7.2 16.7-16.8'
+                />
+              </svg>
+            </div>
           </div>
         )}
         <Toaster position='bottom-center' />

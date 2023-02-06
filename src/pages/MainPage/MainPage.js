@@ -20,6 +20,8 @@ const MainPage = () => {
     sliderRef.current.swiper.slidePrev();
   }, []);
 
+  const partnersArray = MainPageData?.partnersSlider?.Slide || [];
+
   const handleNext = useCallback(() => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
@@ -72,7 +74,7 @@ const MainPage = () => {
               spaceBetween={20}
               modules={[Autoplay, Virtual]}
               pagination={true}>
-              {MainPageData?.partnersSlider?.Slide.map(({ Url, Img }) => {
+              {partnersArray.map(({ Url, Img }) => {
                 return (
                   <SwiperSlide key={Url}>
                     <div className='mainPage__partners-item'>
@@ -86,18 +88,20 @@ const MainPage = () => {
                 );
               })}
             </Swiper>
-            <div className='mainPage__partners__nav'>
-              <div
-                className='mainPage__partners__nav-prevBtn'
-                onClick={handlePrev}>
-                <FaArrowCircleLeft size={30} color={'#1c62cd'} />
+            {partnersArray.length > slideSliceLength && (
+              <div className='mainPage__partners__nav'>
+                <div
+                  className='mainPage__partners__nav-prevBtn'
+                  onClick={handlePrev}>
+                  <FaArrowCircleLeft size={30} color={'#1c62cd'} />
+                </div>
+                <div
+                  className='mainPage__partners__nav-nextBtn'
+                  onClick={handleNext}>
+                  <FaArrowCircleRight size={30} color={'#1c62cd'} />
+                </div>
               </div>
-              <div
-                className='mainPage__partners__nav-nextBtn'
-                onClick={handleNext}>
-                <FaArrowCircleRight size={30} color={'#1c62cd'} />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

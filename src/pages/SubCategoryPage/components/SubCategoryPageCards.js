@@ -28,7 +28,7 @@ const Products = (props) => {
         <div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
       )}
       <div className='mainPagePopular__catalog__cards__card__heart'>
-        <p class='icon'>
+        <p className='icon'>
           <p>
             <HandySvg width='24' height='24' src={heart} />
           </p>

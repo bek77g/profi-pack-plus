@@ -220,7 +220,7 @@ function PageLoading() {
   return (
     <>
       <style>{styles}</style>
-      <div class='loader'></div>
+      <div className='loader'></div>
     </>
   );
 }

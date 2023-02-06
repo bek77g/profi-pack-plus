@@ -221,7 +221,7 @@ function Loading() {
   return (
     <>
       <style>{css}</style>
-      <div class='loader'></div>
+      <div className='loader'></div>
     </>
   );
 }
