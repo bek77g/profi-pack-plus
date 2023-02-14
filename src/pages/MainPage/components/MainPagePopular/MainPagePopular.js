@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { favsProduct, limitCount } from '../../../../hoc/Hooks';
+import { useWindowDimensions } from '../../../../hooks/useWindowDimensions';
 
 const Product = ({ data }) => {
   const [count, setCount] = useState(1);
@@ -132,10 +133,13 @@ const Product = ({ data }) => {
 };
 
 const MainPagePopular = () => {
+  const { width } = useWindowDimensions();
   const [newProducts, setNewProducts] = useState([]);
   const [hitProducts, setHitProducts] = useState([]);
   const slideSliceNew = Math.ceil(newProducts.length / 4);
   const slideSliceHit = Math.ceil(hitProducts.length / 4);
+  const [showedCards, setShowedCards] = useState(4);
+
   useEffect(() => {
     axios(
       '/api/products?filters[New][$eq=true]&populate[Gallery][populate]=*&populate[ProductSEO][populate]=*&populate[sub_catalog][populate]=*'
@@ -156,6 +160,14 @@ const MainPagePopular = () => {
       slide_number * slide_size
     );
   }
+  useEffect(() => {
+    if (width <= 1084) {
+      setShowedCards(2);
+    }
+    if (width <= 544) {
+      setShowedCards(1);
+    }
+  }, [width]);
   return (
     <div className='mainPagePopular'>
       <Carousel variant='dark'>
@@ -163,7 +175,7 @@ const MainPagePopular = () => {
           return (
             <Carousel.Item key={i}>
               <div className='mainPagePopular__catalog__cards'>
-                {sliceSlides(newCatalog, 4, i + 1)}
+                {sliceSlides(newCatalog, showedCards, i + 1)}
               </div>
             </Carousel.Item>
           );
@@ -175,7 +187,7 @@ const MainPagePopular = () => {
             return (
               <Carousel.Item key={i}>
                 <div className='mainPagePopular__catalog__cards'>
-                  {sliceSlides(hitCatalog, 4, i + 1)}
+                  {sliceSlides(hitCatalog, showedCards, i + 1)}
                 </div>
               </Carousel.Item>
             );
