@@ -7,7 +7,7 @@ const NotFounf = () => {
         <span>not found</span>
       </div>
       <div className='cartPageEmpty__title'>404</div>
-      <div className='cartPageEmpty__subtitle'>Проверьте адресс страницы</div>
+      <div className='cartPageEmpty__subtitle'>Проверьте Адрес страницы</div>
       <div className='cartPageEmpty__back'>
         <Link to='/'>
           <button type='button' className='btn btn-outline-secondary'>

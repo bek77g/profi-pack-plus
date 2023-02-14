@@ -58,7 +58,7 @@ const CheckoutPage = () => {
     // } else if (inputTel.trim().length === 0) {
     //     toast.error("Вы не заполнили поле Телефон!");
     // } else if (inputMail.trim().length === 0) {
-    //     toast.error("Вы не заполнили поле Email адресс!");
+    //     toast.error("Вы не заполнили поле Email Адрес!");
     // } else if (inputInfo.trim().length === 0) {
     //     toast.error("Вы не заполнили поле Сообщения!");
     // }
@@ -261,7 +261,7 @@ const CheckoutPage = () => {
               </div>
               <div className='contacts__content__left__address mb-3'>
                 <label htmlFor='inputAddress' className='form-label'>
-                  Адресс
+                  Адрес
                 </label>
                 <input
                   type='text'

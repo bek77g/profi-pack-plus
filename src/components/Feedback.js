@@ -60,7 +60,7 @@ const Feedback = () => {
         event.target.Phone.style.cssText = invalidStyle;
       } else event.target.Phone.style.cssText = validStyle;
       if (Email.trim().length === 0) {
-        toast.error('Вы не заполнили поле Email адресс!');
+        toast.error('Вы не заполнили поле Email Адрес!');
         event.target.Email.style.cssText = invalidStyle;
       } else event.target.Email.style.cssText = validStyle;
       if (Comment.trim().length === 0) {

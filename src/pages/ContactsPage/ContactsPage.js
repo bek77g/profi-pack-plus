@@ -39,7 +39,7 @@ const ContactsPage = () => {
       <SEO
         SeoTitle={ContactPageSEO?.SeoTitle || 'ProfiPackPlus - Контакты'}
         SeoDescription={
-          ContactPageSEO?.SeoDescription || 'Наши контакты и адресс'
+          ContactPageSEO?.SeoDescription || 'Наши контакты и Адрес'
         }
       />
       <div className='contacts'>

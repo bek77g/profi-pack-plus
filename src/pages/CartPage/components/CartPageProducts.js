@@ -448,7 +448,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
                 <label
                   htmlFor='exampleFormControlInput1'
                   className='form-label mb-2'>
-                  Email адресс
+                  Email Адрес
                 </label>
                 <input
                   type='Email'
@@ -462,7 +462,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
               </div>
               <div className='contacts__content__left__Address mb-3'>
                 <label htmlFor='inputAddress' className='form-label'>
-                  Адресс
+                  Адрес
                 </label>
                 <input
                   type='text'
