@@ -10,10 +10,10 @@ const MainPageAdvertiseSlider = () => {
   const navigate = useNavigate();
 
   const setDiscountSlider = (slider) => {
-    return slider.map(({ id, Url, Img }) => {
+    return slider.map(({ id, Url, Img }, idx) => {
       let loaded = false;
       return (
-        <Carousel.Item key={id} onClick={() => navigate(Url)}>
+        <Carousel.Item key={id || idx} onClick={() => navigate(Url)}>
           <p className='advertise-slide'>
             <img
               style={loaded ? {} : { display: 'none' }}
