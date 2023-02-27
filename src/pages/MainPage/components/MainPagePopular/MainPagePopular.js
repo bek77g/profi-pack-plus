@@ -136,8 +136,8 @@ const MainPagePopular = () => {
   const { width } = useWindowDimensions();
   const [newProducts, setNewProducts] = useState([]);
   const [hitProducts, setHitProducts] = useState([]);
-  const slideSliceNew = Math.ceil(newProducts.length / 4);
-  const slideSliceHit = Math.ceil(hitProducts.length / 4);
+  const [slideSliceNew, setSlideSliceNew] = useState(0);
+  const [slideSliceHit, setSlideSliceHit] = useState(0);
   const [showedCards, setShowedCards] = useState(4);
 
   useEffect(() => {
@@ -160,42 +160,72 @@ const MainPagePopular = () => {
       slide_number * slide_size
     );
   }
+
   useEffect(() => {
     if (width <= 1084) {
       setShowedCards(2);
+      setSlideSliceNew(Math.ceil(newProducts.length / 2));
+      setSlideSliceHit(Math.ceil(hitProducts.length / 2));
+      return;
     }
     if (width <= 544) {
       setShowedCards(1);
+      setSlideSliceNew(newProducts.length);
+      setSlideSliceHit(newProducts.length);
+      return;
     }
-  }, [width]);
+    setSlideSliceNew(Math.ceil(newProducts.length / 4));
+    setSlideSliceHit(Math.ceil(hitProducts.length / 4));
+  }, [width, newProducts, hitProducts]);
+
   return (
-    <div className='mainPagePopular'>
-      <Carousel variant='dark'>
-        {[...Array(slideSliceNew).fill()].map((x, i) => {
-          return (
-            <Carousel.Item key={i}>
-              <div className='mainPagePopular__catalog__cards'>
-                {sliceSlides(newCatalog, showedCards, i + 1)}
-              </div>
-            </Carousel.Item>
-          );
-        })}
-      </Carousel>
-      {hitProducts.length > 0 && (
-        <Carousel variant='dark' style={{ marginTop: '20px' }}>
-          {[...Array(slideSliceHit).fill()].map((x, i) => {
-            return (
-              <Carousel.Item key={i}>
-                <div className='mainPagePopular__catalog__cards'>
-                  {sliceSlides(hitCatalog, showedCards, i + 1)}
-                </div>
-              </Carousel.Item>
-            );
-          })}
+    <>
+      <div className='mainPagePopular'>
+        <Carousel variant='dark'>
+          {width > 544
+            ? [...Array(slideSliceNew).fill()].map((x, i) => {
+                return (
+                  <Carousel.Item key={i}>
+                    <div className='mainPagePopular__catalog__cards'>
+                      {sliceSlides(newCatalog, showedCards, i + 1)}
+                    </div>
+                  </Carousel.Item>
+                );
+              })
+            : newProducts.map((card, i) => (
+                <Carousel.Item key={i}>
+                  <div className='mainPagePopular__catalog__cards'>
+                    <Product key={card.id} data={card} />
+                  </div>
+                </Carousel.Item>
+              ))}
         </Carousel>
+      </div>
+      {hitProducts.length > 0 && (
+        <div className='mainPagePopular' style={{ marginTop: '20px' }}>
+          <Carousel interval={'3000'} variant='dark'>
+            {width > 544
+              ? [...Array(slideSliceHit).fill()].map((x, i) => {
+                  return (
+                    <Carousel.Item key={i}>
+                      <div className='mainPagePopular__catalog__cards'>
+                        {sliceSlides(hitCatalog, showedCards, i + 1)}
+                      </div>
+                    </Carousel.Item>
+                  );
+                })
+              : hitProducts.map((card, i) => (
+                  <Carousel.Item key={i}>
+                    <div className='mainPagePopular__catalog__cards'>
+                      <Product key={card.id} data={card} />
+                    </div>
+                  </Carousel.Item>
+                ))}
+          </Carousel>
+        </div>
       )}
       <Toaster position='bottom-center' />
-    </div>
+    </>
   );
 };
 
