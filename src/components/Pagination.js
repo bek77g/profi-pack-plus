@@ -1,5 +1,6 @@
 function PaginationComp({ setPage, page, pageSize }) {
   let pageBtns = Math.ceil(pageSize / 12);
+
   return (
     <nav
       aria-label='Page navigation example'
@@ -17,7 +18,7 @@ function PaginationComp({ setPage, page, pageSize }) {
         {[...Array(pageBtns).fill()].map((pageBtn, i) => {
           let pageIdx = +i + 1;
           return (
-            <li className={`page-item ${pageIdx === page ? 'active' : ''}`}>
+            <li className={`page-item ${pageIdx === +page ? 'active' : ''}`}>
               <button className='page-link' onClick={() => setPage(+pageIdx)}>
                 {pageIdx}
               </button>

@@ -8,6 +8,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { favsProduct, limitCount, pagesHandler } from '../../../../hoc/Hooks';
+import { useSearchParamsState } from '../../../../hooks/useSearchParamsState';
 
 const Products = ({ data }) => {
   const { baseUrl, addCart, addFav } = useContext(CustomContext);
@@ -129,7 +130,7 @@ const Products = ({ data }) => {
 };
 
 const CatalogPageCards = ({ products, sortType, minPrice, maxPrice }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useSearchParamsState('page', { defaultValue: 1 });
 
   const showProducts = () => {
     let array = products

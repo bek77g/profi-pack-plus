@@ -10,12 +10,13 @@ import Loading from '../../layout/loading/Loading';
 import { useContext } from 'react';
 import { CustomContext } from '../../hoc/mainContentContext';
 import { goToTop } from '../../hooks/goToTop';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 const SubCategoryPage = () => {
   const { baseUrl } = useContext(CustomContext);
   const { catalog } = useParams();
   const location = useLocation();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useSearchParamsState('page', { defaultValue: 1 });
   const [loading, setLoading] = useState(true);
   const ref = useRef();
 
