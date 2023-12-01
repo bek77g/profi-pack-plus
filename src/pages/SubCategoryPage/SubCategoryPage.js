@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { CustomContext } from '../../hoc/mainContentContext';
 import { goToTop } from '../../hooks/goToTop';
 import { useSearchParamsState } from '../../hooks/useSearchParamsState';
+import Skeleton from 'react-loading-skeleton';
 
 const SubCategoryPage = () => {
   const { baseUrl } = useContext(CustomContext);
@@ -24,10 +25,10 @@ const SubCategoryPage = () => {
   const [title, setTitle] = useState('');
   const [subCatalogs, setSubCatalogs] = useState([]);
 
-  useEffect(() => {
-    goToTop();
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+  // useEffect(() => {
+  //   goToTop();
+  //   ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -82,6 +83,23 @@ const SubCategoryPage = () => {
     });
   };
 
+  const showSubCatalogsSkeleton = () => {
+    return [...Array(12).keys()].map((_, idx) => {
+      return (
+        <div
+          key={idx}
+          className='catalogPagePopular__catalogs__cards__card cartCategory'>
+          <Skeleton width='100%' height='200px' />
+          <div className='catalogPagePopular__catalogs__cards__card__descr'>
+            <h5>
+              <Skeleton width='100%' height='21px' />
+            </h5>
+          </div>
+        </div>
+      );
+    });
+  };
+
   return (
     <>
       <SEO
@@ -104,25 +122,22 @@ const SubCategoryPage = () => {
           <div
             className='catalogPage__content__right'
             style={{ margin: '0 auto' }}>
-            {loading && <Loading />}
             {!loading && !subCatalogs.length && (
               <>
                 <h2>Ничего не найдено</h2>
               </>
             )}
-            {!loading && subCatalogs.length > 0 && (
-              <>
-                <div className='catalogPagePopular__catalogs__cards'>
-                  {showSubCatalogs()}
-                </div>
-                {subCatalogs.length >= 12 && (
-                  <PaginationComp
-                    setPage={setPage}
-                    page={page}
-                    pageSize={subCatalogs.length}
-                  />
-                )}
-              </>
+            <div className='catalogPagePopular__catalogs__cards'>
+              {!loading && subCatalogs.length > 0
+                ? showSubCatalogs()
+                : showSubCatalogsSkeleton()}
+            </div>
+            {subCatalogs.length >= 12 && (
+              <PaginationComp
+                setPage={setPage}
+                page={page}
+                pageSize={subCatalogs.length}
+              />
             )}
           </div>
         </div>

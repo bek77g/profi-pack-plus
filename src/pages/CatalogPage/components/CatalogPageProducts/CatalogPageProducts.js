@@ -66,7 +66,7 @@ const CatalogPageProducts = () => {
         setLoading(false);
         setCount(res.MinCount);
       });
-    goToTop();
+    // goToTop();
     ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
