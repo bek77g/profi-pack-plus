@@ -8,6 +8,7 @@ import CatalogPageCards from './components/CatalogPageCards/CatalogPageCards';
 import {
   createSearchParams,
   Link,
+  ScrollRestoration,
   useLocation,
   useParams,
   useSearchParams,

@@ -1,7 +1,12 @@
 import { useRef } from 'react';
 import SEO from '../../hoc/SEO';
 import PaginationComp from '../../components/Pagination';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import {
+  Link,
+  ScrollRestoration,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import { useEffect } from 'react';
 import axios from 'axios';

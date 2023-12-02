@@ -2,18 +2,15 @@ import React, { Suspense } from 'react';
 import './scss/style.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Toaster } from 'react-hot-toast';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
 import PageLoading from './layout/loading/PageLoading';
+import MainLayout from './components/MainLayout';
 // import { ReviewsConfigContext, ReviewsProvider } from 'strapi-ratings-client';
 // import { useContext } from 'react';
 // import { CustomContext } from './hoc/mainContentContext';
 // import { useEffect } from 'react';
 
-const Header = React.lazy(() => import('./layout/header/Header'));
-const Footer = React.lazy(() => import('./layout/footer/Footer'));
-const SideBarPage = React.lazy(() => import('./pages/SideBarPage'));
 const CatalogPage = React.lazy(() => import('./pages/CatalogPage/CatalogPage'));
 const CatalogPageProducts = React.lazy(() =>
   import(
@@ -42,6 +39,53 @@ const ContactsPage = React.lazy(() =>
   import('./pages/ContactsPage/ContactsPage')
 );
 
+const router = createBrowserRouter([
+  {
+    element: <MainLayout />,
+    children: [
+      { path: '/', element: <MainPage /> },
+      { path: '/:catalog', element: <SubCategoryPage /> },
+      { path: '/:catalog/:subCatalog', element: <CatalogPage /> },
+      {
+        path: '/:catalog/:subCatalog/:product',
+        element: <CatalogPageProducts />,
+      },
+      {
+        path: '/about',
+        element: <AboutPage />,
+      },
+      {
+        path: '/partnership',
+        element: <PartnershipPage />,
+      },
+      {
+        path: '/order',
+        element: <OrderPage />,
+      },
+      {
+        path: '/contacts',
+        element: <ContactsPage />,
+      },
+      {
+        path: '/cart',
+        element: <CartPage />,
+      },
+      {
+        path: '/favourite',
+        element: <FavouritePage />,
+      },
+      {
+        path: '/cards',
+        element: <SubCategoryPageCards />,
+      },
+      {
+        path: '*',
+        element: <NotFounf />,
+      },
+    ],
+  },
+]);
+
 function App() {
   // const { baseUrl } = useContext(CustomContext);
   // const { setUser } = useContext(ReviewsConfigContext);
@@ -56,33 +100,7 @@ function App() {
     <>
       {/* <ReviewsProvider apiURL={baseUrl}> */}
       <Suspense fallback={<PageLoading />}>
-        <BrowserRouter>
-          <SideBarPage />
-          <div className='container'>
-            <div className='pageContent__view'>
-              <Header />
-              <Routes>
-                <Route path='/' element={<MainPage />} />
-                <Route path='/:catalog' element={<SubCategoryPage />} />
-                <Route path='/:catalog/:subCatalog' element={<CatalogPage />} />
-                <Route
-                  path='/:catalog/:subCatalog/:product'
-                  element={<CatalogPageProducts />}
-                />
-                <Route path='/about' element={<AboutPage />} />
-                <Route path='/partnership' element={<PartnershipPage />} />
-                <Route path='/order' element={<OrderPage />} />
-                <Route path='/contacts' element={<ContactsPage />} />
-                <Route path='/cart' element={<CartPage />} />
-                <Route path='/favourite' element={<FavouritePage />} />
-                <Route path='/cards' element={<SubCategoryPageCards />} />
-                <Route path='*' element={<NotFounf />} />
-              </Routes>
-              <Footer />
-            </div>
-          </div>
-          {Toaster}
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </Suspense>
       {/* </ReviewsProvider> */}
     </>

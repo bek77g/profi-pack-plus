@@ -5,7 +5,7 @@ import arr from '../../../../assets/icons/arr.svg';
 import { HandySvg } from 'handy-svg';
 import heart from '../../../../assets/icons/favourite.svg';
 import cart from '../../../../assets/icons/cart.svg';
-import { Link, useParams } from 'react-router-dom';
+import { Link, ScrollRestoration, useParams } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import Loading from '../../../../layout/loading/Loading';
@@ -17,6 +17,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Fancybox from '../../../../utils/FancyBox';
 import { goToTop } from '../../../../hooks/goToTop';
 import { useRef } from 'react';
+import { Product } from '../../../MainPage/components/MainPagePopular/MainPagePopular';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -51,6 +52,7 @@ const CatalogPageProducts = () => {
     BestSeller,
     MinCount,
     favorite,
+    relatives = [],
   } = favsProduct(productData);
 
   // useEffect(() => {
@@ -67,7 +69,7 @@ const CatalogPageProducts = () => {
         setCount(res.MinCount);
       });
     // goToTop();
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   const addToCart = (id, quantity) => {
@@ -278,6 +280,20 @@ const CatalogPageProducts = () => {
               </div>
               <Toaster position='bottom-center' />
             </div>
+            {relatives.length > 0 && (
+              <>
+                <div className='catalogPage__top'>
+                  <h2>Связанное</h2>
+                </div>
+                {relatives.map((related) => (
+                  <div
+                    className='catalogPagePopular__catalogs__cards'
+                    style={{ justifyContent: 'center' }}>
+                    <Product key={related.id} data={related} />
+                  </div>
+                ))}
+              </>
+            )}
             {/* <ReviewForm />
           <ErrorBox /> */}
           </>

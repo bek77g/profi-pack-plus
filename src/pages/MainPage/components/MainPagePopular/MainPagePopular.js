@@ -12,7 +12,7 @@ import { CustomContext } from '../../../../hoc/mainContentContext';
 import { favsProduct, limitCount } from '../../../../hoc/Hooks';
 import { useWindowDimensions } from '../../../../hooks/useWindowDimensions';
 
-const Product = ({ data }) => {
+export const Product = ({ data }) => {
   const [count, setCount] = useState(1);
 
   const { baseUrl, addCart, addFav } = useContext(CustomContext);
