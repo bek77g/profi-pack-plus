@@ -8,6 +8,7 @@ import CatalogPageCards from './components/CatalogPageCards/CatalogPageCards';
 import {
   createSearchParams,
   Link,
+  ScrollRestoration,
   useLocation,
   useParams,
   useSearchParams,
@@ -15,6 +16,7 @@ import {
 import axios from 'axios';
 import Loading from '../../layout/loading/Loading';
 import { goToTop } from '../../hooks/goToTop';
+import Skeleton from 'react-loading-skeleton';
 
 const CatalogPage = () => {
   const { subCatalog } = useParams();
@@ -36,10 +38,10 @@ const CatalogPage = () => {
 
   const ref = useRef();
 
-  useEffect(() => {
-    goToTop();
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+  // useEffect(() => {
+  //   goToTop();
+  //   ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -104,7 +106,22 @@ const CatalogPage = () => {
           </div>
         </div>
         <div className='catalogPage__content'>
-          {loading && <Loading />}
+          {loading && (
+            <div
+              className='catalogPagePopular__catalogs__cards'
+              style={{ margin: '0 auto' }}>
+              {[...Array(18).keys()].map((card) => (
+                <div
+                  style={{ width: '280px' }}
+                  className='mainPagePopular__catalog__cards__card'
+                  style={{ justifyContent: 'center' }}>
+                  <Skeleton height='200px' />
+                  <Skeleton height='21px' />
+                  <Skeleton height='50px' />
+                </div>
+              ))}
+            </div>
+          )}
           {!loading && !products.length && (
             <>
               <h2>Ничего не найдено</h2>

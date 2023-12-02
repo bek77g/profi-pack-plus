@@ -65,6 +65,7 @@ const Products = ({ data }) => {
         <Link to={Slug}>
           <img
             className='d-block w-100'
+            style={{ minHeight: '198px' }}
             src={
               !!Gallery?.length
                 ? `${baseUrl}${Gallery[0].url}`
