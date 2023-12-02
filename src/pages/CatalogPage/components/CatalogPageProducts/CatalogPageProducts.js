@@ -5,7 +5,7 @@ import arr from '../../../../assets/icons/arr.svg';
 import { HandySvg } from 'handy-svg';
 import heart from '../../../../assets/icons/favourite.svg';
 import cart from '../../../../assets/icons/cart.svg';
-import { Link, ScrollRestoration, useParams } from 'react-router-dom';
+import { Link, ScrollRestoration, useLocation, useParams } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import Loading from '../../../../layout/loading/Loading';
@@ -26,6 +26,7 @@ import { Product } from '../../../MainPage/components/MainPagePopular/MainPagePo
 // } from 'strapi-ratings-client';
 
 const CatalogPageProducts = () => {
+  const {pathname} = useLocation()
   const { baseUrl, addCart, addFav } = useContext(CustomContext);
   // const { setContentID, setCanPostReview } = useContext(ReviewsConfigContext);
   const [count, setCount] = useState(1);
@@ -70,7 +71,7 @@ const CatalogPageProducts = () => {
       });
     // goToTop();
     // ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+  }, [pathname]);
 
   const addToCart = (id, quantity) => {
     addCart(id, quantity);
@@ -283,7 +284,7 @@ const CatalogPageProducts = () => {
             {relatives.length > 0 && (
               <>
                 <div className='catalogPage__top'>
-                  <h2>Связанное</h2>
+                  <h2>Связанные товары</h2>
                 </div>
                 {relatives.map((related) => (
                   <div

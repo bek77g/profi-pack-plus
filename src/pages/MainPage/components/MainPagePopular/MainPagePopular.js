@@ -66,7 +66,7 @@ export const Product = ({ data }) => {
         </p>
       </div>
       <div className='mainPagePopular__catalog__cards__card__img'>
-        <Link to={`${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
+        <Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
           <img
             className='d-block w-100'
             src={`${baseUrl}${Gallery[0].url}`}
@@ -76,13 +76,13 @@ export const Product = ({ data }) => {
       </div>
       <div className='mainPagePopular__catalog__cards__card__descr'>
         <h5>
-          <Link to={`${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
+          <Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
             {Title}{' '}
           </Link>
         </h5>
 
         <div className='mainPagePopular__catalog__cards__card__cart'>
-          <Link to={`${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
+          <Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
             <p style={{ lineHeight: '23px' }}>
               {Price} сом/{CountType}
               <br />
