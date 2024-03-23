@@ -54,6 +54,7 @@ const CatalogPageProducts = () => {
     MinCount,
     favorite,
     relatives = [],
+    relateds =[]
   } = favsProduct(productData);
 
   // useEffect(() => {
@@ -281,18 +282,18 @@ const CatalogPageProducts = () => {
               </div>
               <Toaster position='bottom-center' />
             </div>
-            {relatives.length > 0 && (
+            {[...relatives, ...relateds].length > 0 && (
               <>
                 <div className='catalogPage__top'>
                   <h2>Связанные товары</h2>
                 </div>
-                {relatives.map((related) => (
                   <div
                     className='catalogPagePopular__catalogs__cards'
                     style={{ justifyContent: 'center' }}>
-                    <Product key={related.id} data={related} />
+                    {[...relatives, ...relateds].map((related) => (
+                      <Product key={related.id} data={related} />
+                    ))}
                   </div>
-                ))}
               </>
             )}
             {/* <ReviewForm />
