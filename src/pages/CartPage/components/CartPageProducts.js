@@ -114,6 +114,7 @@ const CartPageProducts = () => {
 																							}
 																							className='form-control form-control-color'
 																							value={quantity}
+																							readOnly
 																						/>
 																						<button
 																							type='button'
