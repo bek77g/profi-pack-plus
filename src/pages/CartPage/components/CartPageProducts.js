@@ -13,15 +13,17 @@ import SEO from '../../../hoc/SEO';
 import CartPageEmpty from './CartPageEmpty';
 
 const CartPageProducts = () => {
-	const { baseUrl, cart, editCart, removeCart } = useContext(CustomContext);
-	const [checkout, setCheckout] = useState(false);
+	const { baseUrl, cart, editCart, removeCart, isCheckout, setIsCheckout } =
+		useContext(CustomContext);
 
 	const removeItem = id => {
 		removeCart(id);
 		toast.success('Товар удалён из корзины');
 	};
 
-	useEffect(() => setCheckout(false), [cart, editCart, removeCart]);
+	useEffect(() => {
+		return () => setIsCheckout(false);
+	}, []);
 
 	let totalPrice = cart.reduce(
 		(acc, rec) => (acc += rec.Price * rec.quantity),
@@ -185,7 +187,7 @@ const CartPageProducts = () => {
 																<b>{totalPrice.toFixed(2)} сом</b>
 															</h4>
 														</div>
-														{!checkout && (
+														{!isCheckout && (
 															<div className='d-flex justify-content-center'>
 																<div className='column'>
 																	<HashLink to='#checkout'>
@@ -196,7 +198,7 @@ const CartPageProducts = () => {
 																						'Для оформления заказа необходимо набрать товаров на сумму от 3000 сом'
 																					);
 																				} else {
-																					setCheckout(true);
+																					setIsCheckout(true);
 																				}
 																			}}
 																			type='button'
@@ -224,7 +226,7 @@ const CartPageProducts = () => {
 						</div>
 					</div>
 				</section>
-				{checkout && (
+				{isCheckout && (
 					<CheckoutPage
 						cart={cart}
 						totalPrice={totalPrice}
@@ -239,7 +241,7 @@ const CartPageProducts = () => {
 export default CartPageProducts;
 
 const CheckoutPage = ({ cart, totalPrice }) => {
-	const { baseUrl, shippingPrice } = useContext(CustomContext);
+	const { baseUrl, shippingPrice, resetCart } = useContext(CustomContext);
 	const [submitBtn, setSubmitBtn] = useState(false);
 	const [loading, setLoading] = useState(false);
 	let randomId = Date.now().valueOf().toString().replace('.', 7);
@@ -339,41 +341,34 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 		setUserData({ ...userData, [name]: value });
 	};
 
-	const orderPostHandler = () => {
+	const orderPostHandler = async () => {
 		setLoading(true);
-		let data = { data: userData };
-		const promise = axios
-			.post('api/orders', data)
-			.then(res => {
+		try {
+			const response = await axios.post('api/orders', { data: userData });
+
+			if (response.status === 200 && response.data.data.id > 0) {
 				setSubmitBtn(true);
 				setLoading(false);
-				localStorage.removeItem('cart');
+				resetCart();
 				localStorage.setItem(
 					'user',
 					JSON.stringify({ FullName, Phone, Email, Address })
 				);
 				document.getElementById('order-form').reset();
-			})
-			.catch(err => {
-				console.log(err);
-			});
-
-		// setTimeout(() => {
-		//   setSubmitBtn(true);
-		//   setLoading(false);
-		//   console.log('Ordered');
-		// }, 3000);
-
-		// const promise = new Promise(function (resolve, reject) {
-		//   // Setting 2000 ms time
-		//   setTimeout(resolve, 2000);
-		// });
-
-		toast.promise(promise, {
-			loading: 'Отправка заказа...',
-			success: 'Заказ успешно отправлен',
-			error: 'Что-то пошло не так, проверьте поля',
-		});
+				toast.success('Заказ успешно отправлен');
+			} else {
+				toast.error(
+					'Что-то пошло не так после отправки заказа. Попробуйте ещё раз.'
+				);
+			}
+		} catch (err) {
+			toast.error(
+				err.response.data.error.message ||
+					'Что-то пошло не так, попробуйте ещё раз.'
+			);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const createUserHandler = event => {
@@ -391,7 +386,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 				toast.error('Вы не заполнили поле ФИО!');
 				event.target.FullName.style.cssText = invalidStyle;
 			} else event.target.FullName.style.cssText = validStyle;
-			if (Phone.trim().length === 0) {
+			if (Phone.trim().length > 9) {
 				event.target.Phone.style.cssText = invalidStyle;
 				toast.error('Вы не заполнили поле Телефон!');
 			} else event.target.Phone.style.cssText = validStyle;
