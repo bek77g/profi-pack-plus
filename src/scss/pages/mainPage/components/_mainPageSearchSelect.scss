@@ -1,21 +1,51 @@
 .mainPageSearchSelect {
-  position: relative;
-  z-index: 5;
-  padding-right: 70px;
-  margin-bottom: 50px;
-  &-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: #fff;
-    height: 100%;
-    padding: 6px 10px;
-    background: #1c62cd;
-    outline: none;
-    border: none;
-    cursor: pointer;
-  }
-  &-btn:disabled {
-    background: #174b98;
-  }
+	position: relative;
+	z-index: 5;
+	// padding-right: 70px;
+	margin-bottom: 50px;
+	// &-btn {
+	// 	position: absolute;
+	// 	right: 0;
+	// 	top: 0;
+	// 	color: #fff;
+	// 	height: 100%;
+	// 	padding: 6px 10px;
+	// 	background: #1c62cd;
+	// 	outline: none;
+	// 	border: none;
+	// 	cursor: pointer;
+	// }
+	&-btn:disabled {
+		background: #174b98;
+	}
+	&__option {
+		cursor: pointer;
+		padding: 4px 12px;
+		min-height: 50px;
+		width: 100%;
+		gap: 12px;
+		user-select: none;
+		background: transparent;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		& img {
+			width: 50px;
+			height: 50px;
+		}
+		&.focused {
+			background: #deebff;
+		}
+		&-left {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		&-right {
+			& p {
+				font-weight: bold;
+				white-space: nowrap;
+			}
+		}
+	}
 }
