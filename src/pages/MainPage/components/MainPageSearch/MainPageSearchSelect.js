@@ -98,8 +98,6 @@ const MainPageSearchSelect = () => {
 	// 	).Gallery[0].formats.small.url
 	// );
 
-	console.log(catalogs);
-
 	const CustomOption = ({ innerProps, isDisabled, data, isFocused }) => {
 		const splittedValue = data.value.split('/');
 		const pureSlug = splittedValue[splittedValue.length - 1];
