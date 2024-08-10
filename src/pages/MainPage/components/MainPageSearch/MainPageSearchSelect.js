@@ -61,7 +61,7 @@ const MainPageSearchSelect = () => {
 
 	const handleSearchSubmit = () => {
 		if (searchValue !== undefined && searchValue.trim().length > 0)
-			navigate(`${searchValue}`);
+			navigate(`/${searchValue}`);
 	};
 
 	useEffect(() => {

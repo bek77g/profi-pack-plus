@@ -14,6 +14,8 @@ import SEO from '../../../../hoc/SEO';
 import Loading from '../../../../layout/loading/Loading';
 import Fancybox from '../../../../utils/FancyBox';
 import { Product } from '../../../MainPage/components/MainPagePopular/MainPagePopular';
+import MainPageSearchSelect from '../../../MainPage/components/MainPageSearch/MainPageSearchSelect';
+import { Products as LikedProducts } from '../CatalogPageCards/CatalogPageCards';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -31,6 +33,7 @@ const CatalogPageProducts = () => {
 	const ref = useRef();
 
 	const [loading, setLoading] = useState(true);
+	const [products, setProducts] = useState([]);
 
 	const [productData, setProductData] = useState({});
 
@@ -66,6 +69,9 @@ const CatalogPageProducts = () => {
 				setLoading(false);
 				setCount(res.MinCount);
 			});
+		axios.get(`/api/sub-catalogs/${subCatalog}`).then(({ data }) => {
+			setProducts(data.data.products.filter(el => el.publishedAt !== null));
+		});
 		// goToTop();
 		// ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	}, [pathname]);
@@ -115,6 +121,7 @@ const CatalogPageProducts = () => {
 				SeoTitle={ProductSEO?.SeoTitle}
 				SeoDescription={ProductSEO?.SeoDescription}
 			/>
+			<MainPageSearchSelect />
 			<div className='catalogPageProducts' ref={ref}>
 				{!loading ? (
 					<>
@@ -293,6 +300,18 @@ const CatalogPageProducts = () => {
 								</div>
 							</>
 						)}
+						<>
+							<div className='catalogPage__top'>
+								<h2>Похожие товары</h2>
+							</div>
+							<div
+								className='catalogPagePopular__catalogs__cards'
+								style={{ justifyContent: 'center' }}>
+								{products.map(related => (
+									<LikedProducts key={related.id} data={related} />
+								))}
+							</div>
+						</>
 						{/* <ReviewForm />
           <ErrorBox /> */}
 					</>

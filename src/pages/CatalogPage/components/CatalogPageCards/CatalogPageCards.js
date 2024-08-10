@@ -9,7 +9,7 @@ import { favsProduct, pagesHandler } from '../../../../hoc/Hooks';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { useSearchParamsState } from '../../../../hooks/useSearchParamsState';
 
-const Products = ({ data }) => {
+export const Products = ({ data }) => {
 	const { baseUrl, addCart, addFav } = useContext(CustomContext);
 	const [count, setCount] = useState(1);
 
