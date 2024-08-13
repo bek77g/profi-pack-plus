@@ -62,6 +62,7 @@ const CatalogPageProducts = () => {
 	// }, [product]);
 
 	useEffect(() => {
+		setLoading(true);
 		axios(`api/products/${product}`)
 			.then(({ data }) => data.data)
 			.then(res => {
@@ -307,9 +308,12 @@ const CatalogPageProducts = () => {
 							<div
 								className='catalogPagePopular__catalogs__cards'
 								style={{ justifyContent: 'center' }}>
-								{products.map(related => (
-									<LikedProducts key={related.id} data={related} />
-								))}
+								{[...products]
+									.sort(() => Math.random() - 0.5)
+									.slice(0, 3)
+									.map(related => (
+										<LikedProducts key={related.id} data={related} />
+									))}
 							</div>
 						</>
 						{/* <ReviewForm />

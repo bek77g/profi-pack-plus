@@ -1,7 +1,7 @@
 import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import cart from '../../../../assets/icons/cart.svg';
 import heart from '../../../../assets/icons/favourite.svg';
 import PaginationComp from '../../../../components/Pagination';
@@ -12,6 +12,7 @@ import { useSearchParamsState } from '../../../../hooks/useSearchParamsState';
 export const Products = ({ data }) => {
 	const { baseUrl, addCart, addFav } = useContext(CustomContext);
 	const [count, setCount] = useState(1);
+	const { pathname } = useLocation();
 
 	const {
 		Title,
@@ -24,7 +25,13 @@ export const Products = ({ data }) => {
 		favorite,
 		BestSeller,
 		MinCount,
+		...rest
 	} = favsProduct(data);
+
+	const link =
+		pathname.split('/').length >= 1 && rest?.sub_catalog
+			? `/${pathname.split('/')[1]}/${rest?.sub_catalog.Slug}/${Slug}`
+			: `/${Slug}`;
 
 	const addToCart = () => {
 		addCart(data, count);
@@ -61,7 +68,7 @@ export const Products = ({ data }) => {
 				</p>
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__img'>
-				<Link to={Slug}>
+				<Link to={link}>
 					<img
 						className='d-block w-100'
 						style={{ minHeight: '198px' }}
@@ -75,11 +82,11 @@ export const Products = ({ data }) => {
 				</Link>
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__descr'>
-				<Link to={Slug}>
+				<Link to={link}>
 					<h5>{Title}</h5>
 				</Link>
 				<div className='mainPagePopular__catalog__cards__card__cart'>
-					<Link to={Slug}>
+					<Link to={link}>
 						<p style={{ lineHeight: '23px' }}>
 							{Price} сом/{CountType}
 							<br />
