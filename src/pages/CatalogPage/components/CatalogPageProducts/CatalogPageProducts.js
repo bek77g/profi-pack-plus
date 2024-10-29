@@ -77,8 +77,9 @@ const CatalogPageProducts = () => {
 		// ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	}, [pathname]);
 
-	const addToCart = (id, quantity) => {
-		addCart(id, quantity);
+	const addToCart = (data, quantity) => {
+		addCart(data, quantity);
+		if (!data.Availability) return null;
 		toast.success('Товар добавлен в корзину');
 	};
 
@@ -213,9 +214,11 @@ const CatalogPageProducts = () => {
 										<span onClick={() => addToFav()}>
 											<HandySvg src={heart} width='24' height='22' />
 										</span>
-										<span onClick={() => addCart(productData, count)}>
+										<button
+											onClick={() => addCart(productData, count)}
+											disabled={!Availability}>
 											<HandySvg src={cart} width='30' height='23' />
-										</span>
+										</button>
 										<span
 											className={`catalogPageProducts__content__availability catalogPageProducts__content__availability--${
 												Availability ? 'stock' : 'nonstock'
@@ -272,6 +275,7 @@ const CatalogPageProducts = () => {
 									</div>
 									<div className='catalogPageProducts__content__right__bottom'>
 										<button
+											disabled={!Availability}
 											className='catalogPageProducts__content__right__bottom__btn'
 											onClick={() => addToCart(productData, count)}>
 											В корзину

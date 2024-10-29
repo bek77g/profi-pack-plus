@@ -31,6 +31,7 @@ export const Product = ({ data }) => {
 
 	const addToCart = () => {
 		addCart(data, count);
+		if (!data.Availability) return null;
 		toast.success('Товар добавлен в корзину');
 	};
 
@@ -89,9 +90,9 @@ export const Product = ({ data }) => {
 							</i>
 						</p>
 					</Link>
-					<span onClick={() => addToCart()}>
+					<button onClick={() => addToCart()} disabled={!Availability}>
 						<HandySvg src={cart} className='icon' width='30' height='30' />
-					</span>
+					</button>
 				</div>
 				<div
 					className={`catalogPagePopular__catalogs__cards__card__availability catalogPagePopular__catalogs__cards__card__availability--${

@@ -146,7 +146,8 @@ export const MainContentContext = props => {
 
 	const addCart = (cartObj, quantity) => {
 		let cartCopy = [...cart];
-		let { id } = cartObj;
+		let { id, Availability } = cartObj;
+		if (!Availability) return null;
 		let existingCart = cartCopy.find(cartItem => cartItem.id === id);
 		if (existingCart) {
 			existingCart.quantity += quantity;
