@@ -7,24 +7,24 @@ const Footer = React.lazy(() => import('../layout/footer/Footer'));
 const SideBarPage = React.lazy(() => import('../pages/SideBarPage'));
 
 const MainLayout = () => {
-  return (
-    <>
-      <SideBarPage />
-      <div className='container'>
-        <div className='pageContent__view'>
-          <Header />
-          <Outlet />
-          <Footer />
-        </div>
-      </div>
-      <ScrollRestoration
-        getKey={(location, matches) => {
-          return location.pathname;
-        }}
-      />
-      {Toaster}
-    </>
-  );
+	return (
+		<>
+			<SideBarPage />
+			<div className='container'>
+				<div className='pageContent__view'>
+					<Header />
+					<Outlet />
+					<Footer />
+				</div>
+			</div>
+			<ScrollRestoration
+				getKey={(location, matches) => {
+					return location.pathname;
+				}}
+			/>
+			{Toaster}
+		</>
+	);
 };
 
 export default MainLayout;

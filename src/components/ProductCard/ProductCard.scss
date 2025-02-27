@@ -1,0 +1,125 @@
+.product-card {
+    width: calc(25% - 30px);
+    margin: 15px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+        transform: translateY(-5px);
+    }
+
+    &__favorite {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        &-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #f3f3f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+            font-size: 20px;
+
+            &:hover {
+                background-color: #f3f3f3;
+            }
+        }
+    }
+
+    &__link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__image {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 20px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__title {
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 1%;
+        margin-bottom: 20px;
+        min-height: 48px;
+    }
+
+    &__bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    &__price {
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 27px;
+        letter-spacing: 0.015em;
+    }
+
+    .button {
+        display: inline-block;
+        background-color: #007bff;
+        border-radius: 30px;
+        padding: 10px 20px;
+        min-width: 100px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out,
+                    border-color 0.15s ease-in-out;
+        border: 1px solid transparent;
+        user-select: none;
+
+        &,
+        span {
+            color: #fff;
+        }
+
+        &:hover {
+            background-color: darken(#007bff, 8%);
+        }
+
+        &:active {
+            background-color: darken(#007bff, 12%);
+        }
+
+        &--outline {
+            background-color: #fff;
+            border-color: #007bff;
+
+            &,
+            span {
+                color: #007bff;
+            }
+
+            &:hover {
+                background-color: #007bff;
+
+                &,
+                span {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

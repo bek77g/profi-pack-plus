@@ -4,24 +4,19 @@ import { createContext, useEffect, useState } from 'react';
 export const CustomContext = createContext();
 export const MainContentContext = props => {
 	const baseUrl = 'https://app.profipack.kg';
-	// const baseUrl = 'http://localhost:1337';
 	axios.defaults.baseURL = baseUrl;
-	axios.defaults.headers.common = {
-		Authorization: `Bearer ${process.env.REACT_APP_JWT_SECRET_KEY}`,
-	};
+	
+	const [user, setUser] = useState(null);
+	const [authModalOpen, setAuthModalOpen] = useState(false);
 	const [catalogs, setCatalogs] = useState([]);
 	const [nav, setNav] = useState(false);
 
 	const [cart, setCart] = useState([]);
 	const [favorite, setFavorite] = useState([]);
-	let localCart = localStorage.getItem('cart');
-	let localFav = localStorage.getItem('favorites');
-
+	
 	const [shippingPrice, setShippingPrice] = useState(0);
-
 	const [isCheckout, setIsCheckout] = useState(false);
 
-	//Pages data start
 	const [MainPageData, setMainPageData] = useState({
 		discount: {
 			img: {
@@ -44,7 +39,100 @@ export const MainContentContext = props => {
 	const [PartnerPageData, setPartnerPageData] = useState({});
 	const [OrderPageData, setOrderPageData] = useState({});
 	const [ContactPageData, setContactPageData] = useState({});
-	//Pages data end
+
+	// Initialize auth state from localStorage
+	useEffect(() => {
+		const token = localStorage.getItem('jwt');
+		if (token) {
+			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+			// Fetch user profile
+			axios.get('/api/users/me')
+				.then(({ data }) => setUser(data))
+				.catch(() => {
+					localStorage.removeItem('jwt');
+					delete axios.defaults.headers.common['Authorization'];
+				});
+		}
+	}, []);
+
+	// Fetch cart and favorites when user is authenticated
+	useEffect(() => {
+		if (user) {
+			// Fetch cart
+			axios.get('/api/cart')
+				.then(({ data }) => setCart(data.items || []))
+				.catch(console.error);
+
+			// Fetch favorites
+			axios.get('/api/favorites')
+				.then(({ data }) => setFavorite(data.products || []))
+				.catch(console.error);
+		}
+	}, [user]);
+
+	const logout = () => {
+		localStorage.removeItem('jwt');
+		delete axios.defaults.headers.common['Authorization'];
+		setUser(null);
+		setCart([]);
+		setFavorite([]);
+	};
+
+	const requireAuth = (callback) => {
+		if (!user) {
+			setAuthModalOpen(true);
+			return false;
+		}
+		return callback();
+	};
+
+	const addCart = (cartObj, quantity = 1) => {
+		requireAuth(() => {
+			axios.post('/api/cart/add', { id: cartObj.id, quantity })
+				.then(({ data }) => setCart(data.items))
+				.catch(console.error);
+		});
+	};
+
+	const editCart = (cartID, amount) => {
+		requireAuth(() => {
+			axios.put(`/api/cart/items/${cartID}`, { quantity: amount })
+				.then(({ data }) => setCart(data.items))
+				.catch(console.error);
+		});
+	};
+
+	const removeCart = cartID => {
+		requireAuth(() => {
+			axios.delete(`/api/cart/items/${cartID}`)
+				.then(({ data }) => setCart(data.items))
+				.catch(console.error);
+		});
+	};
+
+	const resetCart = () => {
+		requireAuth(() => {
+			axios.delete('/api/cart/clear')
+				.then(() => setCart([]))
+				.catch(console.error);
+		});
+	};
+
+	const addFavorite = (product) => {
+		requireAuth(() => {
+			axios.post('/api/favorites/add', { id: product.id })
+				.then(({ data }) => setFavorite(data.products))
+				.catch(console.error);
+		});
+	};
+
+	const removeFavorite = (productId) => {
+		requireAuth(() => {
+			axios.delete(`/api/favorites/${productId}`)
+				.then(({ data }) => setFavorite(data.products))
+				.catch(console.error);
+		});
+	};
 
 	//Get pages data start
 	function getMainPageData() {
@@ -126,94 +214,36 @@ export const MainContentContext = props => {
 		getPartnerPageData();
 		getOrderPageData();
 		getContactPageData();
-		let prev_cart = JSON.parse(localStorage.getItem('cart')) || [];
-		setCart(prev_cart);
-	}, []);
-
-	const addFav = favObj => {
-		let favCopy = [...favorite];
-		let { id } = favObj;
-		let existingObj = favCopy.find(favItem => favItem.id === id);
-		if (existingObj) {
-			favCopy = favCopy.filter(favItem => favItem.id != favObj.id);
-		} else {
-			favObj.favorite = true;
-			favCopy.push(favObj);
-		}
-		setFavorite(favCopy);
-		localStorage.setItem('favorites', JSON.stringify(favCopy));
-	};
-
-	const addCart = (cartObj, quantity) => {
-		let cartCopy = [...cart];
-		let { id, Availability } = cartObj;
-		if (!Availability) return null;
-		let existingCart = cartCopy.find(cartItem => cartItem.id === id);
-		if (existingCart) {
-			existingCart.quantity += quantity;
-		} else {
-			cartObj.quantity = quantity;
-			cartCopy.push(cartObj);
-		}
-		setCart(cartCopy);
-		localStorage.setItem('cart', JSON.stringify(cartCopy));
-	};
-	const editCart = (cartID, amount) => {
-		let cartCopy = [...cart];
-		let existentItem = cartCopy.find(item => item.id == cartID);
-		if (!existentItem) return;
-		existentItem.quantity = amount;
-		if (existentItem.quantity <= 0) {
-			cartCopy = cartCopy.filter(item => item.id != cartID);
-		}
-		setCart(cartCopy);
-		localStorage.setItem('cart', JSON.stringify(cartCopy));
-	};
-	const removeCart = cartID => {
-		let cartCopy = [...cart];
-		cartCopy = cartCopy.filter(item => item.id != cartID);
-		setCart(cartCopy);
-		let cartString = JSON.stringify(cartCopy);
-		localStorage.setItem('cart', cartString);
-	};
-	const resetCart = () => {
-		setCart([]);
-		localStorage.removeItem('cart');
-	};
-
-	useEffect(() => {
-		localCart = JSON.parse(localCart);
-		localFav = JSON.parse(localFav);
-		if (localCart) setCart(localCart);
-		if (localFav) setFavorite(localFav);
 	}, []);
 
 	const value = {
-		baseUrl,
-		nav,
 		catalogs,
 		setCatalogs,
+		nav,
 		setNav,
-		shippingPrice,
-		isCheckout,
-		setIsCheckout,
-		addFav,
+		cart,
 		favorite,
 		addCart,
-		editCart,
 		removeCart,
 		resetCart,
-		cart,
+		editCart,
+		addFavorite,
+		removeFavorite,
 		MainPageData,
 		AboutPageData,
 		PartnerPageData,
 		OrderPageData,
 		ContactPageData,
+		shippingPrice,
+		setShippingPrice,
+		isCheckout,
+		setIsCheckout,
+		user,
+		setUser,
+		logout,
+		authModalOpen,
+		setAuthModalOpen,
 	};
 
-	return (
-		<CustomContext.Provider value={value}>
-			{props.children}
-		</CustomContext.Provider>
-	);
+	return <CustomContext.Provider value={value}>{props.children}</CustomContext.Provider>;
 };
