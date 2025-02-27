@@ -1,4 +1,24 @@
 .profilePage {
+	&__top {
+		span {
+			font-style: normal;
+			font-weight: 400;
+			font-size: 15px;
+			line-height: 18px;
+			color: #c4c4c4;
+			padding-left: 10px;
+
+			&:first-child {
+				padding-left: 0px;
+			}
+		}
+
+		h2 {
+			margin-top: 40px;
+			margin-bottom: 25px;
+		}
+	}
+
 	&__sections {
 		margin-top: 30px;
 	}
