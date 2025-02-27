@@ -7,8 +7,11 @@ import { CustomContext } from '../../../hoc/mainContentContext';
 const AddressInfo = () => {
 	const { user, setUser } = useContext(CustomContext);
 	const [addresses, setAddresses] = useState(user?.addresses || []);
+	const [showNewAddressForm, setShowNewAddressForm] = useState(
+		!addresses.length
+	);
 	const [newAddress, setNewAddress] = useState({
-		type: 'home',
+		type: 'house',
 		title: '',
 		street: '',
 		building: '',
@@ -20,12 +23,24 @@ const AddressInfo = () => {
 
 	// Create a memoized version of the save function
 	const debouncedSave = useCallback(
-		debounce(async (address, id) => {
+		debounce(async address => {
 			try {
-				if (id) {
-					await axios.patch(`/api/profile/addresses/${id}`, address);
+				let response;
+				if (address.id) {
+					await axios.patch(`/api/profile/addresses/${address.id}`, address);
+				} else if (
+					address.street &&
+					address.building &&
+					address.title &&
+					address.type
+				) {
+					await axios.post('/api/profile/addresses', {
+						...address,
+						floor: parseInt(address.floor) || null,
+					});
 				} else {
-					await axios.post('/api/profile/addresses', address);
+					// Если не все обязательные поля заполнены, не отправляем запрос
+					return;
 				}
 
 				// Refresh data after successful save
@@ -36,7 +51,23 @@ const AddressInfo = () => {
 					addresses: updatedProfile.addresses,
 				}));
 
-				toast.success(id ? 'Адрес обновлен' : 'Адрес добавлен');
+				if (!address.id) {
+					// После успешного создания нового адреса
+					setShowNewAddressForm(false);
+					// Очищаем форму нового адреса
+					setNewAddress({
+						type: 'house',
+						title: '',
+						street: '',
+						building: '',
+						apartment: '',
+						floor: null,
+						entrance: '',
+						isDefault: false,
+					});
+				}
+
+				toast.success(address.id ? 'Адрес обновлен' : 'Адрес добавлен');
 			} catch (error) {
 				console.error('Error saving address:', error);
 				toast.error('Ошибка при сохранении');
@@ -60,56 +91,15 @@ const AddressInfo = () => {
 				setAddresses(prevAddresses =>
 					prevAddresses.map(addr => (addr.id === id ? updatedAddress : addr))
 				);
-				debouncedSave(updatedAddress, id);
+				debouncedSave(updatedAddress);
 			}
 		} else {
-			setNewAddress(prev => ({
-				...prev,
-				[name]: fieldValue,
-			}));
-		}
-	};
-
-	const handleAddNewAddress = async e => {
-		e.preventDefault();
-		if (
-			!newAddress.street ||
-			!newAddress.building ||
-			!newAddress.title ||
-			!newAddress.type
-		) {
-			toast.error('Заполните обязательные поля');
-			return;
-		}
-
-		try {
-			await axios.post('/api/profile/addresses', {
+			const updatedNewAddress = {
 				...newAddress,
-				floor: parseInt(newAddress.floor),
-			});
-			const { data: updatedProfile } = await axios.get('/api/profile');
-
-			setAddresses(updatedProfile.addresses);
-			setUser(prev => ({
-				...prev,
-				addresses: updatedProfile.addresses,
-			}));
-
-			setNewAddress({
-				type: 'home',
-				title: '',
-				street: '',
-				building: '',
-				apartment: '',
-				floor: null,
-				entrance: '',
-				isDefault: false,
-			});
-
-			toast.success('Адрес добавлен');
-		} catch (error) {
-			console.error('Error adding address:', error);
-			toast.error('Ошибка при добавлении адреса');
+				[name]: fieldValue,
+			};
+			setNewAddress(updatedNewAddress);
+			debouncedSave(updatedNewAddress);
 		}
 	};
 
@@ -118,11 +108,17 @@ const AddressInfo = () => {
 			await axios.delete(`/api/profile/addresses/${id}`);
 			const { data: updatedProfile } = await axios.get('/api/profile');
 
-			setAddresses(updatedProfile.addresses);
+			const updatedAddresses = updatedProfile.addresses;
+			setAddresses(updatedAddresses);
 			setUser(prev => ({
 				...prev,
-				addresses: updatedProfile.addresses,
+				addresses: updatedAddresses,
 			}));
+
+			// Если удалили последний адрес, показываем форму
+			if (updatedAddresses.length === 0) {
+				setShowNewAddressForm(true);
+			}
 
 			toast.success('Адрес удален');
 		} catch (error) {
@@ -134,6 +130,8 @@ const AddressInfo = () => {
 	useEffect(() => {
 		if (user?.addresses) {
 			setAddresses(user.addresses);
+			// Если адресов нет, показываем форму
+			setShowNewAddressForm(!user.addresses.length);
 		}
 	}, [user]);
 
@@ -210,7 +208,7 @@ const AddressInfo = () => {
 					type='number'
 					className='form-control'
 					name='floor'
-					value={address.floor || null}
+					value={address.floor || ''}
 					onChange={e => handleAddressChange(e, id)}
 					placeholder='Введите этаж'
 					min='1'
@@ -260,11 +258,15 @@ const AddressInfo = () => {
 			</div>
 
 			<div className='profile-section__new-address'>
-				<h4>Добавить новый адрес</h4>
-				{renderAddressForm(newAddress)}
-				<button className='profile-section__add' onClick={handleAddNewAddress}>
-					Добавить адрес
-				</button>
+				{showNewAddressForm ? (
+					<>{renderAddressForm(newAddress)}</>
+				) : (
+					<button
+						className='profile-section__add'
+						onClick={() => setShowNewAddressForm(true)}>
+						Добавить адрес
+					</button>
+				)}
 			</div>
 		</div>
 	);
