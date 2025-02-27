@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { debounce } from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CustomContext } from '../../../hoc/mainContentContext';
 
@@ -13,65 +13,56 @@ const AddressInfo = () => {
 		street: '',
 		building: '',
 		apartment: '',
-		floor: '',
+		floor: null,
 		entrance: '',
 		isDefault: false,
 	});
 
-	const saveAddress = debounce(async (address, id) => {
-		try {
-			let response;
-			if (id) {
-				// Update existing address
-				response = await axios.patch(`/api/profile/addresses/${id}`, address);
-			} else {
-				// Create new address
-				response = await axios.post('/api/profile/addresses', address);
+	// Create a memoized version of the save function
+	const debouncedSave = useCallback(
+		debounce(async (address, id) => {
+			try {
+				if (id) {
+					await axios.patch(`/api/profile/addresses/${id}`, address);
+				} else {
+					await axios.post('/api/profile/addresses', address);
+				}
+
+				// Refresh data after successful save
+				const { data: updatedProfile } = await axios.get('/api/profile');
+				setAddresses(updatedProfile.addresses);
+				setUser(prev => ({
+					...prev,
+					addresses: updatedProfile.addresses,
+				}));
+
+				toast.success(id ? 'Адрес обновлен' : 'Адрес добавлен');
+			} catch (error) {
+				console.error('Error saving address:', error);
+				toast.error('Ошибка при сохранении');
 			}
-
-			const updatedAddresses = id
-				? addresses.map(addr => (addr.id === id ? response.data : addr))
-				: [...addresses, response.data];
-
-			setAddresses(updatedAddresses);
-			setUser(prev => ({
-				...prev,
-				addresses: updatedAddresses,
-			}));
-
-			toast.success(id ? 'Адрес обновлен' : 'Адрес добавлен');
-
-			if (!id) {
-				setNewAddress({
-					type: 'home',
-					title: '',
-					street: '',
-					building: '',
-					apartment: '',
-					floor: '',
-					entrance: '',
-					isDefault: false,
-				});
-			}
-		} catch (error) {
-			toast.error('Ошибка при сохранении адреса');
-			console.error('Error saving address:', error);
-		}
-	}, 1000);
+		}, 1000),
+		[]
+	);
 
 	const handleAddressChange = (e, id) => {
 		const { name, value, type, checked } = e.target;
-		const fieldValue = type === 'checkbox' ? checked : value;
+		let fieldValue = type === 'checkbox' ? checked : value;
+
+		if (name === 'floor') {
+			fieldValue = parseInt(value, 10) || null;
+		}
 
 		if (id) {
-			// Editing existing address
 			const address = addresses.find(addr => addr.id === id);
 			if (address) {
 				const updatedAddress = { ...address, [name]: fieldValue };
-				saveAddress(updatedAddress, id);
+				setAddresses(prevAddresses =>
+					prevAddresses.map(addr => (addr.id === id ? updatedAddress : addr))
+				);
+				debouncedSave(updatedAddress, id);
 			}
 		} else {
-			// Adding new address
 			setNewAddress(prev => ({
 				...prev,
 				[name]: fieldValue,
@@ -79,28 +70,64 @@ const AddressInfo = () => {
 		}
 	};
 
-	const handleAddNewAddress = e => {
+	const handleAddNewAddress = async e => {
 		e.preventDefault();
-		if (!newAddress.street || !newAddress.building || !newAddress.title) {
+		if (
+			!newAddress.street ||
+			!newAddress.building ||
+			!newAddress.title ||
+			!newAddress.type
+		) {
 			toast.error('Заполните обязательные поля');
 			return;
 		}
-		saveAddress(newAddress);
+
+		try {
+			await axios.post('/api/profile/addresses', {
+				...newAddress,
+				floor: parseInt(newAddress.floor),
+			});
+			const { data: updatedProfile } = await axios.get('/api/profile');
+
+			setAddresses(updatedProfile.addresses);
+			setUser(prev => ({
+				...prev,
+				addresses: updatedProfile.addresses,
+			}));
+
+			setNewAddress({
+				type: 'home',
+				title: '',
+				street: '',
+				building: '',
+				apartment: '',
+				floor: null,
+				entrance: '',
+				isDefault: false,
+			});
+
+			toast.success('Адрес добавлен');
+		} catch (error) {
+			console.error('Error adding address:', error);
+			toast.error('Ошибка при добавлении адреса');
+		}
 	};
 
 	const handleDeleteAddress = async id => {
 		try {
 			await axios.delete(`/api/profile/addresses/${id}`);
-			const updatedAddresses = addresses.filter(addr => addr.id !== id);
-			setAddresses(updatedAddresses);
+			const { data: updatedProfile } = await axios.get('/api/profile');
+
+			setAddresses(updatedProfile.addresses);
 			setUser(prev => ({
 				...prev,
-				addresses: updatedAddresses,
+				addresses: updatedProfile.addresses,
 			}));
+
 			toast.success('Адрес удален');
 		} catch (error) {
-			toast.error('Ошибка при удалении адреса');
 			console.error('Error deleting address:', error);
+			toast.error('Ошибка при удалении адреса');
 		}
 	};
 
@@ -120,7 +147,7 @@ const AddressInfo = () => {
 					value={address.type}
 					onChange={e => handleAddressChange(e, id)}
 					required>
-					<option value='home'>Дом</option>
+					<option value='house'>Дом</option>
 					<option value='work'>Работа</option>
 					<option value='delivery'>Доставка</option>
 				</select>
@@ -171,7 +198,7 @@ const AddressInfo = () => {
 					type='text'
 					className='form-control'
 					name='apartment'
-					value={address.apartment}
+					value={address.apartment || ''}
 					onChange={e => handleAddressChange(e, id)}
 					placeholder='Введите номер квартиры/офиса'
 				/>
@@ -181,10 +208,13 @@ const AddressInfo = () => {
 				<label>Этаж</label>
 				<input
 					type='number'
+					className='form-control'
 					name='floor'
-					value={address.floor}
+					value={address.floor || null}
 					onChange={e => handleAddressChange(e, id)}
 					placeholder='Введите этаж'
+					min='1'
+					max='100'
 				/>
 			</div>
 
@@ -194,7 +224,7 @@ const AddressInfo = () => {
 					type='text'
 					className='form-control'
 					name='entrance'
-					value={address.entrance}
+					value={address.entrance || ''}
 					onChange={e => handleAddressChange(e, id)}
 					placeholder='Введите номер подъезда'
 				/>
@@ -204,6 +234,7 @@ const AddressInfo = () => {
 				<label>
 					<input
 						type='checkbox'
+						className='form-check-input'
 						name='isDefault'
 						checked={address.isDefault}
 						onChange={e => handleAddressChange(e, id)}
