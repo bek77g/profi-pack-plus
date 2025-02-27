@@ -25,7 +25,13 @@ import { Products as LikedProducts } from '../CatalogPageCards/CatalogPageCards'
 
 const CatalogPageProducts = () => {
 	const { pathname } = useLocation();
-	const { baseUrl, addCart, addFav } = useContext(CustomContext);
+	const {
+		baseUrl,
+		addCart,
+		addFav,
+		removeFavorite,
+		favorite: favoriteArr,
+	} = useContext(CustomContext);
 	// const { setContentID, setCanPostReview } = useContext(ReviewsConfigContext);
 	const [count, setCount] = useState(1);
 	const [thumbState, setThumbState] = useState(0);
@@ -54,7 +60,7 @@ const CatalogPageProducts = () => {
 		favorite,
 		relatives = [],
 		relateds = [],
-	} = favsProduct(productData);
+	} = favsProduct(productData, favoriteArr);
 
 	// useEffect(() => {
 	//   setContentID(id);
@@ -84,10 +90,10 @@ const CatalogPageProducts = () => {
 	};
 
 	const addToFav = () => {
-		addFav(productData);
-		favorite
-			? toast.success('Товар удалён из избранных')
-			: toast.success('Товар добавлен в избранное');
+		favorite ? removeFavorite(productData.id) : addFav(productData);
+		toast.success(
+			favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
+		);
 	};
 
 	const productSliderThumbs = () => {

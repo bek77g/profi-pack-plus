@@ -10,7 +10,13 @@ import { CustomContext } from '../../../../hoc/mainContentContext';
 import { useSearchParamsState } from '../../../../hooks/useSearchParamsState';
 
 export const Products = ({ data }) => {
-	const { baseUrl, addCart, addFav } = useContext(CustomContext);
+	const {
+		baseUrl,
+		addCart,
+		addFav,
+		removeFavorite,
+		favorite: favoriteArr,
+	} = useContext(CustomContext);
 	const [count, setCount] = useState(1);
 	const { pathname } = useLocation();
 
@@ -26,7 +32,7 @@ export const Products = ({ data }) => {
 		BestSeller,
 		MinCount,
 		...rest
-	} = favsProduct(data);
+	} = favsProduct(data, favoriteArr);
 
 	const link =
 		pathname.split('/').length >= 1 && rest?.sub_catalog
@@ -39,10 +45,10 @@ export const Products = ({ data }) => {
 		toast.success('Товар добавлен в корзину');
 	};
 	const addToFav = () => {
-		addFav(data);
-		favorite
-			? toast.success('Товар удалён из избранных')
-			: toast.success('Товар добавлен в избранное');
+		favorite ? removeFavorite(data.id) : addFav(data);
+		toast.success(
+			favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
+		);
 	};
 
 	useEffect(() => setCount(MinCount), []);

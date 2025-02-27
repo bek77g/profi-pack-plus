@@ -13,7 +13,13 @@ import { useWindowDimensions } from '../../../../hooks/useWindowDimensions';
 export const Product = ({ data }) => {
 	const [count, setCount] = useState(1);
 
-	const { baseUrl, addCart, addFav } = useContext(CustomContext);
+	const {
+		baseUrl,
+		addCart,
+		addFav,
+		removeFavorite,
+		favorite: favoriteArr,
+	} = useContext(CustomContext);
 
 	const {
 		Title,
@@ -27,7 +33,7 @@ export const Product = ({ data }) => {
 		Availability,
 		BestSeller,
 		MinCount,
-	} = favsProduct(data);
+	} = favsProduct(data, favoriteArr);
 
 	const addToCart = () => {
 		addCart(data, count);
@@ -36,10 +42,10 @@ export const Product = ({ data }) => {
 	};
 
 	const addToFav = () => {
-		addFav(data);
-		favorite
-			? toast.success('Товар удалён из избранных')
-			: toast.success('Товар добавлен в избранное');
+		favorite ? removeFavorite(data.id) : addFav(data);
+		toast.success(
+			favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
+		);
 	};
 	useEffect(() => setCount(MinCount), []);
 

@@ -1,51 +1,74 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ProductCard from '../../components/ProductCard/ProductCard';
+import { HandySvg } from 'handy-svg';
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import arr from '../../assets/icons/arr.svg';
+import empty from '../../assets/icons/empty.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
+import SEO from '../../hoc/SEO';
+import CatalogPageCards from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
 
 const FavouritePage = () => {
-	const { favorite, user, setAuthModalOpen } = useContext(CustomContext);
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (!user) {
-			setAuthModalOpen(true);
-		}
-	}, [user, setAuthModalOpen]);
-
-	if (!user) {
-		return null;
-	}
+	const { favorite } = useContext(CustomContext);
+	const [sortType, setSortType] = useState('priceInc');
 
 	return (
-		<section className='favourite'>
-			<div className='container'>
-				<h2>Избранное</h2>
-				{favorite.length ? (
-					<div className='favourite__content'>
-						{favorite.map(item => (
-							<ProductCard key={item.id} item={item} />
-						))}
-					</div>
+		<>
+			<SEO
+				SeoTitle='ProfiPackPlus - Избранное'
+				SeoDescription='Ваши избранные в магазине Profipackplus'
+			/>
+			<div className='catalogPage favorites'>
+				<div className='catalogPage__top'>
+					<span>
+						<Link to='/'>
+							Главная <img src={arr} alt='arr' />
+						</Link>
+					</span>
+					<span>Избранные</span>
+					<h2>Избранные</h2>
+				</div>
+				{favorite.length !== 0 ? (
+					<>
+						<div className='catalogPage__mid'>
+							<div></div>
+							<div className='catalogPage__mid__select'>
+								<select onChange={e => setSortType(e.target.value)}>
+									<option value='priceInc'>По возрастанию цены</option>
+									<option value='priceDec'>По убыванию цены</option>
+									<option value='priceDate'>По дате</option>
+								</select>
+							</div>
+						</div>
+						<div className='catalogPage__content'>
+							<div className='catalogPage__content__right'>
+								<CatalogPageCards products={favorite} sortType={sortType} />
+							</div>
+						</div>
+					</>
 				) : (
-					<div className='favourite__empty'>
-						<h2>
-							Список избранного пуст <span>😕</span>
-						</h2>
-						<p>
-							Вы пока ничего не добавили в избранное.
-							<br />
-							Для того, чтобы добавить товар, перейдите на главную страницу.
-						</p>
-						<button
-							className='button button--black'
-							onClick={() => navigate('/')}>
-							<span>Вернуться назад</span>
-						</button>
+					<div className='cartPageEmpty'>
+						<div className='cartPageEmpty__bundle'>
+							<span>
+								<HandySvg src={empty} />
+							</span>
+						</div>
+						<div className='cartPageEmpty__title'>
+							Ваш каталог избранных пуст
+						</div>
+						<div className='cartPageEmpty__subtitle'>
+							Самое время добавить в нее что-нибудь
+						</div>
+						<div className='cartPageEmpty__back'>
+							<Link to='/'>
+								<button type='button' className='btn btn-outline-secondary'>
+									Перейти в каталог
+								</button>
+							</Link>
+						</div>
 					</div>
 				)}
 			</div>
-		</section>
+		</>
 	);
 };
 

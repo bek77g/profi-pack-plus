@@ -16,6 +16,8 @@ const CartPageProducts = () => {
 	const { baseUrl, cart, editCart, removeCart, isCheckout, setIsCheckout } =
 		useContext(CustomContext);
 
+	console.log({ cart });
+
 	const removeItem = id => {
 		removeCart(id);
 		toast.success('Товар удалён из корзины');
@@ -89,7 +91,7 @@ const CartPageProducts = () => {
 																				</div>
 																				<div className='col-md-3 col-lg-3 col-xl-3 cartPageText'>
 																					<h6 className='text-muted'>
-																						{sub_catalog.Title}
+																						{sub_catalog?.Title}
 																					</h6>
 																					<h6 className='text-black mb-0'>
 																						{Title}

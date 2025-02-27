@@ -3,9 +3,10 @@ import { createContext, useEffect, useState } from 'react';
 
 export const CustomContext = createContext();
 export const MainContentContext = props => {
-	const baseUrl = 'https://app.profipack.kg';
+	// const baseUrl = 'https://app.profipack.kg';
+	const baseUrl = 'http://localhost:1337';
 	axios.defaults.baseURL = baseUrl;
-	
+
 	const [user, setUser] = useState(null);
 	const [authModalOpen, setAuthModalOpen] = useState(false);
 	const [catalogs, setCatalogs] = useState([]);
@@ -13,7 +14,7 @@ export const MainContentContext = props => {
 
 	const [cart, setCart] = useState([]);
 	const [favorite, setFavorite] = useState([]);
-	
+
 	const [shippingPrice, setShippingPrice] = useState(0);
 	const [isCheckout, setIsCheckout] = useState(false);
 
@@ -46,7 +47,8 @@ export const MainContentContext = props => {
 		if (token) {
 			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 			// Fetch user profile
-			axios.get('/api/users/me')
+			axios
+				.get('/api/users/me')
 				.then(({ data }) => setUser(data))
 				.catch(() => {
 					localStorage.removeItem('jwt');
@@ -59,12 +61,14 @@ export const MainContentContext = props => {
 	useEffect(() => {
 		if (user) {
 			// Fetch cart
-			axios.get('/api/cart')
+			axios
+				.get('/api/cart')
 				.then(({ data }) => setCart(data.items || []))
 				.catch(console.error);
 
 			// Fetch favorites
-			axios.get('/api/favorites')
+			axios
+				.get('/api/favorites')
 				.then(({ data }) => setFavorite(data.products || []))
 				.catch(console.error);
 		}
@@ -78,7 +82,7 @@ export const MainContentContext = props => {
 		setFavorite([]);
 	};
 
-	const requireAuth = (callback) => {
+	const requireAuth = callback => {
 		if (!user) {
 			setAuthModalOpen(true);
 			return false;
@@ -88,7 +92,8 @@ export const MainContentContext = props => {
 
 	const addCart = (cartObj, quantity = 1) => {
 		requireAuth(() => {
-			axios.post('/api/cart/add', { id: cartObj.id, quantity })
+			axios
+				.post('/api/cart/add', { id: cartObj.id, quantity })
 				.then(({ data }) => setCart(data.items))
 				.catch(console.error);
 		});
@@ -96,7 +101,8 @@ export const MainContentContext = props => {
 
 	const editCart = (cartID, amount) => {
 		requireAuth(() => {
-			axios.put(`/api/cart/items/${cartID}`, { quantity: amount })
+			axios
+				.put(`/api/cart/items/${cartID}`, { quantity: amount })
 				.then(({ data }) => setCart(data.items))
 				.catch(console.error);
 		});
@@ -104,7 +110,8 @@ export const MainContentContext = props => {
 
 	const removeCart = cartID => {
 		requireAuth(() => {
-			axios.delete(`/api/cart/items/${cartID}`)
+			axios
+				.delete(`/api/cart/items/${cartID}`)
 				.then(({ data }) => setCart(data.items))
 				.catch(console.error);
 		});
@@ -112,23 +119,26 @@ export const MainContentContext = props => {
 
 	const resetCart = () => {
 		requireAuth(() => {
-			axios.delete('/api/cart/clear')
+			axios
+				.delete('/api/cart/clear')
 				.then(() => setCart([]))
 				.catch(console.error);
 		});
 	};
 
-	const addFavorite = (product) => {
+	const addFav = product => {
 		requireAuth(() => {
-			axios.post('/api/favorites/add', { id: product.id })
+			axios
+				.post('/api/favorites/add', { id: product.id })
 				.then(({ data }) => setFavorite(data.products))
 				.catch(console.error);
 		});
 	};
 
-	const removeFavorite = (productId) => {
+	const removeFavorite = productId => {
 		requireAuth(() => {
-			axios.delete(`/api/favorites/${productId}`)
+			axios
+				.delete(`/api/favorites/${productId}`)
 				.then(({ data }) => setFavorite(data.products))
 				.catch(console.error);
 		});
@@ -219,6 +229,7 @@ export const MainContentContext = props => {
 	const value = {
 		catalogs,
 		setCatalogs,
+		baseUrl,
 		nav,
 		setNav,
 		cart,
@@ -227,7 +238,7 @@ export const MainContentContext = props => {
 		removeCart,
 		resetCart,
 		editCart,
-		addFavorite,
+		addFav,
 		removeFavorite,
 		MainPageData,
 		AboutPageData,
@@ -245,5 +256,9 @@ export const MainContentContext = props => {
 		setAuthModalOpen,
 	};
 
-	return <CustomContext.Provider value={value}>{props.children}</CustomContext.Provider>;
+	return (
+		<CustomContext.Provider value={value}>
+			{props.children}
+		</CustomContext.Provider>
+	);
 };
