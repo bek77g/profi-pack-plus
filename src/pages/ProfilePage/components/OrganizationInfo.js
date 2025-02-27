@@ -15,7 +15,7 @@ const OrganizationInfo = () => {
 
 	const saveChanges = debounce(async data => {
 		try {
-			const response = await axios.put('/api/users/me/organization', data);
+			const response = await axios.patch('/api/profile/organization', data);
 			setUser(prev => ({
 				...prev,
 				organization: response.data,
@@ -54,6 +54,7 @@ const OrganizationInfo = () => {
 					<label>Название компании</label>
 					<input
 						type='text'
+						className='form-control'
 						name='name'
 						value={formData.name}
 						onChange={handleChange}
@@ -65,6 +66,7 @@ const OrganizationInfo = () => {
 					<label>ИНН</label>
 					<input
 						type='text'
+						className='form-control'
 						name='inn'
 						value={formData.inn}
 						onChange={handleChange}
@@ -76,6 +78,7 @@ const OrganizationInfo = () => {
 					<label>Должность</label>
 					<input
 						type='text'
+						className='form-control'
 						name='position'
 						value={formData.position}
 						onChange={handleChange}
@@ -87,6 +90,7 @@ const OrganizationInfo = () => {
 					<label>Примечание</label>
 					<input
 						type='text'
+						className='form-control'
 						name='comments'
 						value={formData.comments}
 						onChange={handleChange}

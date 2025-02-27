@@ -48,7 +48,7 @@ export const MainContentContext = props => {
 			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 			// Fetch user profile
 			axios
-				.get('/api/users/me')
+				.get('/api/profile')
 				.then(({ data }) => setUser(data))
 				.catch(() => {
 					localStorage.removeItem('jwt');

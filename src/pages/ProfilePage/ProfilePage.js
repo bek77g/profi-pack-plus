@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import arr from '../../assets/icons/arr.svg';
-import SEO from '../../hoc/SEO';
-import PersonalInfo from './components/PersonalInfo';
-import OrganizationInfo from './components/OrganizationInfo';
 import AddressInfo from './components/AddressInfo';
+import OrganizationInfo from './components/OrganizationInfo';
+import PersonalInfo from './components/PersonalInfo';
+import SEO from '../../hoc/SEO';
+import arr from '../../assets/icons/arr.svg';
 import './ProfilePage.scss';
 
 const ProfilePage = () => {
@@ -15,24 +15,20 @@ const ProfilePage = () => {
                 SeoDescription="Управление личными данными в магазине Profipackplus"
             />
             <div className="profilePage">
-                <div className="catalogPage__top">
-                    <span>
-                        <Link to="/">
-                            Главная <img src={arr} alt="arr" />
-                        </Link>
-                    </span>
-                    <span>Личный кабинет</span>
-                    <h2>Личный кабинет</h2>
+                <div className="breadcrumbs">
+                    <Link to="/">
+                        Главная 
+                    </Link> / <span>Личный кабинет</span>
                 </div>
 
                 <div className="profilePage__sections">
                     <div className="profilePage__section">
-                        <h3>Личные данные</h3>
+                        <h3>Личная информация</h3>
                         <PersonalInfo />
                     </div>
 
                     <div className="profilePage__section">
-                        <h3>Организация</h3>
+                        <h3>Информация об организации</h3>
                         <OrganizationInfo />
                     </div>
 
