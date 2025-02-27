@@ -37,6 +37,8 @@ const ContactsPage = React.lazy(() =>
 	import('./pages/ContactsPage/ContactsPage')
 );
 
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage/ProfilePage'));
+
 const router = createBrowserRouter([
 	{
 		element: <MainLayout />,
@@ -71,6 +73,10 @@ const router = createBrowserRouter([
 			{
 				path: '/favourite',
 				element: <FavouritePage />,
+			},
+			{
+				path: '/profile',
+				element: <ProfilePage />,
 			},
 			{
 				path: '/cards',
