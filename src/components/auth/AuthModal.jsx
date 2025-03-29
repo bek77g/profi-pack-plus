@@ -4,16 +4,16 @@ import { CustomContext } from '../../hoc/mainContentContext';
 import './AuthModal.scss';
 
 const AuthModal = ({ isOpen, onClose }) => {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
-    const [step, setStep] = useState('phone'); // 'phone' or 'code'
+    const [step, setStep] = useState('email'); // 'email' or 'code'
     const [error, setError] = useState('');
     const { setUser } = useContext(CustomContext);
 
-    const handlePhoneSubmit = async (e) => {
+    const handleEmailSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/api/sms/send-code', { phoneNumber });
+            await axios.post('/api/email/send-code', { email });
             setStep('code');
             setError('');
         } catch (err) {
@@ -24,8 +24,8 @@ const AuthModal = ({ isOpen, onClose }) => {
     const handleCodeVerification = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post('/api/sms/verify', {
-                phoneNumber,
+            const { data } = await axios.post('/api/email/verify', {
+                email,
                 code: verificationCode
             });
             
@@ -47,15 +47,15 @@ const AuthModal = ({ isOpen, onClose }) => {
                 <h2>Авторизация</h2>
                 {error && <div className="auth-modal__error">{error}</div>}
                 
-                {step === 'phone' ? (
-                    <form onSubmit={handlePhoneSubmit}>
+                {step === 'email' ? (
+                    <form onSubmit={handleEmailSubmit}>
                         <div className="auth-modal__input-group">
-                            <label>Номер телефона</label>
+                            <label>Email адрес</label>
                             <input
-                                type="tel"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                placeholder="+77771234567"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="example@mail.com"
                                 required
                             />
                         </div>
@@ -66,7 +66,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 ) : (
                     <form onSubmit={handleCodeVerification}>
                         <div className="auth-modal__input-group">
-                            <label>Код из SMS</label>
+                            <label>Код из Email</label>
                             <input
                                 type="text"
                                 value={verificationCode}

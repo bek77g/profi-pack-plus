@@ -1,9 +1,10 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CustomContext } from '../../hoc/mainContentContext';
 import logo from '../../assets/img/logo.jpg';
 import favourite from '../../assets/icons/favourite.svg';
 import cartImg from '../../assets/icons/cart.svg';
+import userIcon from '../../assets/icons/user.svg';
 import { HandySvg } from 'handy-svg';
 
 const Header = () => {
@@ -13,7 +14,7 @@ const Header = () => {
 
   useEffect(() => {
     setNav(false);
-  }, [pathname]);
+  }, [pathname, setNav]);
 
   return (
     <>
@@ -36,6 +37,11 @@ const Header = () => {
             </li>
             <li className='header__nav__bar__item header__nav__bar__item__prelast'>
               <Link to='/contacts'>Контакты</Link>
+            </li>
+            <li className='header__nav__bar__item header__special header__special-user'>
+              <Link to='/profile'>
+                <HandySvg src={userIcon} width='30' height='30' alt='profile' />
+              </Link>
             </li>
             <li className='header__nav__bar__item header__special header__special-heart'>
               <Link to='/favourite'>

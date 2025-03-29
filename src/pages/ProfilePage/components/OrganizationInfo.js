@@ -73,29 +73,6 @@ const OrganizationInfo = () => {
 						placeholder='Введите ИНН'
 					/>
 				</div>
-
-				<div className='profile-section__group'>
-					<label>Должность</label>
-					<input
-						type='text'
-						className='form-control'
-						name='position'
-						value={formData.position}
-						onChange={handleChange}
-						placeholder='Введите вашу должность'
-					/>
-				</div>
-
-				<div className='profile-section__group'>
-					<label>Примечание</label>
-					<input
-						type='text'
-						className='form-control'
-						name='comments'
-						value={formData.comments}
-						onChange={handleChange}
-					/>
-				</div>
 			</div>
 		</div>
 	);

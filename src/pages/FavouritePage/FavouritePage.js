@@ -1,5 +1,5 @@
 import { HandySvg } from 'handy-svg';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import empty from '../../assets/icons/empty.svg';
@@ -8,8 +8,16 @@ import SEO from '../../hoc/SEO';
 import CatalogPageCards from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
 
 const FavouritePage = () => {
-	const { favorite } = useContext(CustomContext);
+	const { favorite, user, setAuthModalOpen } = useContext(CustomContext);
 	const [sortType, setSortType] = useState('priceInc');
+
+	useEffect(() => {
+		if (!user) {
+			setAuthModalOpen(true);
+		} else {
+			setAuthModalOpen(false);
+		}
+	}, [user, setAuthModalOpen]);
 
 	return (
 		<>

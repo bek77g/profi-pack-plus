@@ -190,6 +190,12 @@ const HeaderMobile = () => {
                 </ul>
               </li>
               <li>
+                <a href='/profile'>
+                  <i className='ion-person'></i>
+                  <span className=''>Личный кабинет</span>
+                </a>
+              </li>
+              <li>
                 <a href='#'>
                   <i className='ion-ios-medical-outline'></i>
                   <span className=''>Cocaine</span>

@@ -87,8 +87,7 @@ const PersonalInfo = () => {
 						name='phoneNumber'
 						value={formData.phoneNumber}
 						onChange={handleChange}
-						placeholder='+7 (XXX) XXX-XX-XX'
-						disabled
+						placeholder='+996 (XXX) XXX-XX-XX'
 						required
 					/>
 				</div>
