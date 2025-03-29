@@ -15,6 +15,7 @@ const CatalogPageProducts = React.lazy(() =>
 		'./pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts'
 	)
 );
+const CatalogFullPage = React.lazy(() => import('./pages/CatalogPage/CatalogFullPage'));
 const PartnershipPage = React.lazy(() =>
 	import('./pages/PartnershipPage/PartnershipPage')
 );
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
 			{
 				path: '/:catalog/:subCatalog/:product',
 				element: <CatalogPageProducts />,
+			},
+			{
+				path: '/catalog',
+				element: <CatalogFullPage />,
 			},
 			{
 				path: '/about',
