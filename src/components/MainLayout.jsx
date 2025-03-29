@@ -5,6 +5,7 @@ import { Outlet, ScrollRestoration } from 'react-router-dom';
 const Header = React.lazy(() => import('../layout/header/Header'));
 const Footer = React.lazy(() => import('../layout/footer/Footer'));
 const SideBarPage = React.lazy(() => import('../pages/SideBarPage'));
+const BottomMenu = React.lazy(() => import('../layout/bottom-menu/BottomMenu'));
 
 const MainLayout = () => {
 	return (
@@ -17,6 +18,7 @@ const MainLayout = () => {
 					<Footer />
 				</div>
 			</div>
+			<BottomMenu />
 			<ScrollRestoration
 				getKey={(location, matches) => {
 					return location.pathname;

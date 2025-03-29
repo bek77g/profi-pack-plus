@@ -72,6 +72,12 @@
   }
 }
 
+@media screen and (max-width: 991px) {
+  .header__mobile-hide {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 950px) {
   .header {
     height: 56px;
@@ -224,6 +230,7 @@
     box-shadow: 1px 1px #1c62cd, 2px 2px #1c62cd, 3px 3px #1c62cd,
       4px 4px #1c62cd, 5px 5px #1c62cd, 6px 6px #1c62cd, 7px 7px #1c62cd;
     -webkit-transform: translateX(-2px);
+    transform: translateX(-2px);
   }
 }
 

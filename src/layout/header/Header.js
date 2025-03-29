@@ -38,17 +38,17 @@ const Header = () => {
             <li className='header__nav__bar__item header__nav__bar__item__prelast'>
               <Link to='/contacts'>Контакты</Link>
             </li>
-            <li className='header__nav__bar__item header__special header__special-user'>
+            <li className='header__nav__bar__item header__special header__special-user header__mobile-hide'>
               <Link to='/profile'>
                 <HandySvg src={userIcon} width='30' height='30' alt='profile' />
               </Link>
             </li>
-            <li className='header__nav__bar__item header__special header__special-heart'>
+            <li className='header__nav__bar__item header__special header__special-heart header__mobile-hide'>
               <Link to='/favourite'>
                 <HandySvg src={favourite} width='30' height='30' alt='cart' />
               </Link>
             </li>
-            <li className='header__nav__bar__item header__nav__bar__item__last header__special header__special-cart'>
+            <li className='header__nav__bar__item header__nav__bar__item__last header__special header__special-cart header__mobile-hide'>
               <Link to='/cart'>
                 <HandySvg src={cartImg} width='30' height='30' alt='cart' />
                 {cart.length !== 0 && (
