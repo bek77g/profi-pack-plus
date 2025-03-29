@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useState } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { toast, Toaster } from 'react-hot-toast';
-import ReactInputMask from 'react-input-mask';
 import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import arr from '../../../assets/icons/arr.svg';
 import remove from '../../../assets/icons/remove.svg';
 import { CustomContext } from '../../../hoc/mainContentContext';
@@ -24,8 +21,12 @@ const CartPageProducts = () => {
 	};
 
 	useEffect(() => {
-		return () => setIsCheckout(false);
-	}, []);
+		setIsCheckout(true);
+		// Cleanup function
+		return () => {
+			setIsCheckout(false);
+		};
+	}, [setIsCheckout]);
 
 	let totalPrice = cart.reduce(
 		(acc, rec) => (acc += rec.Price * rec.quantity),
@@ -192,7 +193,7 @@ const CartPageProducts = () => {
 														{!isCheckout && (
 															<div className='d-flex justify-content-center'>
 																<div className='column'>
-																	<HashLink to='#checkout'>
+																	<Link to='#checkout'>
 																		<button
 																			onClick={() => {
 																				if (totalPrice.toFixed(0) < 3000) {
@@ -211,7 +212,7 @@ const CartPageProducts = () => {
 																			}`}>
 																			Оформить заказ
 																		</button>
-																	</HashLink>
+																	</Link>
 																</div>
 															</div>
 														)}
@@ -243,100 +244,33 @@ const CartPageProducts = () => {
 export default CartPageProducts;
 
 const CheckoutPage = ({ cart, totalPrice }) => {
-	const { baseUrl, shippingPrice, resetCart } = useContext(CustomContext);
+	const {
+		shippingPrice,
+		resetCart,
+		user: personalInfo,
+	} = useContext(CustomContext);
 	const [submitBtn, setSubmitBtn] = useState(false);
 	const [loading, setLoading] = useState(false);
-	let randomId = Date.now().valueOf().toString().replace('.', 7);
-
-	const ProductsTableLoop = () => {
-		return (
-			<table>
-				<thead>
-					<tr
-						style={{
-							marginTop: '15px',
-							borderBottomColor: '#e5e5e5',
-							borderBottomStyle: 'solid',
-							borderBottomWidth: '1px',
-							borderCollapse: 'separate',
-						}}>
-						<td>Количество</td>
-						<td>Название</td>
-						<td>Цена</td>
-					</tr>
-				</thead>
-				<tbody>
-					{cart.map(({ Title, Price, Gallery, quantity }) => {
-						return (
-							<tr
-								style={{
-									borderBottomColor: '#e5e5e5',
-									borderBottomStyle: 'solid',
-									borderBottomWidth: '1px',
-									borderCollapse: 'separate',
-								}}>
-								<td style={{ padding: '20px 0', width: '30%' }}>
-									{quantity}
-									<span style={{ color: '#999', padding: '0 10px' }}>x</span>
-									<img
-										style={{ width: '120px' }}
-										src={`${baseUrl}${Gallery[0].url}`}
-										alt={Title}
-									/>
-								</td>
-								<td style={{ padding: '20px 0 20px 10px', width: '50%' }}>
-									{Title}
-								</td>
-								<td style={{ padding: '20px 0 20px 10px', width: '20%' }}>
-									{Price} * {quantity}
-									{' = '}
-									<span>{(Price * quantity).toFixed(2)}</span>
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-				<tfoot>
-					<tr
-						style={{
-							borderBottomColor: '#e5e5e5',
-							borderBottomStyle: 'solid',
-							borderBottomWidth: '1px',
-							borderCollapse: 'separate',
-						}}>
-						<td></td>
-						<td style={{ padding: '20px 0 20px 10px' }}>Общая цена:</td>
-						<td style={{ padding: '20px 0 20px 10px' }}>{totalPrice}</td>
-					</tr>
-				</tfoot>
-			</table>
-		);
-	};
+	const [useOrganization, setUseOrganization] = useState(false);
 
 	const [userData, setUserData] = useState({
-		FullName: '',
-		Phone: '',
-		Email: '',
-		Address: '',
-		ShippingType: '',
-		ProductsPrice: totalPrice,
-		ShippingPrice: shippingPrice,
-		TotalPrice: totalPrice + shippingPrice,
-		Payment: '',
-		Comment: '',
-		DateId: randomId,
-		Products: ReactDOMServer.renderToStaticMarkup(<ProductsTableLoop />),
+		items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
+		totalPrice: totalPrice,
+		shippingPrice: shippingPrice,
+		shippingType: '',
+		comment: '',
+		address: '',
+		organization: '',
 	});
 
 	useEffect(() => {
 		let localUser = localStorage.getItem('user');
 		if (localStorage.getItem('user')) {
-			setUserData({ ...JSON.parse(localUser), ...userData });
+			setUserData(prevState => ({ ...prevState, ...JSON.parse(localUser) }));
 		}
 	}, []);
 
-	const { FullName, Phone, Email, Address, ShippingType, Payment, Comment } =
-		userData;
+	const { shippingType, comment, address, organization } = userData;
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -346,15 +280,37 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 	const orderPostHandler = async () => {
 		setLoading(true);
 		try {
-			const response = await axios.post('api/orders', { data: userData });
+			const orderData = {
+				items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
+				totalPrice: totalPrice,
+				shippingPrice: shippingPrice,
+				shippingType: userData.shippingType,
+				comment: userData.comment,
+			};
 
-			if (response.status === 200 && response.data.data.id > 0) {
+			// Only add address and organization if they're selected
+			if (userData.address) {
+				orderData.address = Number(userData.address);
+			}
+
+			if (useOrganization) {
+				orderData.organization = Number(personalInfo.organization.id);
+			}
+
+			console.log({ userData, orderData });
+
+			const response = await axios.post('api/orders', orderData);
+
+			if (response.status === 200 && response.data.id > 0) {
 				setSubmitBtn(true);
 				setLoading(false);
 				resetCart();
 				localStorage.setItem(
 					'user',
-					JSON.stringify({ FullName, Phone, Email, Address })
+					JSON.stringify({
+						address: userData.address,
+						organization: userData.organization,
+					})
 				);
 				document.getElementById('order-form').reset();
 				toast.success('Заказ успешно отправлен');
@@ -377,33 +333,16 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 		let invalidStyle = 'border: 1px solid #dc3545';
 		let validStyle = 'border: 1px solid #198754;';
 		event.preventDefault();
-		if (
-			FullName.trim().length === 0 ||
-			Phone.trim().length === 0 ||
-			Address.trim().length === 0 ||
-			ShippingType.trim().length === 0 ||
-			Payment.trim().length === 0
-		) {
-			if (FullName.trim().length === 0) {
-				toast.error('Вы не заполнили поле ФИО!');
-				event.target.FullName.style.cssText = invalidStyle;
-			} else event.target.FullName.style.cssText = validStyle;
-			if (Phone.trim().length > 9) {
-				event.target.Phone.style.cssText = invalidStyle;
-				toast.error('Вы не заполнили поле Телефон!');
-			} else event.target.Phone.style.cssText = validStyle;
-			if (Address.trim().length === 0) {
-				toast.error('Вы не заполнили поле Адрес!');
-				event.target.Address.style.cssText = invalidStyle;
-			} else event.target.Address.style.cssText = validStyle;
-			if (ShippingType.trim().length === 0) {
-				toast.error('Вы не заполнили поле Доставки!');
-				event.target.ShippingType.style.cssText = invalidStyle;
-			} else event.target.ShippingType.style.cssText = validStyle;
-			if (Payment.trim().length === 0) {
-				toast.error('Вы не заполнили поле Оплаты!');
-				event.target.Payment.style.cssText = invalidStyle;
-			} else event.target.Payment.style.cssText = validStyle;
+		if (address.trim().length === 0 || shippingType.trim().length === 0) {
+			if (address.trim().length === 0) {
+				toast.error('Вы не выбрали адрес!');
+				event.target.address.style.cssText = invalidStyle;
+			} else event.target.address.style.cssText = validStyle;
+
+			if (shippingType.trim().length === 0) {
+				toast.error('Вы не выбрали способ доставки!');
+				event.target.shippingType.style.cssText = invalidStyle;
+			} else event.target.shippingType.style.cssText = validStyle;
 		} else {
 			orderPostHandler();
 		}
@@ -418,114 +357,112 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 				{!submitBtn ? (
 					<form id='order-form' action='' onSubmit={createUserHandler}>
 						<div className='contacts__content__left'>
-							<div className='contacts__content__left__name mb-3'>
-								<label
-									htmlFor='exampleFormControlInput1'
-									className='form-label mb-2'>
-									Ф.И.О.
-								</label>
-								<input
-									type='text'
-									className='form-control'
-									id='exampleFormControlInput1'
-									placeholder='Ф.И.О.'
-									name='FullName'
-									value={FullName}
-									onChange={handleChange}
-								/>
-							</div>
-							<div className='contacts__content__left__tel mb-3'>
-								<label
-									htmlFor='exampleFormControlInput1'
-									className='form-label mb-2'>
-									Номер телефона
-								</label>
-								<ReactInputMask
-									mask='+\9\96 999 999 999'
-									type='tel'
-									className='form-control'
-									id='exampleFormControlInput1'
-									placeholder='Номер
-                        телефона'
-									name='Phone'
-									value={Phone}
-									onChange={handleChange}
-								/>
-							</div>
-							<div className='contacts__content__left__eEmail mb-3'>
-								<label
-									htmlFor='exampleFormControlInput1'
-									className='form-label mb-2'>
-									Email Адрес
-								</label>
-								<input
-									type='Email'
-									className='form-control'
-									id='exampleFormControlInput1'
-									placeholder='Email@example.com (При заполнении почты на неё придёт чек)'
-									name='Email'
-									value={Email}
-									onChange={handleChange}
-								/>
-							</div>
 							<div className='contacts__content__left__Address mb-3'>
-								<label htmlFor='inputAddress' className='form-label'>
-									Адрес
+								<label htmlFor='address' className='form-label'>
+									Адрес доставки
 								</label>
-								<input
-									type='text'
-									className='form-control'
-									placeholder='Проспект чуй 52'
-									name='Address'
-									value={Address}
-									onChange={handleChange}
-								/>
+								{personalInfo &&
+								personalInfo.addresses &&
+								personalInfo.addresses.length > 0 ? (
+									<select
+										className='form-select'
+										id='address'
+										name='address'
+										value={address}
+										onChange={handleChange}>
+										<option disabled value=''>
+											Выбрать адрес...
+										</option>
+										{personalInfo.addresses.map(addr => (
+											<option key={addr.id} value={addr.id}>
+												{addr.title} - {addr.street}, {addr.building}
+												{addr.apartment ? `, кв. ${addr.apartment}` : ''}
+											</option>
+										))}
+									</select>
+								) : (
+									<div className='mt-2'>
+										<Link
+											to='/profile#address-form'
+											className='btn btn-outline-secondary btn-sm'>
+											Добавить адрес доставки
+										</Link>
+									</div>
+								)}
+							</div>
+							<div className='contacts__content__left__organization mb-3'>
+								<label className='form-label'>Организация</label>
+								{personalInfo && personalInfo.organization ? (
+									<div>
+										<div className='form-check mb-2'>
+											<input
+												className='form-check-input'
+												type='checkbox'
+												id='useOrganization'
+												checked={useOrganization}
+												onChange={e => setUseOrganization(e.target.checked)}
+											/>
+											<label
+												className='form-check-label'
+												htmlFor='useOrganization'>
+												Оформить на организацию
+											</label>
+										</div>
+										{useOrganization && (
+											<div className='card p-2 bg-light'>
+												<div className='mb-0'>
+													<strong>{personalInfo.organization.name}</strong>
+												</div>
+												<div className='text-muted small'>
+													ИНН: {personalInfo.organization.inn}
+												</div>
+											</div>
+										)}
+									</div>
+								) : (
+									<div className='mt-2'>
+										<div className='alert alert-light'>
+											У вас нет организации. Добавьте организацию в профиле,
+											чтобы иметь возможность оформить заказ на организацию.
+										</div>
+										<Link
+											to='/profile#org-form'
+											className='btn btn-outline-secondary btn-sm'>
+											Добавить организацию
+										</Link>
+									</div>
+								)}
 							</div>
 							<div className='contacts__content__left__order mb-3'>
-								<label htmlFor='validationCustom04' className='form-label'>
+								<label htmlFor='shippingType' className='form-label'>
 									Способ доставки
 								</label>
 								<select
 									className='form-select'
-									name='ShippingType'
-									value={ShippingType}
+									id='shippingType'
+									name='shippingType'
+									value={shippingType}
 									onChange={handleChange}>
-									<option selected disabled value=''>
+									<option disabled value=''>
 										Выбрать...
 									</option>
-									<option>Доставка курьером({shippingPrice})</option>
-									<option>Самовывоз</option>
-								</select>
-							</div>
-							<div className='contacts__content__left__Payment mb-3'>
-								<label htmlFor='validationCustom04' className='form-label'>
-									Способ оплаты
-								</label>
-								<select
-									className='form-select'
-									name='Payment'
-									value={Payment}
-									onChange={handleChange}>
-									<option selected disabled value=''>
-										Выбрать...
+									<option value='delivery'>
+										Доставка курьером ({shippingPrice})
 									</option>
-									<option>Наличные курьеру</option>
-									<option>Безналичная оплата</option>
+									<option value='pickup'>Самовывоз</option>
 								</select>
 							</div>
 							<div className='contacts__content__left__message'>
-								<label
-									htmlFor='exampleFormControlTextarea1'
-									className='form-label mb-2'>
+								<label htmlFor='comment' className='form-label mb-2'>
 									Комментарии к заказу:
 								</label>
 								<textarea
 									className='form-control'
-									id='exampleFormControlTextarea1'
+									id='comment'
 									placeholder='Комментарии к заказу'
 									rows='3'
-									name='Comment'
-									value={Comment}
+									name='comment'
+									value={comment}
 									onChange={handleChange}></textarea>
 							</div>
 						</div>
@@ -533,9 +470,8 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 							<div className='column'></div>
 							<div className='column'>
 								<button
-									disabled={loading}
+									disabled={loading || submitBtn}
 									type='submit'
-									disabled={submitBtn}
 									className={`btn btn-outline-${
 										!loading ? 'primary' : 'secondary'
 									}`}>
