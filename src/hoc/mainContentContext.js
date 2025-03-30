@@ -55,7 +55,7 @@ export const MainContentContext = props => {
 					delete axios.defaults.headers.common['Authorization'];
 				});
 		}
-	}, []);
+	}, [authModalOpen]);
 
 	// Fetch cart and favorites when user is authenticated
 	useEffect(() => {
