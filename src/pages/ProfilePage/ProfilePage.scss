@@ -1,5 +1,9 @@
 .profilePage {
+	padding: 0 15px;
+	
 	&__top {
+		margin-bottom: 30px;
+		
 		span {
 			font-style: normal;
 			font-weight: 400;
@@ -14,13 +18,15 @@
 		}
 
 		h2 {
-			margin-top: 40px;
-			margin-bottom: 25px;
+			margin-top: 20px;
+			margin-bottom: 0;
+			font-size: 28px;
+			font-weight: 700;
 		}
 	}
 
 	&__sections {
-		margin-top: 30px;
+		margin-top: 20px;
 	}
 
 	&__section {
@@ -93,6 +99,12 @@
 			width: 100%;
 			margin-bottom: 20px;
 		}
+	}
+}
+
+@media (max-width: 991px) {
+	.profilePage {
+		padding-bottom: 60px; // Учитываем нижнее мобильное меню
 	}
 }
 
