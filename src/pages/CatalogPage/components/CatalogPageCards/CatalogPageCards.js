@@ -40,15 +40,16 @@ export const Products = ({ data }) => {
 			: `/${Slug}`;
 
 	const addToCart = () => {
-		addCart(data, count);
+		const result = addCart(data, count);
 		if (!data.Availability) return null;
-		toast.success('Товар добавлен в корзину');
+		if (result) toast.success('Товар добавлен в корзину');
 	};
 	const addToFav = () => {
-		favorite ? removeFavorite(data.id) : addFav(data);
-		toast.success(
-			favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
-		);
+		const result = favorite ? removeFavorite(data.id) : addFav(data);
+		if (result)
+			toast.success(
+				favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
+			);
 	};
 
 	useEffect(() => setCount(MinCount), []);

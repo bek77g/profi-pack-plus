@@ -91,56 +91,92 @@ export const MainContentContext = props => {
 	};
 
 	const addCart = (cartObj, quantity = 1) => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.post('/api/cart/add', { id: cartObj.id, quantity })
-				.then(({ data }) => setCart(data.items))
-				.catch(console.error);
+				.then(({ data }) => {
+					setCart(data.items);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 
 	const editCart = (cartID, amount) => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.put(`/api/cart/items/${cartID}`, { quantity: amount })
-				.then(({ data }) => setCart(data.items))
-				.catch(console.error);
+				.then(({ data }) => {
+					setCart(data.items);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 
 	const removeCart = cartID => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.delete(`/api/cart/items/${cartID}`)
-				.then(({ data }) => setCart(data.items))
-				.catch(console.error);
+				.then(({ data }) => {
+					setCart(data.items);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 
 	const resetCart = () => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.delete('/api/cart/clear')
-				.then(() => setCart([]))
-				.catch(console.error);
+				.then(() => {
+					setCart([]);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 
 	const addFav = product => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.post('/api/favorites/add', { id: product.id })
-				.then(({ data }) => setFavorite(data.products))
-				.catch(console.error);
+				.then(({ data }) => {
+					setFavorite(data.products);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 
 	const removeFavorite = productId => {
-		requireAuth(() => {
-			axios
+		return requireAuth(() => {
+			return axios
 				.delete(`/api/favorites/${productId}`)
-				.then(({ data }) => setFavorite(data.products))
-				.catch(console.error);
+				.then(({ data }) => {
+					setFavorite(data.products);
+					return true;
+				})
+				.catch(error => {
+					console.error(error);
+					return false;
+				});
 		});
 	};
 

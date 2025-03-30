@@ -84,16 +84,19 @@ const CatalogPageProducts = () => {
 	}, [pathname]);
 
 	const addToCart = (data, quantity) => {
-		addCart(data, quantity);
+		const result = addCart(data, quantity);
 		if (!data.Availability) return null;
-		toast.success('Товар добавлен в корзину');
+		if (result) toast.success('Товар добавлен в корзину');
 	};
 
 	const addToFav = () => {
-		favorite ? removeFavorite(productData.id) : addFav(productData);
-		toast.success(
-			favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
-		);
+		const result = favorite
+			? removeFavorite(productData.id)
+			: addFav(productData);
+		if (result)
+			toast.success(
+				favorite ? 'Товар удалён из избранных' : 'Товар добавлен в избранное'
+			);
 	};
 
 	const productSliderThumbs = () => {
@@ -221,7 +224,7 @@ const CatalogPageProducts = () => {
 											<HandySvg src={heart} width='24' height='22' />
 										</span>
 										<button
-											onClick={() => addCart(productData, count)}
+											onClick={() => addToCart(productData, count)}
 											disabled={!Availability}>
 											<HandySvg src={cart} width='30' height='23' />
 										</button>
