@@ -36,6 +36,64 @@
 			color: #333;
 		}
 	}
+
+	&__logout {
+		display: flex;
+		justify-content: center;
+
+		button {
+			font-size: 16px;
+			font-weight: 600;
+			padding: 10px 30px;
+			transition: all 0.3s ease;
+
+			&:hover {
+				background-color: #c82333;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			}
+
+			@media (max-width: 576px) {
+				width: 100%;
+			}
+		}
+	}
+
+	&__not-logged-in {
+		.profilePage__section {
+			text-align: center;
+			margin-top: 20px;
+
+			h3 {
+				margin-bottom: 15px;
+				font-size: 24px;
+			}
+
+			p {
+				margin-bottom: 25px;
+				color: #666;
+				font-size: 16px;
+			}
+		}
+	}
+
+	&__login-btn {
+		font-size: 16px;
+		font-weight: 600;
+		padding: 10px 30px;
+		transition: all 0.3s ease;
+
+		&:hover {
+			background-color: #0069d9;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		}
+
+		@media (max-width: 576px) {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+	}
 }
 
 .profile-section {
