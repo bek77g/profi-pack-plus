@@ -1,10 +1,13 @@
 .pageContent {
-  display: flex;
-  position: relative;
-  &__view {
-    min-height: 100vh;
-    flex-direction: column;
-    display: flex;
-    align-items: stretch;
-  }
+	display: flex;
+	position: relative;
+	&__view {
+		min-height: 100vh;
+		flex-direction: column;
+		display: flex;
+		align-items: stretch;
+		@media (max-width: 991px) {
+			padding-bottom: 60px;
+		}
+	}
 }
