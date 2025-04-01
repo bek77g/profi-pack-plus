@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { debounce } from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import toast from 'react-hot-toast';
 import { CustomContext } from '../../../hoc/mainContentContext';
 
@@ -13,31 +19,59 @@ const OrganizationInfo = () => {
 		comments: user?.organization?.comments || '',
 	});
 
-	const saveChanges = debounce(async data => {
-		try {
-			const response = await axios.patch('/api/profile/organization', data);
-			setUser(prev => ({
-				...prev,
-				organization: response.data,
-			}));
-			toast.success('Изменения сохранены');
-		} catch (error) {
-			toast.error('Ошибка при сохранении');
-			console.error('Error saving organization data:', error);
-		}
-	}, 1000);
+	// Референс для отслеживания первоначальной загрузки и ручных изменений
+	const initialLoad = useRef(true);
+	const formChanged = useRef(false);
+
+	// Используем useCallback чтобы функция не пересоздавалась при каждом рендере
+	const saveChanges = useCallback(
+		debounce(async data => {
+			try {
+				const response = await axios.patch('/api/profile/organization', data);
+				setUser(prev => ({
+					...prev,
+					organization: response.data,
+				}));
+				toast.success('Изменения сохранены');
+				formChanged.current = false;
+			} catch (error) {
+				toast.error('Ошибка при сохранении');
+				console.error('Error saving organization data:', error);
+			}
+		}, 1000),
+		[setUser]
+	);
 
 	const handleChange = e => {
 		const { name, value } = e.target;
-		setFormData(prev => {
-			const newData = { ...prev, [name]: value };
-			saveChanges(newData);
-			return newData;
-		});
+
+		formChanged.current = true; // Отмечаем, что произошло ручное изменение
+
+		setFormData(prev => ({
+			...prev,
+			[name]: value,
+		}));
+		// Здесь не вызываем saveChanges
 	};
+
+	// Отслеживаем изменения formData и вызываем saveChanges после обновления состояния
+	useEffect(() => {
+		// Пропускаем первый рендер и отправляем запрос только при ручных изменениях
+		if (initialLoad.current) {
+			initialLoad.current = false;
+			return;
+		}
+
+		if (formChanged.current && user) {
+			saveChanges(formData);
+		}
+	}, [formData, saveChanges, user]);
 
 	useEffect(() => {
 		if (user?.organization) {
+			initialLoad.current = true; // Сбрасываем флаг при изменении данных организации
+			formChanged.current = false; // Сбрасываем флаг изменений
+
 			setFormData({
 				name: user.organization.name || '',
 				inn: user.organization.inn || '',
