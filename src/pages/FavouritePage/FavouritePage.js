@@ -5,7 +5,7 @@ import arr from '../../assets/icons/arr.svg';
 import empty from '../../assets/icons/empty.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
 import SEO from '../../hoc/SEO';
-import CatalogPageCards from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
+import { Products } from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
 import './FavouritePage.scss';
 
 const FavouritePage = () => {
@@ -69,7 +69,7 @@ const FavouritePage = () => {
 								<div className='catalogPage__content__right'>
 									<div className='catalogPage__content__right__cardsList'>
 										{getSortedFavorites().map(item => (
-											<CatalogPageCards key={item.id} product={item} />
+											<Products key={item.id} data={item} />
 										))}
 									</div>
 								</div>
