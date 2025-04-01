@@ -42,8 +42,8 @@ const ProfileDashboard = () => {
 						{user?.firstName || user?.organization[0]?.name || 'Пользователь'}
 					</h2>
 					<p>т. {user?.phoneNumber || 'Не указан'}</p>
-					{user?.addresses?.map(addr => (
-						<p>
+					{user?.addresses?.map((addr, index) => (
+						<p key={`address-${index}`}>
 							{addr.street} {addr.building}
 							{addr.apartment ? `, кв. ${addr.apartment}` : ''}
 						</p>

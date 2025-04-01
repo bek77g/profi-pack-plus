@@ -15,6 +15,8 @@ const OrderHistory = () => {
 	const { user } = useContext(CustomContext);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedOrderId, setSelectedOrderId] = useState(null);
+	const [showReceiptModal, setShowReceiptModal] = useState(false);
+	const [receiptOrderId, setReceiptOrderId] = useState(null);
 
 	useEffect(() => {
 		if (user) {
@@ -29,39 +31,58 @@ const OrderHistory = () => {
 			setOrders(data);
 			setError(null);
 		} catch (err) {
-			console.error('Error fetching order history:', err);
+			console.error('Error fetching orders:', err);
 			setError('Не удалось загрузить историю заказов');
 		} finally {
 			setLoading(false);
 		}
 	};
 
+	// Format price to show only one decimal place if needed
+	const formatPrice = price => {
+		return Number(price).toFixed(1).replace(/\.0$/, '');
+	};
+
+	const formatDate = dateString => {
+		const options = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+		};
+		return new Date(dateString).toLocaleDateString('ru-RU', options);
+	};
+
+	const getStatusClass = status => {
+		switch (status.toLowerCase()) {
+			case 'pending':
+				return 'orderHistory__status--pending';
+			case 'processing':
+				return 'orderHistory__status--processing';
+			case 'completed':
+				return 'orderHistory__status--completed';
+			case 'cancelled':
+				return 'orderHistory__status--cancelled';
+			default:
+				return '';
+		}
+	};
+
+	// Get localized status text
 	const getStatusText = status => {
-		switch (status) {
+		switch (status.toLowerCase()) {
 			case 'pending':
 				return 'В обработке';
 			case 'processing':
 				return 'Комплектуется';
-			case 'shipped':
-				return 'Отправлен';
-			case 'delivered':
-				return 'Доставлен';
 			case 'completed':
 				return 'Выполнен';
 			case 'cancelled':
 				return 'Отменен';
 			default:
-				return 'Неизвестно';
+				return status;
 		}
-	};
-
-	const formatDate = dateString => {
-		const date = new Date(dateString);
-		return date.toLocaleDateString('ru-RU', {
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-		});
 	};
 
 	const handleRepeatOrderClick = id => {
@@ -92,13 +113,49 @@ const OrderHistory = () => {
 		setSelectedOrderId(null);
 	};
 
+	const handleConfirmReceiptClick = id => {
+		setReceiptOrderId(id);
+		setShowReceiptModal(true);
+	};
+
+	const confirmOrderReceipt = async () => {
+		if (!receiptOrderId) return;
+
+		try {
+			setLoading(true);
+			// Mark the order as completed
+			await axios.post(`/api/orders/${receiptOrderId}/complete`);
+			// Update the order status in the local state
+			setOrders(
+				orders.map(order =>
+					order.id === receiptOrderId
+						? { ...order, status: 'completed' }
+						: order
+				)
+			);
+			// Close modal
+			setShowReceiptModal(false);
+			setReceiptOrderId(null);
+		} catch (err) {
+			console.error('Error confirming receipt:', err);
+			alert('Не удалось подтвердить получение заказа');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleCloseReceiptModal = () => {
+		setShowReceiptModal(false);
+		setReceiptOrderId(null);
+	};
+
 	return (
 		<>
 			<SEO
-				SeoTitle='ProfiPackPlus - История заказов'
-				SeoDescription='История заказов в магазине Profipackplus'
+				title='История заказов — Профиль'
+				description='История ваших заказов в Профи-пак'
 			/>
-			<div className='profilePage'>
+			<div className='container'>
 				<div className='profilePage__top'>
 					<span>
 						<Link to='/'>
@@ -107,7 +164,7 @@ const OrderHistory = () => {
 					</span>
 					<span>
 						<Link to='/profile'>
-							Личный кабинет <img src={arr} alt='arr' />
+							Профиль <img src={arr} alt='arr' />
 						</Link>
 					</span>
 					<span>История заказов</span>
@@ -122,7 +179,7 @@ const OrderHistory = () => {
 						<div className='profilePage__error'>{error}</div>
 					) : orders.length === 0 ? (
 						<div className='orderHistory__empty'>
-							<p>У вас еще нет заказов</p>
+							У вас пока нет заказов. <Link to='/catalog'>Начать покупки</Link>
 						</div>
 					) : (
 						<div className='orderHistory__list'>
@@ -138,61 +195,89 @@ const OrderHistory = () => {
 											</div>
 										</div>
 										<div
-											className={`orderHistory__status orderHistory__status--${order.status}`}>
+											className={`orderHistory__status ${getStatusClass(
+												order.status
+											)}`}>
 											{getStatusText(order.status)}
 										</div>
 									</div>
 
-									<div className='orderHistory__products'>
-										{order.items.map(item => (
-											<div key={item.id} className='orderHistory__product'>
-												<div className='orderHistory__product-image'>
-													{item.Gallery && item.Gallery.length > 0 && (
-														<img
-															src={`${axios.defaults.baseURL}${
-																item.Gallery[0].formats?.thumbnail?.url ||
-																item.Gallery[0].url
-															}`}
-															alt={item.Title}
-														/>
-													)}
+									<div className='orderHistory__content'>
+										<div className='orderHistory__products'>
+											{order.items.map((item, index) => (
+												<div
+													key={`${order.id}-${index}`}
+													className='orderHistory__product'>
+													<div className='orderHistory__product-image'>
+														{item.Gallery && item.Gallery.length > 0 ? (
+															<img
+																src={`${axios.defaults.baseURL}${
+																	item.Gallery[0].formats?.thumbnail?.url ||
+																	item.Gallery[0].url
+																}`}
+																alt={item.Title}
+															/>
+														) : (
+															<img
+																src='/placeholder.jpg'
+																alt={item.Name || item.Title}
+															/>
+														)}
+													</div>
+													<div className='orderHistory__product-details'>
+														<div className='orderHistory__product-name'>
+															{item.Name || item.Title}
+														</div>
+														<div className='orderHistory__product-sku'>
+															Артикул: {item.Article}
+														</div>
+														<div className='orderHistory__product-price'>
+															{formatPrice(item.Price)} сом × {item.quantity}{' '}
+															{item.CountType} ={' '}
+															{formatPrice(item.Price * item.quantity)} сом
+														</div>
+													</div>
 												</div>
-												<div className='orderHistory__product-info'>
-													<div className='orderHistory__product-title'>
-														{item.Title}
-													</div>
-													<div className='orderHistory__product-article'>
-														Артикул: {item.Article}
-													</div>
-													<div className='orderHistory__product-price'>
-														{item.Price} сом × {item.quantity} {item.CountType}{' '}
-														= {item.Price * item.quantity} сом
-													</div>
-												</div>
-											</div>
-										))}
-									</div>
-
-									<div className='orderHistory__footer'>
-										<div className='orderHistory__total'>
-											<div className='orderHistory__subtotal'>
-												Сумма заказа: <b>{order.totalPrice} сом</b>
-											</div>
-											<div className='orderHistory__shipping'>
-												Доставка: <b>{order.shippingPrice} сом</b>
-											</div>
-											<div className='orderHistory__grand-total'>
-												Итого:{' '}
-												<b>{order.totalPrice + order.shippingPrice} сом</b>
-											</div>
+											))}
 										</div>
 
-										<div className='orderHistory__actions'>
-											<button
-												className='btn btn-primary'
-												onClick={() => handleRepeatOrderClick(order.id)}>
-												Повторить заказ
-											</button>
+										<div className='orderHistory__footer'>
+											<div className='orderHistory__totals'>
+												<div className='orderHistory__subtotal'>
+													Сумма: <b>{formatPrice(order.totalPrice)} сом</b>
+												</div>
+												<div className='orderHistory__shipping'>
+													Доставка:{' '}
+													<b>{formatPrice(order.shippingPrice)} сом</b>
+												</div>
+												<div className='orderHistory__grand-total'>
+													Итого:{' '}
+													<b>
+														{formatPrice(
+															order.totalPrice + order.shippingPrice
+														)}{' '}
+														сом
+													</b>
+												</div>
+											</div>
+
+											<div className='orderHistory__actions'>
+												{order.status.toLowerCase() === 'pending' && (
+													<button
+														className='btn btn-success me-2'
+														onClick={() => handleConfirmReceiptClick(order.id)}>
+														Подтвердить получение
+													</button>
+												)}
+
+												{['completed'].includes(order.status.toLowerCase()) && (
+													<button
+														className='btn btn-primary'
+														onClick={() => handleRepeatOrderClick(order.id)}>
+														Повторить заказ
+													</button>
+												)}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -208,7 +293,7 @@ const OrderHistory = () => {
 				</div>
 			</div>
 
-			{/* Confirmation Modal */}
+			{/* Repeat Order Confirmation Modal */}
 			<Modal show={showModal} onHide={handleCloseModal} centered>
 				<Modal.Header closeButton>
 					<Modal.Title>Подтверждение повторного заказа</Modal.Title>
@@ -223,6 +308,25 @@ const OrderHistory = () => {
 					</Button>
 					<Button variant='primary' onClick={repeatOrder}>
 						Да, повторить заказ
+					</Button>
+				</Modal.Footer>
+			</Modal>
+
+			{/* Confirm Receipt Modal */}
+			<Modal show={showReceiptModal} onHide={handleCloseReceiptModal} centered>
+				<Modal.Header closeButton>
+					<Modal.Title>Подтверждение получения заказа</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					Вы подтверждаете, что получили заказ? После подтверждения вы сможете
+					повторить этот заказ.
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant='secondary' onClick={handleCloseReceiptModal}>
+						Отмена
+					</Button>
+					<Button variant='success' onClick={confirmOrderReceipt}>
+						Да, я получил заказ
 					</Button>
 				</Modal.Footer>
 			</Modal>
