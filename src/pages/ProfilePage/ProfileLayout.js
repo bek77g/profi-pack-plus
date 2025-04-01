@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
 import SEO from '../../hoc/SEO';
-import ProfileDashboard from './ProfileDashboard';
 import './ProfilePage.scss';
 
-const ProfilePage = () => {
-	const { user, setAuthModalOpen } = useContext(CustomContext);
+const ProfileLayout = () => {
+	const { logout, user, setAuthModalOpen } = useContext(CustomContext);
+	const location = useLocation();
 
 	const handleLogin = () => {
 		setAuthModalOpen(true);
+	};
+
+	const isActiveLink = (path) => {
+		return location.pathname === path;
 	};
 
 	return (
@@ -30,7 +34,37 @@ const ProfilePage = () => {
 				</div>
 
 				{user ? (
-					<ProfileDashboard />
+					<div className='profilePage__container'>
+						<div className='profilePage__sidebar'>
+							<h3>Мой аккаунт</h3>
+							<ul className='profilePage__nav'>
+								<li>
+									<Link 
+										to='/profile' 
+										className={isActiveLink('/profile') ? 'active' : ''}
+									>
+										Личные данные
+									</Link>
+								</li>
+								<li>
+									<Link 
+										to='/profile/orders' 
+										className={isActiveLink('/profile/orders') ? 'active' : ''}
+									>
+										История заказов
+									</Link>
+								</li>
+								<li>
+									<button className='btn btn-danger' onClick={logout}>
+										ВЫЙТИ
+									</button>
+								</li>
+							</ul>
+						</div>
+						<div className='profilePage__content'>
+							<Outlet />
+						</div>
+					</div>
 				) : (
 					<div className='profilePage__not-logged-in'>
 						<div className='profilePage__section'>
@@ -50,4 +84,4 @@ const ProfilePage = () => {
 	);
 };
 
-export default ProfilePage;
+export default ProfileLayout;

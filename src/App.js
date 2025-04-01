@@ -38,7 +38,10 @@ const ContactsPage = React.lazy(() =>
 	import('./pages/ContactsPage/ContactsPage')
 );
 
+// Profile Pages
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage/ProfilePage'));
+const PersonalDataPage = React.lazy(() => import('./pages/ProfilePage/PersonalDataPage'));
+const OrderHistory = React.lazy(() => import('./pages/ProfilePage/OrderHistory'));
 
 const router = createBrowserRouter([
 	{
@@ -82,6 +85,14 @@ const router = createBrowserRouter([
 			{
 				path: '/profile',
 				element: <ProfilePage />,
+			},
+			{
+				path: '/profile/personal',
+				element: <PersonalDataPage />,
+			},
+			{
+				path: '/profile/orders',
+				element: <OrderHistory />,
 			},
 			{
 				path: '/cards',
