@@ -202,6 +202,20 @@ const OrderHistory = () => {
 										</div>
 									</div>
 
+									<div className='orderHistory__address'>
+										<strong>Адрес доставки:</strong>{' '}
+										{order.address ? (
+											<span>
+												{order.address.street} {order.address.building}
+												{order.address.apartment &&
+													`, кв. ${order.address.apartment}`}
+												{order.address.city && `, ${order.address.city}`}
+											</span>
+										) : (
+											<span>Адрес не указан</span>
+										)}
+									</div>
+
 									<div className='orderHistory__content'>
 										<div className='orderHistory__products'>
 											{order.items.map((item, index) => (
