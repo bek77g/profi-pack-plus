@@ -66,7 +66,7 @@ const OrderHistory = () => {
 			setLoading(true);
 			await axios.post(`/api/orders/${id}/repeat`);
 			// Перенаправляем в корзину после повторения заказа
-			window.location.href = '/cart';
+			// window.location.href = '/cart';
 		} catch (err) {
 			console.error('Error repeating order:', err);
 			alert('Не удалось повторить заказ');
@@ -97,7 +97,7 @@ const OrderHistory = () => {
 				</div>
 
 				<div className='orderHistory'>
-					<h2 className="mb-4">История заказов</h2>
+					<h2 className='mb-4'>История заказов</h2>
 
 					{loading ? (
 						<Loading />
@@ -113,7 +113,9 @@ const OrderHistory = () => {
 								<div key={order.id} className='orderHistory__item'>
 									<div className='orderHistory__header'>
 										<div className='orderHistory__info'>
-											<div className='orderHistory__number'>Заказ №{order.id}</div>
+											<div className='orderHistory__number'>
+												Заказ №{order.id}
+											</div>
 											<div className='orderHistory__date'>
 												от {formatDate(order.createdAt)}
 											</div>
@@ -146,8 +148,8 @@ const OrderHistory = () => {
 														Артикул: {item.Article}
 													</div>
 													<div className='orderHistory__product-price'>
-														{item.Price} сом × {item.quantity} {item.CountType} ={' '}
-														{item.Price * item.quantity} сом
+														{item.Price} сом × {item.quantity} {item.CountType}{' '}
+														= {item.Price * item.quantity} сом
 													</div>
 												</div>
 											</div>
@@ -163,7 +165,8 @@ const OrderHistory = () => {
 												Доставка: <b>{order.shippingPrice} сом</b>
 											</div>
 											<div className='orderHistory__grand-total'>
-												Итого: <b>{order.totalPrice + order.shippingPrice} сом</b>
+												Итого:{' '}
+												<b>{order.totalPrice + order.shippingPrice} сом</b>
 											</div>
 										</div>
 
@@ -179,7 +182,7 @@ const OrderHistory = () => {
 							))}
 						</div>
 					)}
-					
+
 					<div className='profilePage__back-btn'>
 						<Link to='/profile' className='btn btn-secondary'>
 							Вернуться назад
