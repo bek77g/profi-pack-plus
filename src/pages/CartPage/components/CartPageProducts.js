@@ -229,13 +229,7 @@ const CartPageProducts = () => {
 						</div>
 					</div>
 				</section>
-				{isCheckout && (
-					<CheckoutPage
-						cart={cart}
-						totalPrice={totalPrice}
-						totalQuantity={totalQuantity}
-					/>
-				)}
+				{isCheckout && <CheckoutPage cart={cart} totalPrice={totalPrice} />}
 			</div>
 		</>
 	);
@@ -252,6 +246,9 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 	const [submitBtn, setSubmitBtn] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [useOrganization, setUseOrganization] = useState(false);
+
+	// Проверка минимальной суммы заказа
+	const isMinimumOrderMet = totalPrice >= 3000;
 
 	const [userData, setUserData] = useState({
 		items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
@@ -270,7 +267,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 		}
 	}, []);
 
-	const { shippingType, comment, address, organization } = userData;
+	const { shippingType, comment, address } = userData;
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -333,6 +330,15 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 		let invalidStyle = 'border: 1px solid #dc3545';
 		let validStyle = 'border: 1px solid #198754;';
 		event.preventDefault();
+
+		// Проверка минимальной суммы заказа (3000 сом)
+		if (totalPrice < 3000) {
+			toast.error(
+				'Для оформления заказа необходимо набрать товаров на сумму от 3000 сом'
+			);
+			return;
+		}
+
 		if (address.trim().length === 0 || shippingType.trim().length === 0) {
 			if (address.trim().length === 0) {
 				toast.error('Вы не выбрали адрес!');
@@ -349,163 +355,182 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 	};
 
 	return (
-		<div className='checkoutPage__feedback' id='checkout'>
-			<div className='checkoutPage__feedback__title mb-5'>
-				<h2>{!submitBtn && 'Данные покупателя'}</h2>
-			</div>
-			<div className='checkoutPage__feedback__form'>
-				{!submitBtn ? (
-					<form id='order-form' action='' onSubmit={createUserHandler}>
-						<div className='contacts__content__left'>
-							<div className='contacts__content__left__Address mb-3'>
-								<label htmlFor='address' className='form-label'>
-									Адрес доставки
-								</label>
-								{personalInfo &&
-								personalInfo.addresses &&
-								personalInfo.addresses.length > 0 ? (
-									<select
-										className='form-select'
-										id='address'
-										name='address'
-										value={address}
-										onChange={handleChange}>
-										<option disabled value=''>
-											Выбрать адрес...
-										</option>
-										{personalInfo.addresses.map(addr => (
-											<option key={addr.id} value={addr.id}>
-												{addr.title} - {addr.street}, {addr.building}
-												{addr.apartment ? `, кв. ${addr.apartment}` : ''}
-											</option>
-										))}
-									</select>
-								) : (
-									<div className='mt-2'>
-										<Link
-											to='/profile#address-form'
-											className='btn btn-outline-secondary btn-sm'>
-											Добавить адрес доставки
-										</Link>
-									</div>
-								)}
-							</div>
-							<div className='contacts__content__left__organization mb-3'>
-								<label className='form-label'>Организация</label>
-								{personalInfo && personalInfo.organization ? (
-									<div>
-										<div className='form-check mb-2'>
-											<input
-												className='form-check-input'
-												type='checkbox'
-												id='useOrganization'
-												checked={useOrganization}
-												onChange={e => setUseOrganization(e.target.checked)}
+		<section className='checkoutForm' id='checkout'>
+			<div className='container'>
+				<div className='row'>
+					<div className='col-12 mt-4'>
+						<div className='box'>
+							<h2>Оформление заказа</h2>
+
+							{/* Предупреждение о минимальной сумме заказа */}
+							{!isMinimumOrderMet && (
+								<div className='alert alert-warning mt-3' role='alert'>
+									<strong>Внимание!</strong> Для оформления заказа необходимо
+									набрать товаров на сумму от 3000 сом. Ваша текущая сумма:{' '}
+									{totalPrice.toFixed(2)} сом.
+								</div>
+							)}
+
+							{submitBtn ? (
+								<div className='container' style={{ textAlign: 'center' }}>
+									<h2>Заказ успешно отправлен</h2>
+									<div class='success-animation'>
+										<svg
+											class='checkmark'
+											xmlns='http://www.w3.org/2000/svg'
+											viewBox='0 0 52 52'>
+											<circle
+												class='checkmark__circle'
+												cx='26'
+												cy='26'
+												r='25'
+												fill='none'
 											/>
-											<label
-												className='form-check-label'
-												htmlFor='useOrganization'>
-												Оформить на организацию
+											<path
+												class='checkmark__check'
+												fill='none'
+												d='M14.1 27.2l7.1 7.2 16.7-16.8'
+											/>
+										</svg>
+									</div>
+								</div>
+							) : (
+								<form id='order-form' action='' onSubmit={createUserHandler}>
+									<div className='contacts__content__left'>
+										<div className='contacts__content__left__Address mb-3'>
+											<label htmlFor='address' className='form-label'>
+												Адрес доставки
 											</label>
-										</div>
-										{useOrganization && (
-											<div className='card p-2 bg-light'>
-												<div className='mb-0'>
-													<strong>{personalInfo.organization.name}</strong>
+											{personalInfo &&
+											personalInfo.addresses &&
+											personalInfo.addresses.length > 0 ? (
+												<select
+													className='form-select'
+													id='address'
+													name='address'
+													value={address}
+													onChange={handleChange}>
+													<option disabled value=''>
+														Выбрать адрес...
+													</option>
+													{personalInfo.addresses.map(addr => (
+														<option key={addr.id} value={addr.id}>
+															{addr.title} - {addr.street}, {addr.building}
+															{addr.apartment ? `, кв. ${addr.apartment}` : ''}
+														</option>
+													))}
+												</select>
+											) : (
+												<div className='mt-2'>
+													<Link
+														to='/profile#address-form'
+														className='btn btn-outline-secondary btn-sm'>
+														Добавить адрес доставки
+													</Link>
 												</div>
-												<div className='text-muted small'>
-													ИНН: {personalInfo.organization.inn}
-												</div>
-											</div>
-										)}
-									</div>
-								) : (
-									<div className='mt-2'>
-										<div className='alert alert-light'>
-											У вас нет организации. Добавьте организацию в профиле,
-											чтобы иметь возможность оформить заказ на организацию.
+											)}
 										</div>
-										<Link
-											to='/profile#org-form'
-											className='btn btn-outline-secondary btn-sm'>
-											Добавить организацию
-										</Link>
+										<div className='contacts__content__left__organization mb-3'>
+											<label className='form-label'>Организация</label>
+											{personalInfo && personalInfo.organization ? (
+												<div>
+													<div className='form-check mb-2'>
+														<input
+															className='form-check-input'
+															type='checkbox'
+															id='useOrganization'
+															checked={useOrganization}
+															onChange={e =>
+																setUseOrganization(e.target.checked)
+															}
+														/>
+														<label
+															className='form-check-label'
+															htmlFor='useOrganization'>
+															Оформить на организацию
+														</label>
+													</div>
+													{useOrganization && (
+														<div className='card p-2 bg-light'>
+															<div className='mb-0'>
+																<strong>
+																	{personalInfo.organization.name}
+																</strong>
+															</div>
+															<div className='text-muted small'>
+																ИНН: {personalInfo.organization.inn}
+															</div>
+														</div>
+													)}
+												</div>
+											) : (
+												<div className='mt-2'>
+													<div className='alert alert-light'>
+														У вас нет организации. Добавьте организацию в
+														профиле, чтобы иметь возможность оформить заказ на
+														организацию.
+													</div>
+													<Link
+														to='/profile#org-form'
+														className='btn btn-outline-secondary btn-sm'>
+														Добавить организацию
+													</Link>
+												</div>
+											)}
+										</div>
+										<div className='contacts__content__left__order mb-3'>
+											<label htmlFor='shippingType' className='form-label'>
+												Способ доставки
+											</label>
+											<select
+												className='form-select'
+												id='shippingType'
+												name='shippingType'
+												value={shippingType}
+												onChange={handleChange}>
+												<option disabled value=''>
+													Выбрать...
+												</option>
+												<option value='delivery'>
+													Доставка курьером ({shippingPrice})
+												</option>
+												<option value='pickup'>Самовывоз</option>
+											</select>
+										</div>
+										<div className='contacts__content__left__message'>
+											<label htmlFor='comment' className='form-label mb-2'>
+												Комментарии к заказу:
+											</label>
+											<textarea
+												className='form-control'
+												id='comment'
+												placeholder='Комментарии к заказу'
+												rows='3'
+												name='comment'
+												value={comment}
+												onChange={handleChange}></textarea>
+										</div>
 									</div>
-								)}
-							</div>
-							<div className='contacts__content__left__order mb-3'>
-								<label htmlFor='shippingType' className='form-label'>
-									Способ доставки
-								</label>
-								<select
-									className='form-select'
-									id='shippingType'
-									name='shippingType'
-									value={shippingType}
-									onChange={handleChange}>
-									<option disabled value=''>
-										Выбрать...
-									</option>
-									<option value='delivery'>
-										Доставка курьером ({shippingPrice})
-									</option>
-									<option value='pickup'>Самовывоз</option>
-								</select>
-							</div>
-							<div className='contacts__content__left__message'>
-								<label htmlFor='comment' className='form-label mb-2'>
-									Комментарии к заказу:
-								</label>
-								<textarea
-									className='form-control'
-									id='comment'
-									placeholder='Комментарии к заказу'
-									rows='3'
-									name='comment'
-									value={comment}
-									onChange={handleChange}></textarea>
-							</div>
-						</div>
-						<div className='shopping-cart-footer mt-5'>
-							<div className='column'></div>
-							<div className='column'>
-								<button
-									disabled={loading || submitBtn}
-									type='submit'
-									className={`btn btn-outline-${
-										!loading ? 'primary' : 'secondary'
-									}`}>
-									Отправить заказ
-								</button>
-							</div>
-						</div>
-					</form>
-				) : (
-					<div className='container' style={{ textAlign: 'center' }}>
-						<h2>Заказ успешно отправлен</h2>
-						<div class='success-animation'>
-							<svg
-								class='checkmark'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 52 52'>
-								<circle
-									class='checkmark__circle'
-									cx='26'
-									cy='26'
-									r='25'
-									fill='none'
-								/>
-								<path
-									class='checkmark__check'
-									fill='none'
-									d='M14.1 27.2l7.1 7.2 16.7-16.8'
-								/>
-							</svg>
+									<div className='shopping-cart-footer mt-5'>
+										<div className='column'></div>
+										<div className='column'>
+											<button
+												disabled={loading || submitBtn || !isMinimumOrderMet}
+												type='submit'
+												className={`btn btn-outline-${
+													!loading ? 'primary' : 'secondary'
+												}`}>
+												Отправить заказ
+											</button>
+										</div>
+									</div>
+								</form>
+							)}
+							<Toaster position='bottom-center' />
 						</div>
 					</div>
-				)}
-				<Toaster position='bottom-center' />
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
