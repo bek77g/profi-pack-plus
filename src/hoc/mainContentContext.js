@@ -74,6 +74,36 @@ export const MainContentContext = props => {
 		}
 	}, [user]);
 
+	// Add axios response interceptor to handle token expiration errors
+	useEffect(() => {
+		const responseInterceptor = axios.interceptors.response.use(
+			response => response,
+			error => {
+				// Check if the error is related to token expiration or authentication
+				if (error.response && 
+					(error.response.status === 401 || 
+					 error.response.status === 403 || 
+					 (error.response.data && 
+					  (error.response.data.message === 'jwt expired' || 
+					   error.response.data.message === 'Invalid token' ||
+					   error.response.data.message === 'Authorization header missing')))) {
+					
+					// Show warning before logout
+					if (user) {
+						alert('Срок действия сессии истек. Пожалуйста, войдите снова.');
+						logout();
+					}
+				}
+				return Promise.reject(error);
+			}
+		);
+
+		// Clean up interceptor on component unmount
+		return () => {
+			axios.interceptors.response.eject(responseInterceptor);
+		};
+	}, [user]); // Include user in dependencies
+
 	const logout = () => {
 		localStorage.removeItem('jwt');
 		delete axios.defaults.headers.common['Authorization'];
