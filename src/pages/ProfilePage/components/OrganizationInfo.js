@@ -73,10 +73,10 @@ const OrganizationInfo = () => {
 			formChanged.current = false; // Сбрасываем флаг изменений
 
 			setFormData({
-				name: user.organization.name || '',
-				inn: user.organization.inn || '',
-				position: user.organization.position || '',
-				comments: user.organization.comments || '',
+				name: user?.organization.name || '',
+				inn: user?.organization.inn || '',
+				position: user?.organization.position || '',
+				comments: user?.organization.comments || '',
 			});
 		}
 	}, [user]);

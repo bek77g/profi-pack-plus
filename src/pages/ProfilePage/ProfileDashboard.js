@@ -39,7 +39,7 @@ const ProfileDashboard = () => {
 				</div>
 				<div className='profileDashboard__details'>
 					<h2>
-						{user?.firstName || user?.organization[0]?.name || 'Пользователь'}
+						{user?.firstName || user?.organization?.[0]?.name || 'Пользователь'}
 					</h2>
 					<p>т. {user?.phoneNumber || 'Не указан'}</p>
 					{user?.addresses?.map((addr, index) => (
