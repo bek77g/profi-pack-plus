@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import Loading from '../../components/Loading';
@@ -12,6 +13,8 @@ const OrderHistory = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const { user } = useContext(CustomContext);
+	const [showModal, setShowModal] = useState(false);
+	const [selectedOrderId, setSelectedOrderId] = useState(null);
 
 	useEffect(() => {
 		if (user) {
@@ -61,18 +64,32 @@ const OrderHistory = () => {
 		});
 	};
 
-	const handleRepeatOrder = async id => {
+	const handleRepeatOrderClick = id => {
+		setSelectedOrderId(id);
+		setShowModal(true);
+	};
+
+	const repeatOrder = async () => {
+		if (!selectedOrderId) return;
+
 		try {
 			setLoading(true);
-			await axios.post(`/api/orders/${id}/repeat`);
-			// Перенаправляем в корзину после повторения заказа
-			// window.location.href = '/cart';
+			await axios.post(`/api/orders/${selectedOrderId}/repeat`);
+			// Close modal
+			setShowModal(false);
+			// Redirect to cart after repeating order
+			window.location.href = '/cart';
 		} catch (err) {
 			console.error('Error repeating order:', err);
 			alert('Не удалось повторить заказ');
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleCloseModal = () => {
+		setShowModal(false);
+		setSelectedOrderId(null);
 	};
 
 	return (
@@ -173,7 +190,7 @@ const OrderHistory = () => {
 										<div className='orderHistory__actions'>
 											<button
 												className='btn btn-primary'
-												onClick={() => handleRepeatOrder(order.id)}>
+												onClick={() => handleRepeatOrderClick(order.id)}>
 												Повторить заказ
 											</button>
 										</div>
@@ -190,6 +207,25 @@ const OrderHistory = () => {
 					</div>
 				</div>
 			</div>
+
+			{/* Confirmation Modal */}
+			<Modal show={showModal} onHide={handleCloseModal} centered>
+				<Modal.Header closeButton>
+					<Modal.Title>Подтверждение повторного заказа</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					Вы уверены, что хотите повторить заказ? Заказ будет сразу сохранён и
+					объявлен
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant='secondary' onClick={handleCloseModal}>
+						Отмена
+					</Button>
+					<Button variant='primary' onClick={repeatOrder}>
+						Да, повторить заказ
+					</Button>
+				</Modal.Footer>
+			</Modal>
 		</>
 	);
 };
