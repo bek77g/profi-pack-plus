@@ -52,6 +52,7 @@ const AuthModal = ({ isOpen, onClose }) => {
 	};
 
 	const handleResendCode = async () => {
+		if (timer > 0) return;
 		try {
 			await axios.post('/api/email/send-code', { email });
 			setTimer(30);
@@ -90,17 +91,16 @@ const AuthModal = ({ isOpen, onClose }) => {
 					</form>
 				) : (
 					<>
-						<p>Мы отправили код на адрес: {email}</p>
-						<button
-							onClick={() => setStep('email')}
-							className='auth-modal__change-email'>
-							Изменить email
-						</button>
 						<form onSubmit={handleCodeVerification}>
 							<div className='auth-modal__input-group'>
 								<label>
-									Введите код, отправленный на указанную почту. Проверьте также
-									папку "Спам"
+									Введите код, отправленный на указанную почту - <b>{email}</b>.
+									Проверьте также папку "Спам" <br />
+									<button
+										onClick={() => setStep('email')}
+										className='auth-modal__change-email'>
+										Изменить email
+									</button>
 								</label>
 								<input
 									type='text'
