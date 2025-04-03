@@ -1,14 +1,23 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CustomContext } from '../../hoc/mainContentContext';
 import './AuthModal.scss';
 
 const AuthModal = ({ isOpen, onClose }) => {
 	const [email, setEmail] = useState('');
 	const [verificationCode, setVerificationCode] = useState('');
-	const [step, setStep] = useState('email'); // 'email' or 'code'
+	const [step, setStep] = useState('email');
 	const [error, setError] = useState('');
+	const [timer, setTimer] = useState(0);
 	const { setUser } = useContext(CustomContext);
+
+	useEffect(() => {
+		let interval;
+		if (timer > 0) {
+			interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+		}
+		return () => clearInterval(interval);
+	}, [timer]);
 
 	const handleEmailSubmit = async e => {
 		e.preventDefault();
@@ -16,6 +25,7 @@ const AuthModal = ({ isOpen, onClose }) => {
 			await axios.post('/api/email/send-code', { email });
 			setStep('code');
 			setError('');
+			setTimer(30);
 		} catch (err) {
 			setError(err.response?.data?.message || 'Error sending code');
 		}
@@ -38,6 +48,16 @@ const AuthModal = ({ isOpen, onClose }) => {
 			onClose();
 		} catch (err) {
 			setError(err.response?.data?.message || 'Invalid code');
+		}
+	};
+
+	const handleResendCode = async () => {
+		try {
+			await axios.post('/api/email/send-code', { email });
+			setTimer(30);
+			setError('');
+		} catch (err) {
+			setError(err.response?.data?.message || 'Error resending code');
 		}
 	};
 
@@ -69,25 +89,41 @@ const AuthModal = ({ isOpen, onClose }) => {
 						</button>
 					</form>
 				) : (
-					<form onSubmit={handleCodeVerification}>
-						<div className='auth-modal__input-group'>
-							<label>
-								Введите код, отправленный на указанную почту. Проверьте также
-								папку "Спам"
-							</label>
-							<input
-								type='text'
-								value={verificationCode}
-								onChange={e => setVerificationCode(e.target.value)}
-								placeholder='123456'
-								maxLength='6'
-								required
-							/>
-						</div>
-						<button type='submit' className='auth-modal__submit'>
-							Войти
+					<>
+						<p>Мы отправили код на адрес: {email}</p>
+						<button
+							onClick={() => setStep('email')}
+							className='auth-modal__change-email'>
+							Изменить email
 						</button>
-					</form>
+						<form onSubmit={handleCodeVerification}>
+							<div className='auth-modal__input-group'>
+								<label>
+									Введите код, отправленный на указанную почту. Проверьте также
+									папку "Спам"
+								</label>
+								<input
+									type='text'
+									value={verificationCode}
+									onChange={e => setVerificationCode(e.target.value)}
+									placeholder='123456'
+									maxLength='6'
+									required
+								/>
+							</div>
+							<button type='submit' className='auth-modal__submit'>
+								Войти
+							</button>
+						</form>
+						<button
+							onClick={handleResendCode}
+							disabled={timer > 0}
+							className='auth-modal__resend'>
+							{timer > 0
+								? `Отправить код повторно (${timer}с)`
+								: 'Отправить код повторно'}
+						</button>
+					</>
 				)}
 			</div>
 		</div>
