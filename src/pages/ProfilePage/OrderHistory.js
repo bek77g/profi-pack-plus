@@ -124,7 +124,7 @@ const OrderHistory = () => {
 		try {
 			setLoading(true);
 			// Mark the order as completed
-			await axios.post(`/api/orders/${receiptOrderId}/complete`);
+			await axios.post(`/api/orders/${receiptOrderId}/received`);
 			// Update the order status in the local state
 			setOrders(
 				orders.map(order =>
@@ -313,15 +313,15 @@ const OrderHistory = () => {
 					<Modal.Title>Подтверждение повторного заказа</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					Вы уверены, что хотите повторить заказ? Заказ будет сразу сохранён и
-					объявлен
+					Вы уверены, что хотите повторить заказ? Товары из этого заказа будут
+					добавлены в вашу корзину, заменив все текущие товары.
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleCloseModal}>
 						Отмена
 					</Button>
 					<Button variant='primary' onClick={repeatOrder}>
-						Да, повторить заказ
+						Да, добавить в корзину
 					</Button>
 				</Modal.Footer>
 			</Modal>
