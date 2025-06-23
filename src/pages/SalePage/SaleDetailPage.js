@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { FaArrowLeft, FaCalendarAlt } from 'react-icons/fa';
+import { FaCalendarAlt } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import arr from '../../assets/icons/arr.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
 import SEO from '../../hoc/SEO';
 import { Product } from '../../pages/MainPage/components/MainPagePopular/MainPagePopular';
@@ -100,11 +101,26 @@ const SaleDetailPage = () => {
 				SeoDescription={sale?.description || 'Подробная информация об акции'}
 			/>
 			<div className='saleDetailPage'>
-				<div className='saleDetailPage__back'>
-					<Link to='/sale' className='saleDetailPage__back-link'>
-						<FaArrowLeft />
-						<span>Вернуться к списку акций</span>
-					</Link>
+				<div
+					className='catalogPageProducts__top'
+					style={{ marginBottom: '30px' }}>
+					<span className='icon'>
+						<Link to='/'>
+							Главная{' '}
+							<span>
+								<img src={arr} alt='arrow' />
+							</span>
+						</Link>
+					</span>
+					<span className='icon'>
+						<Link to='/sale'>
+							Акции и распродажи{' '}
+							<span>
+								<img src={arr} alt='arrow' />
+							</span>
+						</Link>
+					</span>
+					<span>{sale?.title}</span>
 				</div>
 
 				<div className='saleDetailPage__header'>

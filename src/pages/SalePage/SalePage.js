@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import arr from '../../assets/icons/arr.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
 import SEO from '../../hoc/SEO';
 import './SalePage.scss';
@@ -60,6 +61,19 @@ const SalePage = () => {
 				SeoDescription='Специальные предложения, акции и распродажи на упаковочные материалы. Скидки до 50% на выбранные товары.'
 			/>
 			<div className='salePage'>
+				<div
+					className='catalogPageProducts__top'
+					style={{ marginBottom: '30px' }}>
+					<span className='icon'>
+						<Link to='/'>
+							Главная{' '}
+							<span>
+								<img src={arr} alt='arrow' />
+							</span>
+						</Link>
+					</span>
+					<span>Акции и распродажи</span>
+				</div>
 				<div className='salePage__header'>
 					<h1 className='salePage__title'>Акции и распродажи</h1>
 				</div>
