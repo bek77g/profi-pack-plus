@@ -50,6 +50,10 @@ $md4: 480;
 			grid-template-columns: 1fr;
 			gap: 20px;
 		}
+
+		&--expired {
+			margin-top: 15px;
+		}
 	}
 
 	&__item {
@@ -68,11 +72,38 @@ $md4: 480;
 			}
 		}
 
+		&--expired {
+			opacity: 0.7;
+			filter: grayscale(50%);
+
+			&:hover {
+				opacity: 0.85;
+				filter: grayscale(30%);
+			}
+		}
+
 		&-link {
 			display: block;
 			text-decoration: none;
 			color: $textColor;
 			height: 100%;
+
+			&--expired {
+				cursor: pointer;
+				position: relative;
+
+				&::after {
+					content: 'Акция завершена';
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					background-color: rgba(102, 102, 102, 0.8);
+					padding: 5px 10px;
+					color: #fff;
+					border-radius: 4px;
+					font-size: 12px;
+				}
+			}
 		}
 
 		&-image {

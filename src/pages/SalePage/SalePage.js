@@ -9,7 +9,8 @@ import './SalePage.scss';
 
 const SalePage = () => {
 	const { baseUrl } = useContext(CustomContext);
-	const [sales, setSales] = useState([]);
+	const [activeSales, setActiveSales] = useState([]);
+	const [expiredSales, setExpiredSales] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -18,14 +19,22 @@ const SalePage = () => {
 				const response = await axios.get('/api/promotions?populate=images');
 
 				if (response.data && response.data.data) {
-					const formattedSales = response.data.data.map(item => {
+					const currentDate = new Date();
+					const active = [];
+					const expired = [];
+
+					response.data.data.forEach(item => {
 						let formattedExpireDate = 'Постоянная акция';
+						let isExpired = false;
+						let endDate = null;
+
 						if (item.endDate) {
-							const date = new Date(item.endDate);
-							formattedExpireDate = date.toLocaleDateString('ru-RU');
+							endDate = new Date(item.endDate);
+							formattedExpireDate = endDate.toLocaleDateString('ru-RU');
+							isExpired = endDate < currentDate;
 						}
 
-						return {
+						const formattedSale = {
 							id: item.id,
 							title: item.title,
 							image:
@@ -37,15 +46,27 @@ const SalePage = () => {
 							expireDate: formattedExpireDate,
 							description: item.description || '',
 							slug: item.slug || `promotion-${item.id}`,
+							isExpired,
+							endDate,
 						};
+
+						if (isExpired) {
+							expired.push(formattedSale);
+						} else {
+							active.push(formattedSale);
+						}
 					});
-					setSales(formattedSales);
+
+					setActiveSales(active);
+					setExpiredSales(expired);
 				} else {
-					setSales([]);
+					setActiveSales([]);
+					setExpiredSales([]);
 				}
 			} catch (error) {
 				console.error('Failed to fetch promotions:', error);
-				setSales([]);
+				setActiveSales([]);
+				setExpiredSales([]);
 			} finally {
 				setIsLoading(false);
 			}
@@ -83,8 +104,8 @@ const SalePage = () => {
 						<div className='salePage__loading'>Загрузка...</div>
 					) : (
 						<div className='salePage__grid'>
-							{sales.length > 0 ? (
-								sales.map(sale => (
+							{activeSales.length > 0 ? (
+								activeSales.map(sale => (
 									<div key={sale.id} className='salePage__item'>
 										<Link
 											to={`/sale/${sale.slug}`}
@@ -117,7 +138,32 @@ const SalePage = () => {
 
 				<div className='salePage__archive'>
 					<h2 className='salePage__archive-title'>Завершенные акции</h2>
-					<p>Список завершенных акций пуст.</p>
+					{expiredSales.length > 0 ? (
+						<div className='salePage__grid salePage__grid--expired'>
+							{expiredSales.map(sale => (
+								<div
+									key={sale.id}
+									className='salePage__item salePage__item--expired'>
+									<Link
+										to={`/sale/${sale.slug}`}
+										className='salePage__item-link salePage__item-link--expired'>
+										<div className='salePage__item-image'>
+											<img src={sale.image} alt={sale.title} />
+										</div>
+										<div className='salePage__item-content'>
+											<h3 className='salePage__item-title'>{sale.title}</h3>
+											<div className='salePage__item-expire'>
+												<FaCalendarAlt />
+												<span>Акция завершена {sale.expireDate}</span>
+											</div>
+										</div>
+									</Link>
+								</div>
+							))}
+						</div>
+					) : (
+						<p>Список завершенных акций пуст.</p>
+					)}
 				</div>
 			</div>
 		</>
