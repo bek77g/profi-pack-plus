@@ -38,6 +38,9 @@ const Header = () => {
 						<li className='header__nav__bar__item header__nav__bar__item__prelast'>
 							<Link to='/contacts'>Контакты</Link>
 						</li>
+						<li className='header__nav__bar__item header__nav__bar__item__prelast'>
+							<Link to='/sale'>Акции</Link>
+						</li>
 						<li className='header__nav__bar__item header__special header__special-user header__mobile-hide'>
 							<Link to='/profile'>
 								<HandySvg src={userIcon} width='30' height='30' alt='profile' />
