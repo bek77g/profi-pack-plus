@@ -5,7 +5,8 @@ import arr from '../../assets/icons/arr.svg';
 import empty from '../../assets/icons/empty.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
 import SEO from '../../hoc/SEO';
-import { Products } from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
+// import { Products } from '../CatalogPage/components/CatalogPageCards/CatalogPageCards';
+import { Product } from '../../pages/MainPage/components/MainPagePopular/MainPagePopular';
 import './FavouritePage.scss';
 
 const FavouritePage = () => {
@@ -15,13 +16,13 @@ const FavouritePage = () => {
 	const handleLogin = () => {
 		setAuthModalOpen(true);
 	};
-	
+
 	// Сортировка избранных товаров
 	const getSortedFavorites = () => {
 		return [...favorite].sort((a, b) => {
 			const priceA = parseFloat(a.price?.replace(/[^\d.]/g, '') || 0);
 			const priceB = parseFloat(b.price?.replace(/[^\d.]/g, '') || 0);
-			
+
 			switch (sortType) {
 				case 'priceInc':
 					return priceA - priceB;
@@ -51,7 +52,7 @@ const FavouritePage = () => {
 					<span>Избранные</span>
 					<h2>Избранные</h2>
 				</div>
-				
+
 				{user ? (
 					favorite.length !== 0 ? (
 						<>
@@ -69,7 +70,7 @@ const FavouritePage = () => {
 								<div className='catalogPage__content__right'>
 									<div className='catalogPage__content__right__cardsList'>
 										{getSortedFavorites().map(item => (
-											<Products key={item.id} data={item} />
+											<Product key={item.id} data={item} />
 										))}
 									</div>
 								</div>
@@ -102,10 +103,9 @@ const FavouritePage = () => {
 						<div className='favouritePage__section'>
 							<h3>Вы не авторизованы</h3>
 							<p>Для доступа к избранным товарам необходимо войти в систему.</p>
-							<button 
-								className='btn btn-primary favouritePage__login-btn' 
-								onClick={handleLogin}
-							>
+							<button
+								className='btn btn-primary favouritePage__login-btn'
+								onClick={handleLogin}>
 								ВОЙТИ В АККАУНТ
 							</button>
 						</div>

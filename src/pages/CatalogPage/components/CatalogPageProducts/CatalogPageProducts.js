@@ -15,7 +15,7 @@ import Loading from '../../../../layout/loading/Loading';
 import Fancybox from '../../../../utils/FancyBox';
 import { Product } from '../../../MainPage/components/MainPagePopular/MainPagePopular';
 import MainPageSearchSelect from '../../../MainPage/components/MainPageSearch/MainPageSearchSelect';
-import { Products as LikedProducts } from '../CatalogPageCards/CatalogPageCards';
+// import { Products as LikedProducts } from '../CatalogPageCards/CatalogPageCards';
 // import {
 //   ReviewsConfigContext,
 //   // Reviews,
@@ -166,10 +166,12 @@ const CatalogPageProducts = () => {
 						<div className='catalogPageProducts__content'>
 							<div className='catalogPageProducts__content__left'>
 								<div className='catalogPageProducts__content__left__card'>
-									<div className='catalogPageProducts__content__left__card__top'>
-										{!Discount && <span>Скидка</span>}
-										{New && <span>Новинка</span>}
-										{BestSeller && <span className='bestseller'>Хит</span>}
+									<div className='catalogPageProducts__content__left__card__tags'>
+										<div className='catalogPageProducts__content__left__card__top'>
+											{!Discount && <span>Скидка</span>}
+											{New && <span>Новинка</span>}
+											{BestSeller && <span className='bestseller'>Хит</span>}
+										</div>
 									</div>
 									<div className='catalogPageProducts__content__left__card__mid'>
 										<Fancybox>
@@ -239,9 +241,22 @@ const CatalogPageProducts = () => {
 								<div className='catalogPageProducts__content__wrapper'>
 									<div className='catalogPageProducts__content__left__card__bottom'>
 										{Discount > 0 && (
-											<p className='catalogPageProducts__content__left__card__bottom-discount'>
-												{Discount} сом
-											</p>
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: '10px',
+												}}>
+												<p className='catalogPageProducts__content__left__card__bottom-discount'>
+													{Discount} сом
+												</p>
+												<div className='catalogPageProducts__content__left__card__discount'>
+													<span>
+														-{Math.round(((Discount - Price) / Discount) * 100)}
+														%
+													</span>
+												</div>
+											</div>
 										)}
 										<p>
 											{Price} сом/{CountType}
@@ -325,7 +340,7 @@ const CatalogPageProducts = () => {
 									.sort(() => Math.random() - 0.5)
 									.slice(0, 3)
 									.map(related => (
-										<LikedProducts key={related.id} data={related} />
+										<Product key={related.id} data={related} />
 									))}
 							</div>
 						</>

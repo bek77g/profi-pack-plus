@@ -3,7 +3,7 @@ import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import { toast, Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import cart from '../../../../assets/icons/cart.svg';
 import heart from '../../../../assets/icons/favourite.svg';
 import { favsProduct } from '../../../../hoc/Hooks';
@@ -11,8 +11,8 @@ import { CustomContext } from '../../../../hoc/mainContentContext';
 import { useWindowDimensions } from '../../../../hooks/useWindowDimensions';
 
 export const Product = ({ data }) => {
+	const { pathname } = useLocation();
 	const [count, setCount] = useState(1);
-
 	const {
 		baseUrl,
 		addCart,
@@ -21,10 +21,9 @@ export const Product = ({ data }) => {
 		favorite: favoriteArr,
 	} = useContext(CustomContext);
 
-	console.log({ data });
-
 	const {
 		Title,
+		Discount,
 		Price,
 		New,
 		Slug,
@@ -52,6 +51,20 @@ export const Product = ({ data }) => {
 	};
 	useEffect(() => setCount(MinCount), []);
 
+	// const fullLink = `${sub_catalog?.catalog.Slug}/${sub_catalog.Slug}/${Slug}`;
+
+	const processedPathname = pathname.split('/').filter(Boolean);
+
+	let fullLink = `/${Slug}`;
+
+	if (sub_catalog?.catalog?.Slug) {
+		fullLink = `/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`;
+	} else if (sub_catalog && processedPathname.length >= 1) {
+		fullLink = `/${processedPathname[0]}/${sub_catalog.Slug}/${Slug}`;
+	} else if (sub_catalog) {
+		fullLink = `/${sub_catalog.Slug}/${Slug}`;
+	}
+
 	return (
 		<div className='mainPagePopular__catalog__cards__card'>
 			<div className='mainPagePopular__catalog__cards__card__tags'>
@@ -63,6 +76,11 @@ export const Product = ({ data }) => {
 				{BestSeller && (
 					<div className='mainPagePopular__catalog__cards__card__hit'>Хит</div>
 				)}
+				{Discount && Discount > 0 ? (
+					<div className='mainPagePopular__catalog__cards__card__discount'>
+						-{Math.round(((Discount - Price) / Discount) * 100)}%
+					</div>
+				) : null}
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__heart'>
 				<p
@@ -74,7 +92,7 @@ export const Product = ({ data }) => {
 				</p>
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__img'>
-				<Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
+				<Link to={fullLink}>
 					<img
 						className='d-block w-100'
 						src={`${baseUrl}${Gallery[0].url}`}
@@ -84,58 +102,68 @@ export const Product = ({ data }) => {
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__descr'>
 				<h5>
-					<Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
-						{Title}{' '}
-					</Link>
+					<Link to={fullLink}>{Title} </Link>
 				</h5>
 
-				<div className='mainPagePopular__catalog__cards__card__cart'>
-					<Link to={`/${sub_catalog.catalog.Slug}/${sub_catalog.Slug}/${Slug}`}>
-						<p style={{ lineHeight: '23px' }}>
-							{Price} сом/{CountType}
-							<br />
-							<i style={{ fontStyle: 'initial', fontSize: '18px' }}>
-								{(Price * count).toFixed(2)} сом
-							</i>
-						</p>
-					</Link>
-					<button onClick={() => addToCart()} disabled={!Availability}>
-						<HandySvg src={cart} className='icon' width='30' height='30' />
-					</button>
-				</div>
-				<div
-					className={`catalogPagePopular__catalogs__cards__card__availability catalogPagePopular__catalogs__cards__card__availability--${
-						Availability ? 'stock' : 'nonstock'
-					}`}>
-					{Availability ? 'В наличии' : 'Нет в наличии'}
-				</div>
-				<div className='catalogPagePopular__catalogs__cards__card__quantity'>
-					<button
-						type='button'
-						className='btn btn-info'
-						onClick={() =>
-							setCount(count <= MinCount ? MinCount : count - MinCount)
-						}>
-						-
-					</button>
-					<input
-						type='text'
-						onKeyPress={e => !/[0-9]/.test(e.key) && e.preventDefault()}
-						onChange={e => {
-							let num = +e.target.value;
-							setCount(num);
-						}}
-						className='form-control form-control-color'
-						value={count}
-						readOnly
-					/>
-					<button
-						type='button'
-						className='btn btn-info'
-						onClick={() => setCount(count + MinCount)}>
-						+
-					</button>
-				</div>
+				{Availability ? (
+					<>
+						<div className='mainPagePopular__catalog__cards__card__cart'>
+							<Link to={fullLink}>
+								<p style={{ lineHeight: '23px', display: 'grid' }}>
+									{Discount && Discount > 0 ? (
+										<span className='mainPagePopular__catalog__cards__card__prevprice'>
+											{Discount} сом/{CountType}
+										</span>
+									) : null}
+									<span>
+										{Price} сом/{CountType}
+									</span>
+									<br />
+									<i style={{ fontStyle: 'initial', fontSize: '18px' }}>
+										{(Price * count).toFixed(2)} сом
+									</i>
+								</p>
+							</Link>
+						</div>
+						<div className='catalogPagePopular__catalogs__cards__card__quantity'>
+							<button
+								type='button'
+								className='btn btn-info'
+								onClick={() =>
+									setCount(count <= MinCount ? MinCount : count - MinCount)
+								}>
+								-
+							</button>
+							<input
+								type='text'
+								onKeyPress={e => !/[0-9]/.test(e.key) && e.preventDefault()}
+								onChange={e => {
+									let num = +e.target.value;
+									setCount(num);
+								}}
+								className='form-control form-control-color'
+								value={count}
+								readOnly
+							/>
+							<button
+								type='button'
+								className='btn btn-info'
+								onClick={() => setCount(count + MinCount)}>
+								+
+							</button>
+							<button
+								className='mainPagePopular__catalog__cards__card__cart-btn'
+								onClick={() => addToCart()}
+								disabled={!Availability}>
+								<HandySvg src={cart} className='icon' width='30' height='30' />
+							</button>
+						</div>
+					</>
+				) : (
+					<div className='catalogPagePopular__catalogs__cards__card__availability catalogPagePopular__catalogs__cards__card__availability--nonstock'>
+						Нет в наличии
+					</div>
+				)}
 			</div>
 		</div>
 	);

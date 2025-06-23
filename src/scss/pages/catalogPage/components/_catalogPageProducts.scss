@@ -36,8 +36,13 @@
 		&__left {
 			max-width: 390px;
 			&__card {
-				&__top {
+				&__tags {
+					display: flex;
+					align-items: center;
+					gap: 8px;
 					margin-bottom: 20px;
+				}
+				&__top {
 					display: flex;
 					gap: 8px;
 					span {
@@ -49,6 +54,20 @@
 					& .bestseller {
 						background-color: #d6192b;
 					}
+				}
+
+				&__discount {
+					background: #d6192b;
+					width: -webkit-fit-content;
+					width: -moz-fit-content;
+					width: fit-content;
+					font-size: 12px;
+					line-height: 13px;
+					letter-spacing: 0.1em;
+					text-transform: uppercase;
+					border-radius: 3px;
+					padding: 8px 18px;
+					color: #ffffff;
 				}
 
 				&__mid {

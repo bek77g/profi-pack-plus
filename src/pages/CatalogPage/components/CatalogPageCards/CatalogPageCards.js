@@ -8,8 +8,9 @@ import PaginationComp from '../../../../components/Pagination';
 import { favsProduct, pagesHandler } from '../../../../hoc/Hooks';
 import { CustomContext } from '../../../../hoc/mainContentContext';
 import { useSearchParamsState } from '../../../../hooks/useSearchParamsState';
+import { Product } from '../../../../pages/MainPage/components/MainPagePopular/MainPagePopular';
 
-export const Products = ({ data }) => {
+export const ExProducts = ({ data }) => {
 	const {
 		baseUrl,
 		addCart,
@@ -167,7 +168,8 @@ const CatalogPageCards = ({ products, sortType, minPrice, maxPrice }) => {
 					return a.publishedAt - b.publishedAt;
 				}
 			})
-			.map(product => <Products key={product.id} data={product} />);
+			// .map(product => <Products key={product.id} data={product} />);
+			.map(product => <Product key={product.id} data={product} />);
 		return pagesHandler(array, 12, page);
 	};
 
