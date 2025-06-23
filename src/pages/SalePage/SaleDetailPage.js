@@ -14,6 +14,7 @@ const SaleDetailPage = () => {
 	const [sale, setSale] = useState(null);
 	const [relatedProducts, setRelatedProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isExpired, setIsExpired] = useState(false);
 
 	useEffect(() => {
 		const fetchPromotion = async () => {
@@ -30,9 +31,11 @@ const SaleDetailPage = () => {
 					const item = response.data.data[0];
 
 					let formattedExpireDate = 'Постоянная акция';
+					let expired = false;
 					if (item.endDate) {
 						const date = new Date(item.endDate);
 						formattedExpireDate = date.toLocaleDateString('ru-RU');
+						expired = new Date() > date;
 					}
 
 					let imageUrl = 'https://via.placeholder.com/800x400';
@@ -53,9 +56,11 @@ const SaleDetailPage = () => {
 						description: item.description || '',
 						fullDescription: item.fullDescription || item.description,
 						slug: item.slug,
+						isExpired: expired,
 					};
 
 					setSale(promotionData);
+					setIsExpired(expired);
 
 					if (item.products && item.products.length > 0) {
 						setRelatedProducts(item.products);
@@ -100,7 +105,10 @@ const SaleDetailPage = () => {
 				SeoTitle={`${sale?.title || 'Акция'} - Profi Pack Plus`}
 				SeoDescription={sale?.description || 'Подробная информация об акции'}
 			/>
-			<div className='saleDetailPage'>
+			<div
+				className={`saleDetailPage ${
+					isExpired ? 'saleDetailPage--expired' : ''
+				}`}>
 				<div
 					className='catalogPageProducts__top'
 					style={{ marginBottom: '30px' }}>
@@ -129,10 +137,17 @@ const SaleDetailPage = () => {
 						<div className='saleDetailPage__expire'>
 							<FaCalendarAlt />
 							<span>
-								{sale.expireDate.includes('Постоянная')
+								{isExpired
+									? 'Акция завершена ' + sale.expireDate
+									: sale.expireDate.includes('Постоянная')
 									? sale.expireDate
 									: `Действует до ${sale.expireDate}`}
 							</span>
+						</div>
+					)}
+					{isExpired && (
+						<div className='saleDetailPage__expired-notice'>
+							Данная акция завершена
 						</div>
 					)}
 				</div>
@@ -155,7 +170,15 @@ const SaleDetailPage = () => {
 
 				{relatedProducts.length > 0 && (
 					<div className='saleDetailPage__related'>
-						<h2 className='saleDetailPage__related-title'>Товары по акции</h2>
+						<h2 className='saleDetailPage__related-title'>
+							{isExpired ? 'Товары, участвовавшие в акции' : 'Товары по акции'}
+						</h2>
+						{isExpired && (
+							<p className='saleDetailPage__related-note'>
+								Акция завершена, но вы всё ещё можете ознакомиться с товарами,
+								которые в ней участвовали
+							</p>
+						)}
 						<div className='saleDetailPage__related-grid'>
 							{relatedProducts.map(product => {
 								return <Product key={product.id} data={product} />;
