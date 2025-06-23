@@ -99,6 +99,17 @@ const ProfileDashboard = () => {
 						</div>
 					</Link>
 				</div>
+				<div className='profileDashboard__card'>
+					<Link to='/sale'>
+						<div className='profileDashboard__card-icon'>
+							<img src='' alt='Sale' />
+						</div>
+						<div className='profileDashboard__card-content'>
+							<h3>Акции и распродажи</h3>
+							<p>Все акции и распродажи</p>
+						</div>
+					</Link>
+				</div>
 			</div>
 
 			<button

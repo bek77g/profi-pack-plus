@@ -15,7 +15,9 @@ const CatalogPageProducts = React.lazy(() =>
 		'./pages/CatalogPage/components/CatalogPageProducts/CatalogPageProducts'
 	)
 );
-const CatalogFullPage = React.lazy(() => import('./pages/CatalogPage/CatalogFullPage'));
+const CatalogFullPage = React.lazy(() =>
+	import('./pages/CatalogPage/CatalogFullPage')
+);
 const PartnershipPage = React.lazy(() =>
 	import('./pages/PartnershipPage/PartnershipPage')
 );
@@ -40,8 +42,18 @@ const ContactsPage = React.lazy(() =>
 
 // Profile Pages
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage/ProfilePage'));
-const PersonalDataPage = React.lazy(() => import('./pages/ProfilePage/PersonalDataPage'));
-const OrderHistory = React.lazy(() => import('./pages/ProfilePage/OrderHistory'));
+const PersonalDataPage = React.lazy(() =>
+	import('./pages/ProfilePage/PersonalDataPage')
+);
+const OrderHistory = React.lazy(() =>
+	import('./pages/ProfilePage/OrderHistory')
+);
+
+// Sale Pages
+const SalePage = React.lazy(() => import('./pages/SalePage/SalePage'));
+const SaleDetailPage = React.lazy(() =>
+	import('./pages/SalePage/SaleDetailPage')
+);
 
 const router = createBrowserRouter([
 	{
@@ -97,6 +109,14 @@ const router = createBrowserRouter([
 			{
 				path: '/cards',
 				element: <SubCategoryPageCards />,
+			},
+			{
+				path: '/sale',
+				element: <SalePage />,
+			},
+			{
+				path: '/sale/:slug',
+				element: <SaleDetailPage />,
 			},
 			{
 				path: '*',

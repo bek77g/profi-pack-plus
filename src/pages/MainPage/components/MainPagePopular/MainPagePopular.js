@@ -21,6 +21,8 @@ export const Product = ({ data }) => {
 		favorite: favoriteArr,
 	} = useContext(CustomContext);
 
+	console.log({ data });
+
 	const {
 		Title,
 		Price,
