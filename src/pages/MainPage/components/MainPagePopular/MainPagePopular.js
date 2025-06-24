@@ -101,7 +101,7 @@ export const Product = ({ data }) => {
 				</Link>
 			</div>
 			<div className='mainPagePopular__catalog__cards__card__descr'>
-				<h5>
+				<h5 title={Title}>
 					<Link to={fullLink}>{Title} </Link>
 				</h5>
 
@@ -110,11 +110,11 @@ export const Product = ({ data }) => {
 						<div className='mainPagePopular__catalog__cards__card__cart'>
 							<Link to={fullLink}>
 								<p style={{ lineHeight: '23px', display: 'grid' }}>
-									{Discount && Discount > 0 ? (
-										<span className='mainPagePopular__catalog__cards__card__prevprice'>
-											{Discount} сом/{CountType}
-										</span>
-									) : null}
+									<span className='mainPagePopular__catalog__cards__card__prevprice'>
+										{Discount && Discount > 0
+											? Discount + ' сом/' + CountType
+											: null}
+									</span>
 									<span>
 										{Price} сом/{CountType}
 									</span>

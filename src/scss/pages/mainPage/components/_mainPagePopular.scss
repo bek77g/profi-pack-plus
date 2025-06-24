@@ -93,6 +93,7 @@
 					opacity: 0.6;
 					font-size: 15px;
 					line-height: 19px;
+					height: 19px;
 				}
 
 				&__heart {
@@ -125,7 +126,9 @@
 				&__img {
 					display: flex;
 					justify-content: center;
+					align-items: center;
 					padding-bottom: 15px;
+					aspect-ratio: 1/1 auto;
 
 					a {
 						width: 100%;
@@ -135,11 +138,13 @@
 						width: 100%;
 						-o-object-fit: contain;
 						object-fit: contain;
-						max-height: 200px;
 					}
 				}
 
 				&__descr {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
 					h5 {
 						font-style: normal;
 						font-weight: 400;
@@ -147,6 +152,11 @@
 						line-height: 18px;
 						color: #2f3035;
 						text-align: center;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 3;
+						overflow: hidden;
+						height: 57px;
 					}
 
 					p {
