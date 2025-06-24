@@ -61,13 +61,14 @@
 					width: -webkit-fit-content;
 					width: -moz-fit-content;
 					width: fit-content;
-					font-size: 12px;
-					line-height: 13px;
+					font-size: 18px;
+					line-height: 21px;
 					letter-spacing: 0.1em;
 					text-transform: uppercase;
 					border-radius: 3px;
-					padding: 8px 18px;
+					padding: 6px 15px;
 					color: #ffffff;
+					font-weight: bold;
 				}
 
 				&__mid {
@@ -101,7 +102,7 @@
 						line-height: 36px;
 						color: #000000;
 						opacity: 0.6;
-						padding-bottom: 6px;
+						// padding-bottom: 6px;
 						position: relative;
 
 						&:before {

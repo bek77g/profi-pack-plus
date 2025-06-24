@@ -78,7 +78,7 @@ export const Product = ({ data }) => {
 				)}
 				{Discount && Discount > 0 ? (
 					<div className='mainPagePopular__catalog__cards__card__discount'>
-						-{Math.round(((Discount - Price) / Discount) * 100)}%
+						-{Math.floor(((Discount - Price) / Discount) * 100)}%
 					</div>
 				) : null}
 			</div>
@@ -118,14 +118,12 @@ export const Product = ({ data }) => {
 									<span>
 										{Price} сом/{CountType}
 									</span>
-									<br />
-									<i style={{ fontStyle: 'initial', fontSize: '18px' }}>
-										{(Price * count).toFixed(2)} сом
-									</i>
 								</p>
 							</Link>
 						</div>
-						<div className='catalogPagePopular__catalogs__cards__card__quantity'>
+						<div
+							style={{ marginTop: '10px' }}
+							className='catalogPagePopular__catalogs__cards__card__quantity'>
 							<button
 								type='button'
 								className='btn btn-info'
@@ -157,6 +155,30 @@ export const Product = ({ data }) => {
 								disabled={!Availability}>
 								<HandySvg src={cart} className='icon' width='30' height='30' />
 							</button>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+								marginTop: '4px',
+							}}>
+							{/* <span
+								style={{
+									marginRight: '5px',
+									whiteSpace: 'nowrap',
+									fontSize: '11px',
+									color: '#2f3035',
+								}}>
+								{count} {CountType} * {Price} ={' '}
+							</span> */}
+							<span
+								style={{
+									fontSize: '18px',
+									fontWeight: 'bold',
+								}}>
+								{(Price * count).toFixed(2)} сом
+							</span>
 						</div>
 					</>
 				) : (

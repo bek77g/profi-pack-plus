@@ -246,13 +246,14 @@ const CatalogPageProducts = () => {
 													display: 'flex',
 													alignItems: 'center',
 													gap: '10px',
+													paddingBottom: '6px',
 												}}>
 												<p className='catalogPageProducts__content__left__card__bottom-discount'>
 													{Discount} сом
 												</p>
 												<div className='catalogPageProducts__content__left__card__discount'>
 													<span>
-														-{Math.round(((Discount - Price) / Discount) * 100)}
+														-{Math.floor(((Discount - Price) / Discount) * 100)}
 														%
 													</span>
 												</div>
