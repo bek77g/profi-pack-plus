@@ -153,7 +153,7 @@ export const Product = ({ data }) => {
 								className='mainPagePopular__catalog__cards__card__cart-btn'
 								onClick={() => addToCart()}
 								disabled={!Availability}>
-								<HandySvg src={cart} className='icon' width='30' height='30' />
+								<HandySvg src={cart} className='icon' width='24' height='24' />
 							</button>
 						</div>
 						<div

@@ -178,14 +178,15 @@
 					text-align: center;
 
 					&-btn {
+						position: absolute;
+						right: 12px;
+						bottom: 41px;
 						display: inline;
-						float: right;
 						background: #1c62cd;
-						border-radius: 10px 0px 0px 0px;
-						padding: 6px 8px;
+						border-radius: 10px;
+						padding: 6px;
 						border: none;
 						outline: none;
-						margin-left: 15px;
 
 						&:disabled {
 							background: gray;
