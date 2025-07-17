@@ -78,15 +78,24 @@ const CartPageProducts = () => {
 																		Gallery,
 																		quantity,
 																		MinCount,
+																		Available,
 																	}) => {
 																		return (
 																			<div
 																				key={id}
-																				className='row mb-4 d-flex justify-content-between align-items-center'>
+																				className={`row mb-4 d-flex justify-content-between align-items-center ${
+																					!Available
+																						? 'cart-item-unavailable'
+																						: ''
+																				}`}>
 																				<div className='col-md-2 col-lg-2 col-xl-2 cartImg text-center'>
 																					<img
 																						src={`${baseUrl}${Gallery[0].url}`}
-																						className='img-fluid rounded-3'
+																						className={`img-fluid rounded-3 ${
+																							!Available
+																								? 'cart-item-unavailable-img'
+																								: ''
+																						}`}
 																						alt='Cotton T-shirt'
 																					/>
 																				</div>
@@ -94,21 +103,43 @@ const CartPageProducts = () => {
 																					<h6 className='text-muted'>
 																						{sub_catalog?.Title}
 																					</h6>
-																					<h6 className='text-black mb-0'>
+																					<h6
+																						className={`mb-0 ${
+																							!Available
+																								? 'text-muted'
+																								: 'text-black'
+																						}`}>
 																						{Title}
 																					</h6>
+																					{!Available && (
+																						<small className='text-danger fw-bold'>
+																							Товара нет в наличии
+																						</small>
+																					)}
 																				</div>
 																				<div className='col-md-3 col-lg-3 col-xl-2 d-flex'>
 																					<div className='catalogPagePopular__catalogs__cards__card__quantity pt-4'>
 																						<button
 																							type='button'
-																							className='btn btn-info'
-																							onClick={() =>
-																								editCart(
-																									id,
-																									quantity - MinCount
-																								)
-																							}>
+																							className={`btn ${
+																								!Available
+																									? 'btn-secondary'
+																									: 'btn-info'
+																							}`}
+																							disabled={!Available}
+																							onClick={() => {
+																								console.log({
+																									item: cart.find(
+																										item => item.id === id
+																									),
+																								});
+
+																								Available &&
+																									editCart(
+																										id,
+																										quantity - MinCount
+																									);
+																							}}>
 																							-
 																						</button>
 																						<input
@@ -117,14 +148,24 @@ const CartPageProducts = () => {
 																								!/[0-9]/.test(e.key) &&
 																								e.preventDefault()
 																							}
-																							className='form-control form-control-color'
+																							className={`form-control form-control-color ${
+																								!Available
+																									? 'cart-item-unavailable-input'
+																									: ''
+																							}`}
 																							value={quantity}
 																							readOnly
 																						/>
 																						<button
 																							type='button'
-																							className='btn btn-info'
+																							className={`btn ${
+																								!Available
+																									? 'btn-secondary'
+																									: 'btn-info'
+																							}`}
+																							disabled={!Available}
 																							onClick={() =>
+																								Available &&
 																								editCart(
 																									id,
 																									quantity + MinCount
@@ -238,6 +279,7 @@ const CartPageProducts = () => {
 export default CartPageProducts;
 
 const CheckoutPage = ({ cart, totalPrice }) => {
+	const { removeCart } = useContext(CustomContext);
 	const {
 		shippingPrice,
 		resetCart,
@@ -249,6 +291,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 
 	// Проверка минимальной суммы заказа
 	const isMinimumOrderMet = totalPrice >= 3000;
+	const hasNotAvailableItems = cart.some(item => !item.Available);
 
 	const [userData, setUserData] = useState({
 		items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
@@ -268,6 +311,12 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 	}, []);
 
 	const { shippingType, comment, address } = userData;
+
+	const clearNotAvailableItems = () => {
+		const notAvailableItems = cart.filter(item => !item.Available);
+		notAvailableItems.forEach(item => removeCart(item.id));
+		toast.success('Недоступные товары были удалены из корзины');
+	};
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -368,6 +417,18 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 									<strong>Внимание!</strong> Для оформления заказа необходимо
 									набрать товаров на сумму от 3000 сом. Ваша текущая сумма:{' '}
 									{totalPrice.toFixed(2)} сом.
+								</div>
+							)}
+							{hasNotAvailableItems && (
+								<div className='alert alert-warning mt-3' role='alert'>
+									<strong>Внимание!</strong> Некоторые товары в корзине
+									отсутствуют в наличии. Нельзя оформить заказ
+									<br />
+									<button
+										className='btn btn-primary mt-3'
+										onClick={clearNotAvailableItems}>
+										Удалить недоступные товары
+									</button>
 								</div>
 							)}
 
@@ -515,7 +576,12 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 										<div className='column'></div>
 										<div className='column'>
 											<button
-												disabled={loading || submitBtn || !isMinimumOrderMet}
+												disabled={
+													loading ||
+													submitBtn ||
+													!isMinimumOrderMet ||
+													hasNotAvailableItems
+												}
 												type='submit'
 												className={`btn btn-outline-${
 													!loading ? 'primary' : 'secondary'
