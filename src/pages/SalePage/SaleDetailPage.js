@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 import { Link, useParams } from 'react-router-dom';
 import arr from '../../assets/icons/arr.svg';
 import { CustomContext } from '../../hoc/mainContentContext';
@@ -161,7 +162,7 @@ const SaleDetailPage = () => {
 
 					<div className='saleDetailPage__description'>
 						{sale?.fullDescription ? (
-							<div dangerouslySetInnerHTML={{ __html: sale.fullDescription }} />
+							<ReactMarkdown children={sale.fullDescription} />
 						) : (
 							<p>{sale?.description}</p>
 						)}
