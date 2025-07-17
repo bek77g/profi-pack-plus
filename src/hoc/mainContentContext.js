@@ -80,14 +80,16 @@ export const MainContentContext = props => {
 			response => response,
 			error => {
 				// Check if the error is related to token expiration or authentication
-				if (error.response && 
-					(error.response.status === 401 || 
-					 error.response.status === 403 || 
-					 (error.response.data && 
-					  (error.response.data.message === 'jwt expired' || 
-					   error.response.data.message === 'Invalid token' ||
-					   error.response.data.message === 'Authorization header missing')))) {
-					
+				if (
+					error.response &&
+					(error.response.status === 401 ||
+						error.response.status === 403 ||
+						(error.response.data &&
+							(error.response.data.message === 'jwt expired' ||
+								error.response.data.message === 'Invalid token' ||
+								error.response.data.message ===
+									'Authorization header missing')))
+				) {
 					// Show warning before logout
 					if (user) {
 						alert('Срок действия сессии истек. Пожалуйста, войдите снова.');

@@ -78,13 +78,13 @@ const CartPageProducts = () => {
 																		Gallery,
 																		quantity,
 																		MinCount,
-																		Available,
+																		Availability,
 																	}) => {
 																		return (
 																			<div
 																				key={id}
 																				className={`row mb-4 d-flex justify-content-between align-items-center ${
-																					!Available
+																					!Availability
 																						? 'cart-item-unavailable'
 																						: ''
 																				}`}>
@@ -92,7 +92,7 @@ const CartPageProducts = () => {
 																					<img
 																						src={`${baseUrl}${Gallery[0].url}`}
 																						className={`img-fluid rounded-3 ${
-																							!Available
+																							!Availability
 																								? 'cart-item-unavailable-img'
 																								: ''
 																						}`}
@@ -105,13 +105,13 @@ const CartPageProducts = () => {
 																					</h6>
 																					<h6
 																						className={`mb-0 ${
-																							!Available
+																							!Availability
 																								? 'text-muted'
 																								: 'text-black'
 																						}`}>
 																						{Title}
 																					</h6>
-																					{!Available && (
+																					{!Availability && (
 																						<small className='text-danger fw-bold'>
 																							Товара нет в наличии
 																						</small>
@@ -122,11 +122,11 @@ const CartPageProducts = () => {
 																						<button
 																							type='button'
 																							className={`btn ${
-																								!Available
+																								!Availability
 																									? 'btn-secondary'
 																									: 'btn-info'
 																							}`}
-																							disabled={!Available}
+																							disabled={!Availability}
 																							onClick={() => {
 																								console.log({
 																									item: cart.find(
@@ -134,7 +134,7 @@ const CartPageProducts = () => {
 																									),
 																								});
 
-																								Available &&
+																								Availability &&
 																									editCart(
 																										id,
 																										quantity - MinCount
@@ -149,7 +149,7 @@ const CartPageProducts = () => {
 																								e.preventDefault()
 																							}
 																							className={`form-control form-control-color ${
-																								!Available
+																								!Availability
 																									? 'cart-item-unavailable-input'
 																									: ''
 																							}`}
@@ -159,13 +159,13 @@ const CartPageProducts = () => {
 																						<button
 																							type='button'
 																							className={`btn ${
-																								!Available
+																								!Availability
 																									? 'btn-secondary'
 																									: 'btn-info'
 																							}`}
-																							disabled={!Available}
+																							disabled={!Availability}
 																							onClick={() =>
-																								Available &&
+																								Availability &&
 																								editCart(
 																									id,
 																									quantity + MinCount
@@ -291,7 +291,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 
 	// Проверка минимальной суммы заказа
 	const isMinimumOrderMet = totalPrice >= 3000;
-	const hasNotAvailableItems = cart.some(item => !item.Available);
+	const hasNotAvailableItems = cart.some(item => !item.Availability);
 
 	const [userData, setUserData] = useState({
 		items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
@@ -313,7 +313,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 	const { shippingType, comment, address } = userData;
 
 	const clearNotAvailableItems = () => {
-		const notAvailableItems = cart.filter(item => !item.Available);
+		const notAvailableItems = cart.filter(item => !item.Availability);
 		notAvailableItems.forEach(item => removeCart(item.id));
 		toast.success('Недоступные товары были удалены из корзины');
 	};
