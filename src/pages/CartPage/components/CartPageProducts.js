@@ -483,7 +483,7 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 											) : (
 												<div className='mt-2'>
 													<Link
-														to='/profile#address-form'
+														to='/profile/personal#address-form'
 														className='btn btn-outline-secondary btn-sm'>
 														Добавить адрес доставки
 													</Link>
