@@ -2,7 +2,7 @@ import axios from 'axios';
 import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import arr from '../../../../assets/icons/arr.svg';
@@ -314,7 +314,6 @@ const CatalogPageProducts = () => {
 									</p>
 								</div>
 							</div>
-							<Toaster position='bottom-center' />
 						</div>
 						{[...relatives, ...relateds].length > 0 && (
 							<>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import arr from '../../../assets/icons/arr.svg';
 import remove from '../../../assets/icons/remove.svg';
@@ -257,7 +257,6 @@ const CartPageProducts = () => {
 																</div>
 															</div>
 														)}
-														<Toaster position='bottom-center' />
 													</div>
 												</div>
 											</div>
@@ -592,7 +591,6 @@ const CheckoutPage = ({ cart, totalPrice }) => {
 									</div>
 								</form>
 							)}
-							<Toaster position='bottom-center' />
 						</div>
 					</div>
 				</div>

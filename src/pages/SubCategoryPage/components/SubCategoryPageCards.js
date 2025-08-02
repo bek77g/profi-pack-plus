@@ -1,7 +1,7 @@
 import { HandySvg } from 'handy-svg';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import arr from '../../../assets/icons/arr.svg';
 import cart from '../../../assets/icons/cart.svg';
@@ -131,7 +131,6 @@ const SubCategoryPageCards = () => {
 						<PaginationComp />
 					</div>
 				</div>
-				<Toaster position='bottom-center' />
 			</div>
 		</div>
 	);

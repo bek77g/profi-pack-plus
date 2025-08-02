@@ -2,7 +2,7 @@ import axios from 'axios';
 import { HandySvg } from 'handy-svg';
 import { useContext, useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Link, useLocation } from 'react-router-dom';
 import cart from '../../../../assets/icons/cart.svg';
 import heart from '../../../../assets/icons/favourite.svg';
@@ -283,7 +283,6 @@ const MainPagePopular = () => {
 					</Carousel>
 				</div>
 			)}
-			<Toaster position='bottom-center' />
 		</>
 	);
 };

@@ -1,4 +1,5 @@
 import React, { Suspense, useContext } from 'react';
+import { Toaster } from 'react-hot-toast';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'swiper/css';
@@ -138,6 +139,7 @@ function App() {
 				isOpen={authModalOpen}
 				onClose={() => setAuthModalOpen(false)}
 			/>
+			<Toaster position='bottom-center' />
 		</>
 	);
 }
